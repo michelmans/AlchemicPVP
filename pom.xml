@@ -3,7 +3,7 @@
   <groupId>com.alchemi</groupId>
   <artifactId>AlchemicPVP</artifactId>
   <version>1.4.0</version>
-  <name>alchemicpvp</name>
+  <name>AlchemicPVP</name>
   <build>
     <sourceDirectory>src/main/java</sourceDirectory>
     <plugins>
