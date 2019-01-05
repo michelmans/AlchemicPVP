@@ -1,0 +1,76 @@
+name: AlchemicPVP
+main: com.alchemi.alchemicpvp.main
+version: 1.4.0
+api-version: 1.13
+author: Alchemi
+description: A plugin which tracks player stats regarding to kills etc.
+
+commands:
+  stats:
+    usage: /stats
+    description: View your stats
+    
+  check:
+    usage: /check [player]
+    description: Check on a player, with optional teleport.
+    
+  uncheck:
+    usage: /uncheck
+    description: Remove all check effects.
+    
+  setcheckspawn:
+    usage: /setcheckspawn
+    description: Sets the return point for the /uncheck command.
+    
+  statsreload:
+    usage: /statsreload
+    description: Reload all files.
+    
+  message:
+    usage: /message <recipient> <message>
+    description: Send a private message.
+    aliases: ["msg", "tell", "t", "w", "whisper"]
+    
+  reply:
+    usage: /reply <message>
+    description: Reply to a message.
+    aliases: ["r"]
+   
+  smite:
+    usage: /smite <heathen>
+    description: SEND A BOLT OF LIGHTING TO THAT HEATHEN.
+    aliases: ["wrath"]
+    
+  vanish:
+    usage: /vanish
+    description: Toggle vanish.
+    aliases: ["v"]
+    
+  socialspy:
+    usage: /socialspy [ignore] [player]
+    description: Toogle big brother.
+    aliases: ["spy"]
+  
+permissions:
+  alchemicpvp.stats.other:
+    description: Permission to view an other players stats.
+    default: false
+  alchemicpvp.stats.clear:
+    description: Permission to clear someone's stats.
+    default: false
+  alchemicpvp.check:
+    description: Permission to check on players.
+    default: false
+  alchemicpvp.check.bypass:
+    description: Allows to see player in checkmode.
+    default: false
+  alchemicpvp.spawn:
+    description: Allows to set spawnpoint.
+  alchemicpvp.smite:
+    description: Permission to SMITE HEATHENS.
+  alchemicpvp.vanish:
+    description: Permission to toggle vanish.
+  alchemicpvp.spy:
+    description: Permission to be big brother.
+  alchemicpvp.spy.hideFromBigBrother:
+    description: Permission to hide from big brother.

@@ -1,0 +1,60 @@
+AlchemicPVP:
+  Tag: '&7[&1&lAlchemicPVP&r&7]'
+  
+  NoPermission: '&c&oYou don''t have permission to use &9$command$&c.&r&c If you believe this is an error, &nplease contact an administrator.'
+  Reload: '&3Reloaded files.'
+  
+  Stats:
+    NoPlayer: '&cPlayer &f$player$ &cdoesn''t exist.'
+    Cleared: '&3$player$''s stats have been cleared.'
+    HeaderOther: '&3&l&o===> &r&l&1$player$ &o&3<==='
+    FooterOther: '&1&l&o===> &r&l&3$player$ &o&1<==='
+    Header: '&3&l&o===> &r&l&1STATS &o&3<==='
+    Kills: '&3Kills: &6$amount$'
+    Deaths: '&3Deaths: &4$amount$'
+    KDR: '&3K/D ratio: &9$amount$'
+    cKillstreak: '&3Current killstreak: &9$amount$'
+    bKillstreak: '&3Best killstreak: &9$amount$'
+    Footer: '&1&l&o===> &r&l&3STATS &o&1<==='
+  
+  Check:
+    PlayerOffline: '$player$ &cis offline.'
+    Teleport: '&3You have been teleported to &f$player$&3.'
+    Check: '&3You now posses the powers of a &6god&3, you''re &6invisible &3and you can &6fly&3.'
+    Uncheck: '&3You no longer posses &cgodly powers&3, you''re no longer &cinvisible &3and you''re &cgrounded&3, mister.'
+    NotCheck: '&cYou are not in checkmode.'
+    AlreadyCheck: '&cYou already are in checkmode.'
+    NoHurting: '&cYou cannot hurt players while in checkmode.'
+    VanishTag: '&3&o[Vanished]&r '
+    Spawn: '&3Spawn now set to &f$x$ $y$ $z$&3.'
+  
+  Vanish: '&3You are no longer visible to other players.'
+  Unvanish: '&3You are now visible to other players.'
+  
+  Message:
+    PlayerOffline: '$player$ &cis offline.'
+    TemplateSend: '&7[&3&oyou&r&7] --> [&3&o$player$&r&7]&f$message$'
+    TemplateReceive: '&7[&3&o$player$&r&7] --> [&3&oyou&r&7]&f$message$'
+    
+  Smite:
+    PlayerOFfline: '$player$ &cis offline.'
+    Provide: '&cPlease provide a victim.'
+    Smitten: '&6Experience the wrath of &4almighty zeus!'
+    SmiteSent: '&6$player$ has been smitten.'
+  
+  Spy:
+    PlayerOFfline: '$player$ &cis offline.'
+    Message: '&8&O{ SOCIALSPY [$sender$] --> [$recipient$]$message$ }'
+    Start: '&8&o[Spy] You are now spying on people...'
+    Stop: '&6&o[Spy] Good job! We are one step closer to an ideal society!'
+    IgnoreStart: '&8&o[Spy] You are now ignoring $player$'
+    IgnoreStop: '&8&o[Spy] You are no longer ignoring $player$'
+    
+  DeathMessages:
+  - '&7$killer$ &7killed $victim$ &7using $item$&7.'
+  - '&7$victim$ &7took his last breath thanks to $killer$&7!'
+  - '&7$killer$ &7annihilated $victim$&7!'
+  - '&7$victim$ &7got riggity-rekt by $killer$&7!'
+  - '&7$victim$ &7was no match for $killer$&7!'
+  - '&7$victim$ &7was killed by $killer$&7!'
+  - '&7$victim$ &7couldn''t win from $killer$&7!' 
