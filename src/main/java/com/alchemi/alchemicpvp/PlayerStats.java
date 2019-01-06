@@ -111,5 +111,16 @@ public class PlayerStats {
 	public void setReplyTo(CommandSender replyTo) {
 		this.replyTo = replyTo;
 	}
+
+	public String getNickname() {
+		return data.getString("nickname");
+	}
+
+	public void setNickname(String nickname) {
+		data.set("nickname", nickname);
+		try {
+			data.save(dataFile);
+		} catch (IOException e) {}
+	}
 	
 }

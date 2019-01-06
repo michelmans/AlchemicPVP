@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
-import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -57,8 +56,14 @@ public class StatsCommand implements CommandExecutor {
 				return true;
 				
 			} else if (args.length > 0 && main.instance.hasPermission(pl, "alchemicpvp.stats.other")) {
-				File statsFile = new File(main.instance.playerData, Bukkit.getPlayerExact(args[0]).getUniqueId() + ".yml");
-				System.out.println(statsFile);
+				OfflinePlayer player = Library.getOfflinePlayer(args[0]);
+				
+				if (player == null) {
+					main.instance.messenger.sendMessage("Stats.NoPlayer", sender);
+					return true;
+				}
+				
+				File statsFile = new File(main.instance.playerData, player.getUniqueId().toString() + ".yml");
 				if (!statsFile.exists()) {
 					main.instance.messenger.sendMessage("Stats.NoPlayer", sender, new HashMap<String, Object>(){
 						{

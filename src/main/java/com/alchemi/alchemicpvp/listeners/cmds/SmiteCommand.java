@@ -54,6 +54,12 @@ public class SmiteCommand implements CommandExecutor {
 			smite.getWorld().strikeLightning(smite);
 			
 			
+		} else if (sender instanceof Player) {
+			main.instance.messenger.sendMessage("NoPermission", sender, new HashMap<String, Object>(){
+				{
+					put("$command$", "/smite");
+				}
+			});
 		}
 		
 		return true;

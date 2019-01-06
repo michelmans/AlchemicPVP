@@ -15,16 +15,20 @@ import com.alchemi.al.sexyconfs.SexyConfiguration;
 import com.alchemi.alchemicpvp.listeners.CHECK;
 import com.alchemi.alchemicpvp.listeners.Events;
 import com.alchemi.alchemicpvp.listeners.SpyListener;
+import com.alchemi.alchemicpvp.listeners.StaffChat;
 import com.alchemi.alchemicpvp.listeners.cmds.CheckCommand;
 import com.alchemi.alchemicpvp.listeners.cmds.MessageCommand;
+import com.alchemi.alchemicpvp.listeners.cmds.NickCommand;
 import com.alchemi.alchemicpvp.listeners.cmds.ReloadCommand;
 import com.alchemi.alchemicpvp.listeners.cmds.ReplyCommand;
 import com.alchemi.alchemicpvp.listeners.cmds.SmiteCommand;
 import com.alchemi.alchemicpvp.listeners.cmds.SpawnCommand;
 import com.alchemi.alchemicpvp.listeners.cmds.SpyCommand;
+import com.alchemi.alchemicpvp.listeners.cmds.StaffChatCommand;
 import com.alchemi.alchemicpvp.listeners.cmds.StatsCommand;
 import com.alchemi.alchemicpvp.listeners.cmds.UncheckCommand;
 import com.alchemi.alchemicpvp.listeners.cmds.VanishCommand;
+import com.alchemi.alchemicpvp.listeners.cmds.WhoCommand;
 import com.alchemi.alchemicpvp.listeners.tabcomplete.SpyTabComplete;
 import com.alchemi.alchemicpvp.listeners.tabcomplete.StatsTabComplete;
 
@@ -44,8 +48,10 @@ public class main extends JavaPlugin {
 	public FileManager fileManager;
 	public SexyConfiguration config;
 	
-	private final int MESSAGES_FILE_VERSION = 4;
-	private final int CONFIG_FILE_VERSION = 1;
+	public StaffChat staffChat;
+	
+	private final int MESSAGES_FILE_VERSION = 5;
+	private final int CONFIG_FILE_VERSION = 2;
 	
 	public File playerData;
 	
@@ -80,6 +86,8 @@ public class main extends JavaPlugin {
 			config = fileManager.getConfig("config.yml");
 			config.setComment("Stats.potionEffect", "# Whether a vanished player should get the invisiblity potion effect or not.\n# Note: this does not affect visibility for players without the alchemicpvp.check.bypass permission node.\n# Default: false");
 			config.setComment("Stats.deathMessages", "# Should death messages be displayed\n# Default: true");
+			config.setComment("Nickname.allowFormat", "# Allow the use of formatting in nicknames.\n# e.g. &k, &l, &6, etc.\n# Default: false");
+			config.setComment("Nick.characterlimit", "# The limit of characters a nickname can have.\n# Default: 15");
 			config.set("SPAWN", getServer().getWorlds().get(0).getSpawnLocation());
 			config.set("File-Version-Do-Not-Edit", CONFIG_FILE_VERSION);
 			fileManager.save(config);
@@ -96,8 +104,11 @@ public class main extends JavaPlugin {
 			messenger.print("Vault installed! Using vault chat.");
 			
 		}
+		
+		staffChat = new StaffChat();
 		registerCommands();
 		getServer().getPluginManager().registerEvents(new Events(), this);
+		getServer().getPluginManager().registerEvents(staffChat, this);
 		
 		
 		playerData = new File(getDataFolder(), "playerdata");
@@ -118,6 +129,9 @@ public class main extends JavaPlugin {
 		getCommand("smite").setExecutor(new SmiteCommand());
 		getCommand("vanish").setExecutor(new VanishCommand());
 		getCommand("socialspy").setExecutor(new SpyCommand());
+		getCommand("nick").setExecutor(new NickCommand());
+		getCommand("whois").setExecutor(new WhoCommand());
+		getCommand("staffchat").setExecutor(new StaffChatCommand());
 		
 		getCommand("socialspy").setTabCompleter(new SpyTabComplete());
 		getCommand("stats").setTabCompleter(new StatsTabComplete());

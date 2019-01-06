@@ -26,8 +26,8 @@ import org.bukkit.scoreboard.Team.Option;
 import org.bukkit.scoreboard.Team.OptionStatus;
 
 import com.alchemi.al.Messenger;
-import com.alchemi.alchemicpvp.VanishMeta;
 import com.alchemi.alchemicpvp.main;
+import com.alchemi.alchemicpvp.meta.VanishMeta;
 
 public class CHECK implements Listener{
 
@@ -47,8 +47,6 @@ public class CHECK implements Listener{
 		pl.setFoodLevel(40);
 		
 		checkers.addEntry(getPlayer());
-		
-		player.getInventory().setArmorContents(new ItemStack[] {air, air, air, air});
 		
 		main.instance.getServer().getPluginManager().registerEvents(this, main.instance);
 		if (!((VanishMeta)player.getMetadata("vanish").get(0)).asBoolean()) vanishToggle(pl);
@@ -90,7 +88,7 @@ public class CHECK implements Listener{
 			main.instance.messenger.sendMessage("Unvanish", player);
 		}
 		else {
-			player.setPlayerListName(Messenger.cc(main.instance.messenger.getMessage("Check.VanishTag") + prefix + player.getDisplayName()));
+			player.setPlayerListName(Messenger.cc(main.instance.messenger.getMessage("Check.VanishTag") + prefix + player.getName()));
 			if (main.instance.config.getBoolean("Stats.potionEffect")) player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 100000, 9, true, false), true);
 			vanish = true;
 			main.instance.messenger.sendMessage("Vanish", player);
@@ -113,7 +111,7 @@ public class CHECK implements Listener{
 	
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent e) {
-		if (!main.instance.hasPermission(e.getPlayer(), "alchemicpvp.check.bypass")) {
+		if ((((VanishMeta)player.getMetadata("vanish").get(0)).asBoolean()) && !main.instance.hasPermission(e.getPlayer(), "alchemicpvp.check.bypass")) {
 			e.getPlayer().hidePlayer(main.instance, player);
 		}
 	}

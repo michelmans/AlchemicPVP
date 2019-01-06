@@ -43,13 +43,28 @@ AlchemicPVP:
     SmiteSent: '&6$player$ has been smitten.'
   
   Spy:
-    PlayerOFfline: '$player$ &cis offline.'
+    PlayerOffline: '$player$ &cis offline.'
     Message: '&8&O{ SOCIALSPY [$sender$] --> [$recipient$]$message$ }'
     Start: '&8&o[Spy] You are now spying on people...'
     Stop: '&6&o[Spy] Good job! We are one step closer to an ideal society!'
     IgnoreStart: '&8&o[Spy] You are now ignoring $player$'
     IgnoreStop: '&8&o[Spy] You are no longer ignoring $player$'
     
+  Nick:
+    NoOne: '&cThere is no player with that nickname online.'
+    Is: '&3$player$ &chas the nickname $name$&3.'
+    Taken1: '&cSomeone with the nickname "$name$&c" is already online.'
+    Taken2: '&c&n&oPlease choose a new one&r&c.'
+    New: '&3Your nickname is now: $name$'
+    TooLong: '&cThis nickname is too long, it cannot be more than $amount$ characters.'
+    NoFormat: '&cYour nickname cannot contain formatting e.g. $eg$'
+  
+  StaffChat:
+    NonStaff: '&7[&l&4HelpOP&r&7] $player$: &f'
+    Staff: '&7[&6&lStaffChat&r&7] $player$: &f'
+    Start: '&3You are now participating in the staff chat.'
+    Stop: '&cYou are no longer participating in the staff chat.'
+  
   DeathMessages:
   - '&7$killer$ &7killed $victim$ &7using $item$&7.'
   - '&7$victim$ &7took his last breath thanks to $killer$&7!'
@@ -57,4 +72,12 @@ AlchemicPVP:
   - '&7$victim$ &7got riggity-rekt by $killer$&7!'
   - '&7$victim$ &7was no match for $killer$&7!'
   - '&7$victim$ &7was killed by $killer$&7!'
-  - '&7$victim$ &7couldn''t win from $killer$&7!' 
+  - '&7$victim$ &7couldn''t win from $killer$&7!'
+  - '&7$victim$ &7was &lEX-TER-MI-NA-TED &r&7by $killer$&7!'
+  - '&7$victim$ &7was &lDELETED &r&7by $killer$&7!'
+  - '&7$victim$ &7had mercilessly been ended by &7$killer$&7!'
+  - '&7$victim$''s &7life had been extinguished by &7$killer$&7!'
+  - '&7$victim$ &7has brutally been exterminated by &7$killer$&7!'
+  - '&7$victim$ &7has been slaughtered by &7$killer$&7!'
+  - '&7$victim$ &7did not stand a chance against &7$killer$&7''s weapon!'
+  - '&7$victim$ &7has been killed after an epic showdown with &7$killer$&7!'

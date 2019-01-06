@@ -20,22 +20,33 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
+import com.alchemi.al.Library;
+import com.alchemi.al.Messenger;
 import com.alchemi.alchemicpvp.PlayerStats;
-import com.alchemi.alchemicpvp.VanishMeta;
 import com.alchemi.alchemicpvp.main;
+import com.alchemi.alchemicpvp.listeners.cmds.WhoCommand;
+import com.alchemi.alchemicpvp.meta.NickMeta;
+import com.alchemi.alchemicpvp.meta.VanishMeta;
+
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.HoverEvent.Action;
+import net.md_5.bungee.api.chat.TextComponent;
 
 public class Events implements Listener {
 
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent e) {
 		e.getPlayer().getInventory().clear();
-		e.getPlayer().setMetadata("vanish", new VanishMeta(main.instance, false));
+		
 		if (main.instance.hasPermission(e.getPlayer(), "alchemicpvp.spy")) e.getPlayer().performCommand("socialspy");
 		
 		File dataFile = new File(main.instance.playerData, e.getPlayer().getUniqueId().toString() + ".yml");
 		FileConfiguration fc = new YamlConfiguration();
 		if (!dataFile.exists()) {
 			fc.set("name", e.getPlayer().getName());
+			fc.set("nickname", e.getPlayer().getDisplayName());
 			fc.set("kills", 0);
 			fc.set("deaths", 0);
 			fc.createSection("killstreak");
@@ -49,6 +60,26 @@ public class Events implements Listener {
 		}
 		
 		main.instance.registerPlayer(new PlayerStats(fc, dataFile));
+		
+		if (!Library.hasMeta(e.getPlayer(), VanishMeta.NAME, VanishMeta.class)) e.getPlayer().setMetadata(VanishMeta.NAME, new VanishMeta(main.instance, false));
+		if (!Library.hasMeta(e.getPlayer(), NickMeta.NAME, NickMeta.class)) e.getPlayer().setMetadata(NickMeta.NAME, new NickMeta(fc.getString("nickname")));
+		
+		if (WhoCommand.whoIs(fc.getString("nickname")) != null 
+				&& !WhoCommand.whoIs(fc.getString("nickname")).equals(e.getPlayer())) {
+			
+			TextComponent mainComponent = new TextComponent(Messenger.cc(Messenger.parseVars(main.instance.messenger.getMessage("Nick.Taken1"), new HashMap<String, Object>(){
+				{
+					put("$name$", Library.getMeta(e.getPlayer(), NickMeta.NAME, NickMeta.class).asString());
+				}
+			}))) ;
+			TextComponent clickComponent = new TextComponent("\n" + Messenger.cc(main.instance.messenger.getMessage("Nick.Taken2")));
+			clickComponent.setHoverEvent(new HoverEvent(Action.SHOW_TEXT, new ComponentBuilder("Click me for the command").create()));
+			clickComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/nick "));
+			mainComponent.addExtra(clickComponent);
+			e.getPlayer().spigot().sendMessage(mainComponent);
+			
+		} else e.getPlayer().setDisplayName(Library.getMeta(e.getPlayer(), NickMeta.NAME, NickMeta.class).asString());
+		
 		
 	}
 	
@@ -81,15 +112,16 @@ public class Events implements Listener {
 		}
 		
 		Random rand = new Random();
-		List<String> deathMessages = main.instance.fileManager.getConfig("messages.yml").getStringList("alchemicpvp.DeathMessages");
+		List<String> deathMessages = main.instance.fileManager.getConfig("messages.yml").getStringList("AlchemicPVP.DeathMessages");
 		
-		main.instance.messenger.broadcast(deathMessages.get(rand.nextInt(deathMessages.size() - 1)), new HashMap<String, Object>(){
+		if (deathMessages.size() > 1) main.instance.messenger.broadcast(deathMessages.get(rand.nextInt(deathMessages.size())), new HashMap<String, Object>(){
 			{
 				put("$victim$", ((Player) e.getEntity()).getDisplayName());
 				put("$killer$", e.getEntity().getKiller().getDisplayName());
 				put("$item$", itemKill);
 			}
 		}, false);
+		else main.instance.messenger.print(main.instance.fileManager.getConfig("messages.yml").getStringList("AlchemicPVP.DeathMessages"));
 		
 	}
 	

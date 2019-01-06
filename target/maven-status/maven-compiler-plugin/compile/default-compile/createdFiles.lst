@@ -22,7 +22,6 @@ com\alchemi\alchemicpvp\listeners\CHECK$2.class
 com\alchemi\alchemicpvp\listeners\cmds\ReloadCommand.class
 com\alchemi\alchemicpvp\listeners\cmds\StatsCommand$19.class
 com\alchemi\alchemicpvp\listeners\SpyListener$3.class
-com\alchemi\alchemicpvp\VanishMeta.class
 com\alchemi\alchemicpvp\listeners\cmds\SpawnCommand.class
 com\alchemi\alchemicpvp\listeners\cmds\SmiteCommand$3.class
 com\alchemi\alchemicpvp\main.class
@@ -32,10 +31,12 @@ com\alchemi\alchemicpvp\listeners\cmds\SpawnCommand$2.class
 com\alchemi\alchemicpvp\listeners\cmds\StatsCommand$16.class
 com\alchemi\alchemicpvp\listeners\cmds\StatsCommand$6.class
 com\alchemi\alchemicpvp\listeners\cmds\StatsCommand$15.class
+com\alchemi\alchemicpvp\meta\VanishMeta.class
 com\alchemi\alchemicpvp\listeners\SpyListener$2.class
 com\alchemi\alchemicpvp\listeners\cmds\StatsCommand$3.class
 com\alchemi\alchemicpvp\listeners\cmds\SpyCommand$2.class
 com\alchemi\alchemicpvp\listeners\cmds\UncheckCommand$1.class
+com\alchemi\alchemicpvp\meta\NickMeta.class
 com\alchemi\alchemicpvp\listeners\cmds\StatsCommand$12.class
 com\alchemi\alchemicpvp\listeners\cmds\ReplyCommand$1.class
 com\alchemi\alchemicpvp\listeners\cmds\SpawnCommand$1.class
@@ -58,7 +59,6 @@ com\alchemi\alchemicpvp\listeners\cmds\SmiteCommand$2.class
 com\alchemi\alchemicpvp\listeners\cmds\StatsCommand$18.class
 com\alchemi\alchemicpvp\listeners\cmds\StatsCommand$11.class
 com\alchemi\alchemicpvp\listeners\cmds\ReplyCommand$2.class
-com\alchemi\alchemicpvp\SpyMeta.class
 com\alchemi\alchemicpvp\listeners\cmds\StatsCommand.class
 com\alchemi\alchemicpvp\listeners\cmds\VanishCommand$1.class
 com\alchemi\alchemicpvp\listeners\cmds\MessageCommand$3.class

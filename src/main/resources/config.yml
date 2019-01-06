@@ -1,3 +1,7 @@
 Stats:
   potionEffect: false
   deathMessages: true
+
+Nickname:
+  allowFormat: false
+  characterlimit: 15

@@ -48,8 +48,23 @@ commands:
     
   socialspy:
     usage: /socialspy [ignore] [player]
-    description: Toogle big brother.
+    description: Toggle big brother.
     aliases: ["spy"]
+  
+  nick:
+    usage: /nick [nickname]
+    description: Set a nickname.
+    aliases: ["nickname"]
+  
+  whois:
+    usage: /whois [nickname]
+    description: Search for the player behind the nickname.
+    aliases: ["who", "doctorwho?", "realname"]
+    
+  staffchat:
+    usage: /staffchat [message]
+    description: Toggle staffchat usage or send a singular message.
+    aliases: ["helpop"]
   
 permissions:
   alchemicpvp.stats.other:
@@ -74,3 +89,11 @@ permissions:
     description: Permission to be big brother.
   alchemicpvp.spy.hideFromBigBrother:
     description: Permission to hide from big brother.
+  alchemicpvp.nick:
+    description: Permission for a nickname.
+  alchemicpvp.nick.format:
+    description: Permission to format your nickname.
+  alchemicpvp.whois:
+    description: Permission to look for the player behind the nickname.
+  alchemicpvp.staffchat:
+    description: Permission to use the staff chat.
