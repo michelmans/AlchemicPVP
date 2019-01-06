@@ -1,10 +1,13 @@
 C:\Users\Valeyard\Documents\GitHub\AlchemicPVP\src\main\java\com\alchemi\alchemicpvp\listeners\tabcomplete\SpyTabComplete.java
+C:\Users\Valeyard\Documents\GitHub\AlchemicPVP\src\main\java\com\alchemi\alchemicpvp\listeners\cmds\StaffChatCommand.java
 C:\Users\Valeyard\Documents\GitHub\AlchemicPVP\src\main\java\com\alchemi\alchemicpvp\listeners\cmds\SmiteCommand.java
 C:\Users\Valeyard\Documents\GitHub\AlchemicPVP\src\main\java\com\alchemi\alchemicpvp\listeners\cmds\MessageCommand.java
 C:\Users\Valeyard\Documents\GitHub\AlchemicPVP\src\main\java\com\alchemi\alchemicpvp\listeners\tabcomplete\StatsTabComplete.java
 C:\Users\Valeyard\Documents\GitHub\AlchemicPVP\src\main\java\com\alchemi\alchemicpvp\meta\VanishMeta.java
 C:\Users\Valeyard\Documents\GitHub\AlchemicPVP\src\main\java\com\alchemi\alchemicpvp\listeners\cmds\CheckCommand.java
+C:\Users\Valeyard\Documents\GitHub\AlchemicPVP\src\main\java\com\alchemi\alchemicpvp\listeners\StaffChat.java
 C:\Users\Valeyard\Documents\GitHub\AlchemicPVP\src\main\java\com\alchemi\alchemicpvp\listeners\cmds\SpyCommand.java
+C:\Users\Valeyard\Documents\GitHub\AlchemicPVP\src\main\java\com\alchemi\alchemicpvp\listeners\cmds\WhoCommand.java
 C:\Users\Valeyard\Documents\GitHub\AlchemicPVP\src\main\java\com\alchemi\alchemicpvp\listeners\CHECK.java
 C:\Users\Valeyard\Documents\GitHub\AlchemicPVP\src\main\java\com\alchemi\alchemicpvp\listeners\cmds\ReloadCommand.java
 C:\Users\Valeyard\Documents\GitHub\AlchemicPVP\src\main\java\com\alchemi\alchemicpvp\listeners\cmds\StatsCommand.java
@@ -14,6 +17,7 @@ C:\Users\Valeyard\Documents\GitHub\AlchemicPVP\src\main\java\com\alchemi\alchemi
 C:\Users\Valeyard\Documents\GitHub\AlchemicPVP\src\main\java\com\alchemi\alchemicpvp\listeners\SpyListener.java
 C:\Users\Valeyard\Documents\GitHub\AlchemicPVP\src\main\java\com\alchemi\alchemicpvp\main.java
 C:\Users\Valeyard\Documents\GitHub\AlchemicPVP\src\main\java\com\alchemi\alchemicpvp\listeners\Events.java
+C:\Users\Valeyard\Documents\GitHub\AlchemicPVP\src\main\java\com\alchemi\alchemicpvp\listeners\cmds\NickCommand.java
 C:\Users\Valeyard\Documents\GitHub\AlchemicPVP\src\main\java\com\alchemi\alchemicpvp\listeners\cmds\VanishCommand.java
 C:\Users\Valeyard\Documents\GitHub\AlchemicPVP\src\main\java\com\alchemi\alchemicpvp\listeners\EventMessage.java
 C:\Users\Valeyard\Documents\GitHub\AlchemicPVP\src\main\java\com\alchemi\alchemicpvp\PlayerStats.java

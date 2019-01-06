@@ -15,7 +15,7 @@ public class WhoCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		
-		if (main.instance.hasPermission(sender, "alchemicpvp.whois") && args.length > 1) {
+		if (main.instance.hasPermission(sender, "alchemicpvp.whois") && args.length > 0) {
 			Player answer = whoIs(args[0]);
 			if (answer == null) {
 				main.instance.messenger.sendMessage("Nick.NoOne", sender, new HashMap<String, Object>(){
@@ -25,7 +25,6 @@ public class WhoCommand implements CommandExecutor {
 				});
 				return true;
 			}
-			
 			main.instance.messenger.sendMessage("Nick.Is", sender, new HashMap<String, Object>(){
 				{
 					put("$name$", answer.getDisplayName());
