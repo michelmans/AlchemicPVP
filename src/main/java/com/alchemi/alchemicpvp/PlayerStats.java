@@ -3,7 +3,6 @@ package com.alchemi.alchemicpvp;
 import java.io.File;
 import java.io.IOException;
 
-import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -12,8 +11,6 @@ public class PlayerStats {
 	private FileConfiguration data;
 	private File dataFile;
 	private String name;
-	
-	private CommandSender replyTo;
 	
 	public PlayerStats(FileConfiguration data, File dataFile) {
 		this.data = data;
@@ -102,14 +99,6 @@ public class PlayerStats {
 			setBestKillstreak(getCurrentKillstreak());
 		}
 		
-	}
-
-	public CommandSender getReplyTo() {
-		return replyTo;
-	}
-
-	public void setReplyTo(CommandSender replyTo) {
-		this.replyTo = replyTo;
 	}
 
 	public String getNickname() {

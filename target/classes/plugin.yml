@@ -1,6 +1,6 @@
 name: AlchemicPVP
 main: com.alchemi.alchemicpvp.main
-version: 1.5.1
+version: 1.5.4
 api-version: 1.13
 author: Alchemi
 description: A plugin which tracks player stats regarding to kills etc.
@@ -64,7 +64,7 @@ commands:
   staffchat:
     usage: /staffchat [message]
     description: Toggle staffchat usage or send a singular message.
-    aliases: ["helpop"]
+    aliases: ["helpop", "adminchat", "ho", "ac", "sc"]
   
 permissions:
   alchemicpvp.stats.other:

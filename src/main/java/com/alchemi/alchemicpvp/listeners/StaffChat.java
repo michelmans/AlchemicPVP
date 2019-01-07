@@ -19,12 +19,12 @@ public class StaffChat implements Listener{
 	
 	public void addListener(CommandSender sender) {
 		listeners.add(sender);
-		main.instance.messenger.sendMessage("StaffChat.Start", sender);
+		main.messenger.sendMessage("StaffChat.Start", sender);
 	}
 	
 	public void removeListener(CommandSender sender) {
 		listeners.remove(sender);
-		main.instance.messenger.sendMessage("StaffChat.Stop", sender);
+		main.messenger.sendMessage("StaffChat.Stop", sender);
 	}
 	
 	public boolean isListening(CommandSender sender) {
@@ -42,14 +42,14 @@ public class StaffChat implements Listener{
 	public void send(CommandSender sender, String message) {
 		String toSend;
 		if (main.instance.hasPermission(sender, "alchemicpvp.staffchat")) {
-			toSend = Messenger.parseVars(main.instance.messenger.getMessage("StaffChat.Staff"), new HashMap<String, Object>(){
+			toSend = Messenger.parseVars(main.messenger.getMessage("StaffChat.Staff"), new HashMap<String, Object>(){
 				{
 					if (sender instanceof Player) put("$player$", ((Player) sender).getDisplayName());
 					else put("$player$", "Console");
 				}
 			}) + message;
 		} else {
-			toSend = Messenger.parseVars(main.instance.messenger.getMessage("StaffChat.NonStaff"), new HashMap<String, Object>(){
+			toSend = Messenger.parseVars(main.messenger.getMessage("StaffChat.NonStaff"), new HashMap<String, Object>(){
 				{
 					put("$player$", ((Player) sender).getDisplayName());
 				}

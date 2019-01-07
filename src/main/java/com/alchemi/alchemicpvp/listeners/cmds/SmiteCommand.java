@@ -20,19 +20,19 @@ public class SmiteCommand implements CommandExecutor {
 			if (args.length == 0) {
 				if (sender instanceof Player) {
 					smite = ((Player) sender).getLocation();
-					main.instance.messenger.sendMessage("Smite.Smitten", sender);
-					main.instance.messenger.sendMessage("Smite.SmiteSent", sender, new HashMap<String, Object>(){
+					main.messenger.sendMessage("Smite.Smitten", sender);
+					main.messenger.sendMessage("Smite.SmiteSent", sender, new HashMap<String, Object>(){
 						{
 							put("$player$", sender.getName());
 						}
 					});
 				} else {
-					main.instance.messenger.sendMessage("Smite.Provide", sender);
+					main.messenger.sendMessage("Smite.Provide", sender);
 					return true;
 				}
 			} else {
 				if (Bukkit.getPlayer(args[0]) == null || !Bukkit.getPlayer(args[0]).isOnline()) {
-					main.instance.messenger.sendMessage("Smite.PlayerOffline", sender, new HashMap<String, Object>(){
+					main.messenger.sendMessage("Smite.PlayerOffline", sender, new HashMap<String, Object>(){
 						{
 							put("$player$", args[0]);
 						}
@@ -42,8 +42,8 @@ public class SmiteCommand implements CommandExecutor {
 				
 				smite = Bukkit.getPlayer(args[0]).getLocation();
 				
-				main.instance.messenger.sendMessage("Smite.Smitten", Bukkit.getPlayer(args[0]));
-				main.instance.messenger.sendMessage("Smite.SmiteSent", sender, new HashMap<String, Object>(){
+				main.messenger.sendMessage("Smite.Smitten", Bukkit.getPlayer(args[0]));
+				main.messenger.sendMessage("Smite.SmiteSent", sender, new HashMap<String, Object>(){
 					{
 						put("$player$", args[0]);
 					}
@@ -55,7 +55,7 @@ public class SmiteCommand implements CommandExecutor {
 			
 			
 		} else if (sender instanceof Player) {
-			main.instance.messenger.sendMessage("NoPermission", sender, new HashMap<String, Object>(){
+			main.messenger.sendMessage("NoPermission", sender, new HashMap<String, Object>(){
 				{
 					put("$command$", "/smite");
 				}

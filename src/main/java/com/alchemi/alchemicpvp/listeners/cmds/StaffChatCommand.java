@@ -17,7 +17,7 @@ public class StaffChatCommand implements CommandExecutor {
 		if (args.length == 0 && main.instance.hasPermission(sender, "alchemicpvp.staffchat")) {
 			if (!staffChat.isListening(sender)) staffChat.addListener(sender);
 			else staffChat.removeListener(sender);
-		} else if (args.length > 0) {
+		} else if (args.length > 0 && (main.instance.hasPermission(sender, "alchemicpvp.staffchat") || label.equals("ho") || label.equals("helpop"))) {
 			String toSend = "";
 			for (String arg : args) {
 				toSend += arg + " ";

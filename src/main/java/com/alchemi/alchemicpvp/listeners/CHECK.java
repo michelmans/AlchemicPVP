@@ -26,6 +26,7 @@ import org.bukkit.scoreboard.Team.Option;
 import org.bukkit.scoreboard.Team.OptionStatus;
 
 import com.alchemi.al.Messenger;
+import com.alchemi.alchemicpvp.Config;
 import com.alchemi.alchemicpvp.main;
 import com.alchemi.alchemicpvp.meta.VanishMeta;
 
@@ -82,16 +83,16 @@ public class CHECK implements Listener{
 		
 		Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "animatednames reload");
 		if (vanish) {
-			player.setPlayerListName(Messenger.cc(prefix + player.getDisplayName()));
-			if (main.instance.config.getBoolean("Stats.potionEffect")) player.removePotionEffect(PotionEffectType.INVISIBILITY);
+			player.setPlayerListName(Messenger.cc(prefix + player.getName()));
+			if (Config.STATS.POTION_EFFECT.asBoolean()) player.removePotionEffect(PotionEffectType.INVISIBILITY);
 			vanish = false;
-			main.instance.messenger.sendMessage("Unvanish", player);
+			main.messenger.sendMessage("Unvanish", player);
 		}
 		else {
-			player.setPlayerListName(Messenger.cc(main.instance.messenger.getMessage("Check.VanishTag") + prefix + player.getName()));
-			if (main.instance.config.getBoolean("Stats.potionEffect")) player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 100000, 9, true, false), true);
+			player.setPlayerListName(Messenger.cc(main.messenger.getMessage("Check.VanishTag") + prefix + player.getName()));
+			if (Config.STATS.POTION_EFFECT.asBoolean()) player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 100000, 9, true, false), true);
 			vanish = true;
-			main.instance.messenger.sendMessage("Vanish", player);
+			main.messenger.sendMessage("Vanish", player);
 		}
 		
 		player.removeMetadata("vanish", main.instance);
@@ -130,7 +131,7 @@ public class CHECK implements Listener{
 	public void onShootBow(EntityShootBowEvent e) {
 		if (e.getEntityType().equals(EntityType.PLAYER) && ((Player)e.getEntity()).equals(player)) {
 			e.setCancelled(true);
-			main.instance.messenger.sendMessage("Check.NoHurting", player);
+			main.messenger.sendMessage("Check.NoHurting", player);
 		}
 	}
 	
@@ -187,7 +188,7 @@ public class CHECK implements Listener{
 		
 		if (e.getDamager() instanceof Player && ((Player) e.getDamager()).equals(this.player)) {
 			e.setCancelled(true);
-			main.instance.messenger.sendMessage("Check.NoHurting", player);
+			main.messenger.sendMessage("Check.NoHurting", player);
 		}
 	}
 	

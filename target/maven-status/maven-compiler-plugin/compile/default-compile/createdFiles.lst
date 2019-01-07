@@ -4,6 +4,7 @@ com\alchemi\alchemicpvp\listeners\cmds\StatsCommand$1.class
 com\alchemi\alchemicpvp\listeners\CHECK.class
 com\alchemi\alchemicpvp\listeners\cmds\ReplyCommand$3.class
 com\alchemi\alchemicpvp\listeners\cmds\VanishCommand.class
+com\alchemi\alchemicpvp\Config$STATS.class
 com\alchemi\alchemicpvp\listeners\cmds\CheckCommand$2.class
 com\alchemi\alchemicpvp\listeners\cmds\MessageCommand$1.class
 com\alchemi\alchemicpvp\listeners\cmds\StatsCommand$10.class
@@ -12,6 +13,7 @@ com\alchemi\alchemicpvp\listeners\cmds\NickCommand$4.class
 com\alchemi\alchemicpvp\listeners\cmds\ReloadCommand$1.class
 com\alchemi\alchemicpvp\listeners\cmds\SmiteCommand$1.class
 com\alchemi\alchemicpvp\listeners\cmds\StatsCommand$5.class
+com\alchemi\alchemicpvp\Config$NICKNAME.class
 com\alchemi\alchemicpvp\listeners\cmds\StatsCommand$17.class
 com\alchemi\alchemicpvp\listeners\Events.class
 com\alchemi\alchemicpvp\listeners\cmds\SpyCommand$1.class
@@ -22,6 +24,7 @@ com\alchemi\alchemicpvp\listeners\cmds\MessageCommand$2.class
 com\alchemi\alchemicpvp\listeners\cmds\UncheckCommand.class
 com\alchemi\alchemicpvp\listeners\cmds\WhoCommand$1.class
 com\alchemi\alchemicpvp\listeners\cmds\StatsCommand$9.class
+com\alchemi\alchemicpvp\Config$MESSAGE.class
 com\alchemi\alchemicpvp\listeners\CHECK$2.class
 com\alchemi\alchemicpvp\listeners\cmds\NickCommand.class
 com\alchemi\alchemicpvp\listeners\cmds\ReloadCommand.class
@@ -42,11 +45,13 @@ com\alchemi\alchemicpvp\listeners\cmds\NickCommand$2.class
 com\alchemi\alchemicpvp\listeners\cmds\StaffChatCommand.class
 com\alchemi\alchemicpvp\meta\VanishMeta.class
 com\alchemi\alchemicpvp\listeners\SpyListener$2.class
+com\alchemi\alchemicpvp\Config$ConfigInterface.class
 com\alchemi\alchemicpvp\listeners\cmds\StatsCommand$3.class
 com\alchemi\alchemicpvp\listeners\cmds\SpyCommand$2.class
 com\alchemi\alchemicpvp\listeners\StaffChat.class
 com\alchemi\alchemicpvp\listeners\cmds\UncheckCommand$1.class
 com\alchemi\alchemicpvp\meta\NickMeta.class
+com\alchemi\alchemicpvp\meta\StatsMeta.class
 com\alchemi\alchemicpvp\listeners\cmds\WhoCommand$2.class
 com\alchemi\alchemicpvp\listeners\cmds\StatsCommand$12.class
 com\alchemi\alchemicpvp\listeners\cmds\ReplyCommand$1.class
@@ -56,6 +61,7 @@ com\alchemi\alchemicpvp\listeners\EventMessage.class
 com\alchemi\alchemicpvp\listeners\cmds\SmiteCommand$4.class
 com\alchemi\alchemicpvp\listeners\StaffChat$1.class
 com\alchemi\alchemicpvp\listeners\cmds\WhoCommand.class
+com\alchemi\alchemicpvp\Config.class
 com\alchemi\alchemicpvp\listeners\SpyListener.class
 com\alchemi\alchemicpvp\listeners\tabcomplete\StatsTabComplete.class
 com\alchemi\alchemicpvp\listeners\SpyListener$1.class

@@ -64,7 +64,7 @@ commands:
   staffchat:
     usage: /staffchat [message]
     description: Toggle staffchat usage or send a singular message.
-    aliases: ["helpop"]
+    aliases: ["helpop", "adminchat", "ho", "ac", "sc"]
   
 permissions:
   alchemicpvp.stats.other:

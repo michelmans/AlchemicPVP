@@ -5,3 +5,8 @@ Stats:
 Nickname:
   allowFormat: false
   characterlimit: 15
+  
+Message:
+  
+  receiveSound: "ENTITY_CHICKEN_EGG"
+  mentionSound: "ENTITY_ENDER_DRAGON_GROWL"

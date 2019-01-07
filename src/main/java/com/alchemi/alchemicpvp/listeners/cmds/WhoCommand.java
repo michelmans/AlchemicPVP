@@ -18,14 +18,14 @@ public class WhoCommand implements CommandExecutor {
 		if (main.instance.hasPermission(sender, "alchemicpvp.whois") && args.length > 0) {
 			Player answer = whoIs(args[0]);
 			if (answer == null) {
-				main.instance.messenger.sendMessage("Nick.NoOne", sender, new HashMap<String, Object>(){
+				main.messenger.sendMessage("Nick.NoOne", sender, new HashMap<String, Object>(){
 					{
 						put("$nick$", args[0]);
 					}
 				});
 				return true;
 			}
-			main.instance.messenger.sendMessage("Nick.Is", sender, new HashMap<String, Object>(){
+			main.messenger.sendMessage("Nick.Is", sender, new HashMap<String, Object>(){
 				{
 					put("$name$", answer.getDisplayName());
 					put("$player$", answer.getName());

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -15,6 +16,7 @@ import org.bukkit.entity.Player;
 import com.alchemi.al.Library;
 import com.alchemi.alchemicpvp.PlayerStats;
 import com.alchemi.alchemicpvp.main;
+import com.alchemi.alchemicpvp.meta.StatsMeta;
 
 public class StatsCommand implements CommandExecutor {
 
@@ -32,7 +34,7 @@ public class StatsCommand implements CommandExecutor {
 				OfflinePlayer player = Library.getOfflinePlayer(args[0]);
 				
 				if (player == null) {
-					main.instance.messenger.sendMessage("Stats.NoPlayer", sender);
+					main.messenger.sendMessage("Stats.NoPlayer", sender);
 					return true;
 				}
 				
@@ -48,7 +50,7 @@ public class StatsCommand implements CommandExecutor {
 					fc.save(dataFile);
 				} catch (IOException e1) {}
 
-				main.instance.messenger.sendMessage("Stats.Cleared", sender, new HashMap<String, Object>(){
+				main.messenger.sendMessage("Stats.Cleared", sender, new HashMap<String, Object>(){
 					{
 						put("$player$", args[0]);
 					}
@@ -59,13 +61,13 @@ public class StatsCommand implements CommandExecutor {
 				OfflinePlayer player = Library.getOfflinePlayer(args[0]);
 				
 				if (player == null) {
-					main.instance.messenger.sendMessage("Stats.NoPlayer", sender);
+					main.messenger.sendMessage("Stats.NoPlayer", sender);
 					return true;
 				}
 				
 				File statsFile = new File(main.instance.playerData, player.getUniqueId().toString() + ".yml");
 				if (!statsFile.exists()) {
-					main.instance.messenger.sendMessage("Stats.NoPlayer", sender, new HashMap<String, Object>(){
+					main.messenger.sendMessage("Stats.NoPlayer", sender, new HashMap<String, Object>(){
 						{
 							put("$player$", args[0]);
 						}
@@ -73,68 +75,68 @@ public class StatsCommand implements CommandExecutor {
 					return true;
 				}
 				
-				if (main.instance.getPlayer(args[0]) == null) {
+				if (!player.isOnline()) {
 					stats = new PlayerStats(YamlConfiguration.loadConfiguration(statsFile), statsFile);
 					other = true;
 				}
 				else {
-					stats = main.instance.getPlayer(args[0]);
+					stats = StatsMeta.getStats(Bukkit.getPlayer(args[0]));
 					other = true;
 				}
 				
 				
 				
 			} else if (args.length > 0){
-				main.instance.messenger.sendMessage("NoPermission", pl, new HashMap<String, Object>(){
+				main.messenger.sendMessage("NoPermission", pl, new HashMap<String, Object>(){
 					{
 						put("$command$", "/stats " + args[0]);
 					}
 				});
 				return true;
 			} else {
-				stats = main.instance.getPlayer(pl.getName());
+				stats = StatsMeta.getStats(pl);
 			}
 			
 			
-			if (!other) main.instance.messenger.sendMessage("Stats.Header", pl);
+			if (!other) main.messenger.sendMessage("Stats.Header", pl);
 			else {
-				main.instance.messenger.sendMessage("Stats.HeaderOther", pl, new HashMap<String, Object>(){
+				main.messenger.sendMessage("Stats.HeaderOther", pl, new HashMap<String, Object>(){
 					{
 						put("$player$", stats.getName());
 					}
 				});
 			}
 			
-			main.instance.messenger.sendMessage("Stats.Kills", pl, new HashMap<String, Object>(){
+			main.messenger.sendMessage("Stats.Kills", pl, new HashMap<String, Object>(){
 				{
 					put("$amount$", stats.getKills());
 				}
 			});
-			main.instance.messenger.sendMessage("Stats.Deaths", pl, new HashMap<String, Object>(){
+			main.messenger.sendMessage("Stats.Deaths", pl, new HashMap<String, Object>(){
 				{
 					put("$amount$", stats.getDeaths());
 				}
 			});
-			main.instance.messenger.sendMessage("Stats.KDR", pl, new HashMap<String, Object>(){
+			main.messenger.sendMessage("Stats.KDR", pl, new HashMap<String, Object>(){
 				{
 					if (stats.getDeaths() > 0) put("$amount$", stats.getKDR());
 					else put("$amount$", "N/A");
 				}
 			});
-			main.instance.messenger.sendMessage("Stats.cKillstreak", pl, new HashMap<String, Object>(){
+			main.messenger.sendMessage("Stats.cKillstreak", pl, new HashMap<String, Object>(){
 				{
 					put("$amount$", stats.getCurrentKillstreak());
 				}
 			});
-			main.instance.messenger.sendMessage("Stats.bKillstreak", pl, new HashMap<String, Object>(){
+			main.messenger.sendMessage("Stats.bKillstreak", pl, new HashMap<String, Object>(){
 				{
 					put("$amount$", stats.getBestKillstreak());
 				}
 			});
 			
-			if (!other) main.instance.messenger.sendMessage("Stats.Footer", pl);
+			if (!other) main.messenger.sendMessage("Stats.Footer", pl);
 			else {
-				main.instance.messenger.sendMessage("Stats.FooterOther", pl, new HashMap<String, Object>(){
+				main.messenger.sendMessage("Stats.FooterOther", pl, new HashMap<String, Object>(){
 					{
 						put("$player$", stats.getName());
 					}
@@ -150,7 +152,7 @@ public class StatsCommand implements CommandExecutor {
 				OfflinePlayer player = Library.getOfflinePlayer(args[0]);
 				
 				if (player == null) {
-					main.instance.messenger.sendMessage("Stats.NoPlayer", sender);
+					main.messenger.sendMessage("Stats.NoPlayer", sender);
 					return true;
 				}
 				
@@ -166,7 +168,7 @@ public class StatsCommand implements CommandExecutor {
 					fc.save(dataFile);
 				} catch (IOException e1) {}
 
-				main.instance.messenger.sendMessage("Stats.Cleared", sender, new HashMap<String, Object>(){
+				main.messenger.sendMessage("Stats.Cleared", sender, new HashMap<String, Object>(){
 					{
 						put("$player$", args[0]);
 					}
@@ -177,14 +179,14 @@ public class StatsCommand implements CommandExecutor {
 			OfflinePlayer player = Library.getOfflinePlayer(args[0]);
 			
 			if (player == null) {
-				main.instance.messenger.sendMessage("Stats.NoPlayer", sender);
+				main.messenger.sendMessage("Stats.NoPlayer", sender);
 				return true;
 			}
 			File statsFile = new File(main.instance.playerData, player.getUniqueId() + ".yml");
 			System.out.println(statsFile);
 			
 			if (!statsFile.exists()) {
-				main.instance.messenger.sendMessage("Stats.NoPlayer", sender, new HashMap<String, Object>(){
+				main.messenger.sendMessage("Stats.NoPlayer", sender, new HashMap<String, Object>(){
 					{
 						put("$player$", args[0]);
 					}
@@ -192,48 +194,48 @@ public class StatsCommand implements CommandExecutor {
 				return true;
 			}
 			PlayerStats stats;	
-			if (main.instance.getPlayer(args[0]) == null) {
+			if (!player.isOnline()) {
 				stats = new PlayerStats(YamlConfiguration.loadConfiguration(statsFile), statsFile);
 				
 			}
 			else {
-				stats = main.instance.getPlayer(args[0]);
+				stats = StatsMeta.getStats(Bukkit.getPlayer(args[0]));
 				
 			}
 			
-			main.instance.messenger.sendMessage("Stats.HeaderOther", sender, new HashMap<String, Object>(){
+			main.messenger.sendMessage("Stats.HeaderOther", sender, new HashMap<String, Object>(){
 				{
 					put("$player$", stats.getName());
 				}
 			});
 			
-			main.instance.messenger.sendMessage("Stats.Kills", sender, new HashMap<String, Object>(){
+			main.messenger.sendMessage("Stats.Kills", sender, new HashMap<String, Object>(){
 				{
 					put("$amount$", stats.getKills());
 				}
 			});
-			main.instance.messenger.sendMessage("Stats.Deaths", sender, new HashMap<String, Object>(){
+			main.messenger.sendMessage("Stats.Deaths", sender, new HashMap<String, Object>(){
 				{
 					put("$amount$", stats.getDeaths());
 				}
 			});
-			main.instance.messenger.sendMessage("Stats.KDR", sender, new HashMap<String, Object>(){
+			main.messenger.sendMessage("Stats.KDR", sender, new HashMap<String, Object>(){
 				{
 					if (stats.getDeaths() > 0) put("$amount$", stats.getKDR());
 					else put("$amount$", "N/A");
 				}
 			});
-			main.instance.messenger.sendMessage("Stats.cKillstreak", sender, new HashMap<String, Object>(){
+			main.messenger.sendMessage("Stats.cKillstreak", sender, new HashMap<String, Object>(){
 				{
 					put("$amount$", stats.getCurrentKillstreak());
 				}
 			});
-			main.instance.messenger.sendMessage("Stats.bKillstreak", sender, new HashMap<String, Object>(){
+			main.messenger.sendMessage("Stats.bKillstreak", sender, new HashMap<String, Object>(){
 				{
 					put("$amount$", stats.getBestKillstreak());
 				}
 			});
-			main.instance.messenger.sendMessage("Stats.FooterOther", sender, new HashMap<String, Object>(){
+			main.messenger.sendMessage("Stats.FooterOther", sender, new HashMap<String, Object>(){
 				{
 					put("$player$", stats.getName());
 				}

@@ -10,8 +10,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.alchemi.al.Messenger;
+import com.alchemi.alchemicpvp.Config;
 import com.alchemi.alchemicpvp.main;
 import com.alchemi.alchemicpvp.meta.NickMeta;
+import com.alchemi.alchemicpvp.meta.StatsMeta;
 
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -29,18 +31,18 @@ public class NickCommand implements CommandExecutor {
 			
 			Matcher m = Pattern.compile("&[1234567890klnor]").matcher(args[0]);
 			
-			if (args[0].length() > main.instance.config.getInt("Nickname.characterlimit")) {
-				main.instance.messenger.sendMessage("Nick.TooLong", sender, new HashMap<String, Object>(){
+			if (args[0].length() > Config.NICKNAME.CHARACTERLIMIT.asInt()) {
+				main.messenger.sendMessage("Nick.TooLong", sender, new HashMap<String, Object>(){
 					{
 						put("$name$", args[0]);
-						put("$amount$", main.instance.config.getInt("Nickname.characterlimit"));
+						put("$amount$", Config.NICKNAME.CHARACTERLIMIT.value());
 					}
 				});
 				return true;
 			} 
 			
-			if (m.find() && !main.instance.hasPermission(sender, "alchemicpvp.nick.format") && !main.instance.config.getBoolean("Nickname.allowFormat")) {
-				sender.sendMessage(Messenger.parseVars(Messenger.cc(main.instance.messenger.getMessage("Nick.NoFormat")), new HashMap<String, Object>(){
+			if (m.find() && !main.instance.hasPermission(sender, "alchemicpvp.nick.format") && !Config.NICKNAME.ALLOW_FORMAT.asBoolean()) {
+				sender.sendMessage(Messenger.parseVars(Messenger.cc(main.messenger.getMessage("Nick.NoFormat")), new HashMap<String, Object>(){
 					{
 						put("$name$", args[0]);
 						put("$eg$", "&k, &6, &1, etc.");
@@ -52,12 +54,12 @@ public class NickCommand implements CommandExecutor {
 			if (WhoCommand.whoIs(args[0]) != null 
 					&& !WhoCommand.whoIs(args[0]).equals(player)) {
 				
-				TextComponent mainComponent = new TextComponent(Messenger.cc(Messenger.parseVars(main.instance.messenger.getMessage("Nick.Taken1"), new HashMap<String, Object>(){
+				TextComponent mainComponent = new TextComponent(Messenger.cc(Messenger.parseVars(main.messenger.getMessage("Nick.Taken1"), new HashMap<String, Object>(){
 					{
 						put("$name$", args[0]);
 					}
 				}))) ;
-				TextComponent clickComponent = new TextComponent("\n" + Messenger.cc(main.instance.messenger.getMessage("Nick.Taken2")));
+				TextComponent clickComponent = new TextComponent("\n" + Messenger.cc(main.messenger.getMessage("Nick.Taken2")));
 				clickComponent.setHoverEvent(new HoverEvent(Action.SHOW_TEXT, new ComponentBuilder("Click me for the command").create()));
 				clickComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/nick "));
 				mainComponent.addExtra(clickComponent);
@@ -68,16 +70,16 @@ public class NickCommand implements CommandExecutor {
 			
 			player.setDisplayName(args[0]);
 			player.setMetadata(NickMeta.NAME, new NickMeta(args[0]));
-			main.instance.getPlayer(player.getName()).setNickname(args[0]);
+			StatsMeta.getStats(player).setNickname(args[0]);
 			
-			main.instance.messenger.sendMessage("Nick.New", sender, new HashMap<String, Object>(){
+			main.messenger.sendMessage("Nick.New", sender, new HashMap<String, Object>(){
 				{
 					put("$name$", args[0]);
 					put("$player$", sender.getName());
 				}
 			});
 		} else if (sender instanceof Player) {
-			main.instance.messenger.sendMessage("NoPermission", sender, new HashMap<String, Object>(){
+			main.messenger.sendMessage("NoPermission", sender, new HashMap<String, Object>(){
 				{
 					put("$command$", "/nick");
 				}

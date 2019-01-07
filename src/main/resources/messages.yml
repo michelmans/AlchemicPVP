@@ -20,8 +20,8 @@ AlchemicPVP:
   Check:
     PlayerOffline: '$player$ &cis offline.'
     Teleport: '&3You have been teleported to &f$player$&3.'
-    Check: '&3You now posses the powers of a &6god&3, you''re &6invisible &3and you can &6fly&3.'
-    Uncheck: '&3You no longer posses &cgodly powers&3, you''re no longer &cinvisible &3and you''re &cgrounded&3, mister.'
+    Check: '&3You now posses the powers of a &6god&3 and you can &6fly&3.'
+    Uncheck: '&3You no longer posses &cgodly powers&3 and you''re &cgrounded&3, mister.'
     NotCheck: '&cYou are not in checkmode.'
     AlreadyCheck: '&cYou already are in checkmode.'
     NoHurting: '&cYou cannot hurt players while in checkmode.'
@@ -60,8 +60,8 @@ AlchemicPVP:
     NoFormat: '&cYour nickname cannot contain formatting e.g. $eg$'
   
   StaffChat:
-    NonStaff: '&7[&l&4HelpOP&r&7] $player$: &f'
-    Staff: '&7[&6&lStaffChat&r&7] $player$: &f'
+    NonStaff: '&7[&l&4HelpOP&r&7] $player$&r: '
+    Staff: '&7[&6&lStaffChat&r&7] $player$&r: '
     Start: '&3You are now participating in the staff chat.'
     Stop: '&cYou are no longer participating in the staff chat.'
   

@@ -11,10 +11,11 @@ import org.bukkit.entity.Player;
 import com.alchemi.al.Messenger;
 import com.alchemi.alchemicpvp.main;
 import com.alchemi.alchemicpvp.listeners.EventMessage;
+import com.alchemi.alchemicpvp.meta.StatsMeta;
 
 public class ReplyCommand implements CommandExecutor {
 
-	private Messenger msgnr = main.instance.messenger;
+	private Messenger msgnr = main.messenger;
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -22,7 +23,7 @@ public class ReplyCommand implements CommandExecutor {
 			CommandSender recipient;
 			
 			if (sender instanceof Player) {
-				recipient = main.instance.getPlayer(sender.getName()).getReplyTo();
+				recipient = StatsMeta.getMeta(sender).getReplyTo();
 			} else {
 				recipient = MessageCommand.getConsoleReply();	
 			}
@@ -73,13 +74,13 @@ public class ReplyCommand implements CommandExecutor {
 				});
 				if (recipient == Bukkit.getConsoleSender()) {
 					MessageCommand.setConsoleReply(sender);
-					main.instance.getPlayer(sender.getName()).setReplyTo(recipient);
+					StatsMeta.getMeta(sender).setReplyTo(recipient);
 				} else if (sender == Bukkit.getConsoleSender()) {
 					MessageCommand.setConsoleReply(recipient);
-					main.instance.getPlayer(recipient.getName()).setReplyTo(sender);
+					StatsMeta.getMeta(recipient).setReplyTo(sender);
 				} else {
-					main.instance.getPlayer(sender.getName()).setReplyTo(recipient);
-					main.instance.getPlayer(recipient.getName()).setReplyTo(sender);
+					StatsMeta.getMeta(sender).setReplyTo(recipient);
+					StatsMeta.getMeta(recipient).setReplyTo(sender);
 				}
 			}
 		}

@@ -1,7 +1,6 @@
 package com.alchemi.alchemicpvp;
 
 import java.io.File;
-import java.util.Collection;
 import java.util.HashMap;
 
 import org.bukkit.command.CommandSender;
@@ -11,7 +10,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.alchemi.al.FileManager;
 import com.alchemi.al.Messenger;
-import com.alchemi.al.sexyconfs.SexyConfiguration;
 import com.alchemi.alchemicpvp.listeners.CHECK;
 import com.alchemi.alchemicpvp.listeners.Events;
 import com.alchemi.alchemicpvp.listeners.SpyListener;
@@ -44,9 +42,8 @@ public class main extends JavaPlugin {
 	private boolean VaultPerms = false;
 	public static boolean AnimatedNames = false;
 	
-	public Messenger messenger;
-	public FileManager fileManager;
-	public SexyConfiguration config;
+	public static Messenger messenger;
+	public static FileManager fileManager;
 	
 	public StaffChat staffChat;
 	
@@ -55,7 +52,6 @@ public class main extends JavaPlugin {
 	
 	public File playerData;
 	
-	private HashMap<String, PlayerStats> playerStats = new HashMap<String, PlayerStats>();
 	private HashMap<String, CHECK> checkedPlayers = new HashMap<String, CHECK>();
 	
 	public HashMap<String, SpyListener> spies = new HashMap<String, SpyListener>();
@@ -83,18 +79,18 @@ public class main extends JavaPlugin {
 			messenger.print("Your config file is outdated! Updating...");
 			fileManager.reloadConfig("config.yml");
 			fileManager.updateConfig("config.yml");
-			config = fileManager.getConfig("config.yml");
-			config.setComment("Stats.potionEffect", "# Whether a vanished player should get the invisiblity potion effect or not.\n# Note: this does not affect visibility for players without the alchemicpvp.check.bypass permission node.\n# Default: false");
-			config.setComment("Stats.deathMessages", "# Should death messages be displayed\n# Default: true");
-			config.setComment("Nickname.allowFormat", "# Allow the use of formatting in nicknames.\n# e.g. &k, &l, &6, etc.\n# Default: false");
-			config.setComment("Nick.characterlimit", "# The limit of characters a nickname can have.\n# Default: 15");
-			config.set("SPAWN", getServer().getWorlds().get(0).getSpawnLocation());
-			config.set("File-Version-Do-Not-Edit", CONFIG_FILE_VERSION);
-			fileManager.save(config);
+			Config.config = fileManager.getConfig("config.yml");
+			Config.config.setComment("Stats.potionEffect", "# Whether a vanished player should get the invisiblity potion effect or not.\n# Note: this does not affect visibility for players without the alchemicpvp.check.bypass permission node.\n# Default: false");
+			Config.config.setComment("Stats.deathMessages", "# Should death messages be displayed\n# Default: true");
+			Config.config.setComment("Nickname.allowFormat", "# Allow the use of formatting in nicknames.\n# e.g. &k, &l, &6, etc.\n# Default: false");
+			Config.config.setComment("Nick.characterlimit", "# The limit of characters a nickname can have.\n# Default: 15");
+			Config.config.set("SPAWN", getServer().getWorlds().get(0).getSpawnLocation());
+			Config.config.set("File-Version-Do-Not-Edit", CONFIG_FILE_VERSION);
+			fileManager.save(Config.config);
 			messenger.print("File successfully updated!");
 		}
 		
-		config = fileManager.getConfig("config.yml");
+		Config.reload();
 		
 		VaultPerms = setupPermission();
 		AnimatedNames = getServer().getPluginManager().getPlugin("AnimatedName") != null;
@@ -164,23 +160,6 @@ public class main extends JavaPlugin {
 		chat = rsp.getProvider();
 		
 		return chat != null;
-	}
-	
-	public PlayerStats getPlayer(String name) {
-		if (!playerStats.containsKey(name)) return null;
-		return playerStats.get(name);
-	}
-	
-	public Collection<PlayerStats> getAllStats(){
-		return playerStats.values();
-	}
-	
-	public void registerPlayer(PlayerStats stats) {
-		playerStats.put(stats.getName(), stats);
-	}
-	
-	public void unregisterPlayer(String name) {
-		if (playerStats.containsKey(name)) playerStats.remove(name);
 	}
 	
 	public CHECK getCheckPlayer(String name) {

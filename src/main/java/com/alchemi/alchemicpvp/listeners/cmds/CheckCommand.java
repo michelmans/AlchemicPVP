@@ -21,19 +21,19 @@ public class CheckCommand implements CommandExecutor {
 			Player player = (Player) sender;
 			
 			if (main.instance.getCheckPlayer(player.getName()) != null) {
-				main.instance.messenger.sendMessage("Check.AlreadyCheck", player);
+				main.messenger.sendMessage("Check.AlreadyCheck", player);
 				return true;
 			}
 			
 			if (args.length > 0) {
-				if (Bukkit.getPlayer(args[0]) == null) main.instance.messenger.sendMessage("Check.PlayerOffline", player, new HashMap<String, Object>(){
+				if (Bukkit.getPlayer(args[0]) == null) main.messenger.sendMessage("Check.PlayerOffline", player, new HashMap<String, Object>(){
 					{
 						put("$player$", args[0]);
 					}
 				});
 				else {
 					player.teleport(Bukkit.getPlayer(args[0]));
-					main.instance.messenger.sendMessage("Check.Teleport", player, new HashMap<String, Object>(){
+					main.messenger.sendMessage("Check.Teleport", player, new HashMap<String, Object>(){
 						{
 							put("$player$", args[0]);
 						}
@@ -42,10 +42,10 @@ public class CheckCommand implements CommandExecutor {
 			}
 			
 			main.instance.registerCheck(new CHECK(player));
-			main.instance.messenger.sendMessage("Check.Check", player);
+			main.messenger.sendMessage("Check.Check", player);
 			
 		}  else if (sender instanceof Player) {
-			main.instance.messenger.sendMessage("NoPermission", sender, new HashMap<String, Object>(){
+			main.messenger.sendMessage("NoPermission", sender, new HashMap<String, Object>(){
 				{
 					put("$command$", "/check");
 				}

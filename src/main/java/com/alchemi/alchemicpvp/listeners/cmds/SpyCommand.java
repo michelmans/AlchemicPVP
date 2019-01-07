@@ -22,7 +22,7 @@ public class SpyCommand implements CommandExecutor{
 			if (args.length > 1 && args[0].equalsIgnoreCase("ignore") && main.instance.spies.containsKey(sender.getName())) {
 				
 				if (Bukkit.getPlayer(args[1]) == null) {
-					main.instance.messenger.sendMessage("Message.PlayerOffline", sender, new HashMap<String, Object>(){
+					main.messenger.sendMessage("Message.PlayerOffline", sender, new HashMap<String, Object>(){
 						{
 							put("$player$", args[1]);
 						}
@@ -34,7 +34,7 @@ public class SpyCommand implements CommandExecutor{
 			} else if (args.length > 1 && args[0].equalsIgnoreCase("unignore") && main.instance.spies.containsKey(sender.getName())) {
 				
 				if (Bukkit.getPlayer(args[1]) == null) {
-					main.instance.messenger.sendMessage("Message.PlayerOffline", sender, new HashMap<String, Object>(){
+					main.messenger.sendMessage("Message.PlayerOffline", sender, new HashMap<String, Object>(){
 						{
 							put("$player$", args[1]);
 						}
@@ -48,14 +48,14 @@ public class SpyCommand implements CommandExecutor{
 			
 			if (main.instance.spies.containsKey(sender.getName())) {
 				main.instance.spies.remove(sender.getName());
-				main.instance.messenger.sendMessage("Spy.Stop", sender);
+				main.messenger.sendMessage("Spy.Stop", sender);
 			} else {
 				main.instance.spies.put(sender.getName(), new SpyListener((Player) sender));
-				main.instance.messenger.sendMessage("Spy.Start", sender);
+				main.messenger.sendMessage("Spy.Start", sender);
 			}
 			
 		} else if (sender instanceof Player) {
-			main.instance.messenger.sendMessage("NoPermission", sender, new HashMap<String, Object>(){
+			main.messenger.sendMessage("NoPermission", sender, new HashMap<String, Object>(){
 				{
 					put("$command$", "/socialspy");
 				}

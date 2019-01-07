@@ -7,6 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.alchemi.alchemicpvp.Config;
 import com.alchemi.alchemicpvp.main;
 
 public class SpawnCommand implements CommandExecutor {
@@ -18,9 +19,9 @@ public class SpawnCommand implements CommandExecutor {
 		if (sender instanceof Player && main.instance.hasPermission(sender, "alchemicpvp.spawn")) {
 			
 			Player player = (Player) sender;
-			main.instance.config.set("SPAWN", player.getLocation());
-			main.instance.fileManager.saveConfig("config.yml");
-			main.instance.messenger.sendMessage("Check.Spawn", player, new HashMap<String, Object>(){
+			Config.SPAWN = player.getLocation();
+			Config.save();
+			main.messenger.sendMessage("Check.Spawn", player, new HashMap<String, Object>(){
 				{
 					put("$x$", player.getLocation().getBlockX());
 					put("$y$", player.getLocation().getBlockY());
@@ -29,7 +30,7 @@ public class SpawnCommand implements CommandExecutor {
 			});
 			
 		} else if (sender instanceof Player) {
-			main.instance.messenger.sendMessage("NoPermission", sender, new HashMap<String, Object>(){
+			main.messenger.sendMessage("NoPermission", sender, new HashMap<String, Object>(){
 				{
 					put("$command$", "/setcheckspawn");
 				}
