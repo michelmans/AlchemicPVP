@@ -48,7 +48,7 @@ public class main extends JavaPlugin {
 	public StaffChat staffChat;
 	
 	private final int MESSAGES_FILE_VERSION = 5;
-	private final int CONFIG_FILE_VERSION = 2;
+	private final int CONFIG_FILE_VERSION = 3;
 	
 	public File playerData;
 	
@@ -84,12 +84,15 @@ public class main extends JavaPlugin {
 			Config.config.setComment("Stats.deathMessages", "# Should death messages be displayed\n# Default: true");
 			Config.config.setComment("Nickname.allowFormat", "# Allow the use of formatting in nicknames.\n# e.g. &k, &l, &6, etc.\n# Default: false");
 			Config.config.setComment("Nick.characterlimit", "# The limit of characters a nickname can have.\n# Default: 15");
+			Config.config.setComment("Message.mentionTag", "# What should be before a players name to mention them.\n# Set to \"\" to disable mentioning.\n# Default: @");
+			Config.config.setComment("Message.mentionColour", "# What format the mention should get.\n# Set to \"\" to disable the format.\n#Default: &b&n");
 			Config.config.set("SPAWN", getServer().getWorlds().get(0).getSpawnLocation());
 			Config.config.set("File-Version-Do-Not-Edit", CONFIG_FILE_VERSION);
 			fileManager.save(Config.config);
 			messenger.print("File successfully updated!");
 		}
 		
+		Config.enable();
 		Config.reload();
 		
 		VaultPerms = setupPermission();

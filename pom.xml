@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.alchemi</groupId>
   <artifactId>AlchemicPVP</artifactId>
-  <version>1.5.4</version>
+  <version>1.6.0</version>
   <name>AlchemicPVP</name>
   <build>
     <sourceDirectory>src/main/java</sourceDirectory>

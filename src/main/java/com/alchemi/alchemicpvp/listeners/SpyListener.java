@@ -52,7 +52,6 @@ public class SpyListener implements Listener{
 	
 	@EventHandler
 	public void onMessage(EventMessage e) {
-		
 		if (e.getSender() instanceof Player && !ignored.contains((Player) e.getSender()) && !main.instance.hasPermission(e.getSender(), "alchemicpvp.spy.hideFromBigBrother")&&
 				e.getSender() != spy && e.getRecipient() != spy) {
 			main.messenger.sendMessage("Spy.Message", spy, new HashMap<String, Object>(){

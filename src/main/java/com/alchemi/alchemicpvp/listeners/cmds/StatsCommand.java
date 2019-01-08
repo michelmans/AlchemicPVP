@@ -61,7 +61,11 @@ public class StatsCommand implements CommandExecutor {
 				OfflinePlayer player = Library.getOfflinePlayer(args[0]);
 				
 				if (player == null) {
-					main.messenger.sendMessage("Stats.NoPlayer", sender);
+					main.messenger.sendMessage("Stats.NoPlayer", sender, new HashMap<String, Object>(){
+						{
+							put("$player$", args[0]);
+						}
+					});
 					return true;
 				}
 				

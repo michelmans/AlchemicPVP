@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.alchemi.al.Messenger;
+import com.alchemi.alchemicpvp.Config;
 import com.alchemi.alchemicpvp.main;
 import com.alchemi.alchemicpvp.listeners.EventMessage;
 import com.alchemi.alchemicpvp.meta.StatsMeta;
@@ -60,6 +61,7 @@ public class ReplyCommand implements CommandExecutor {
 			Bukkit.getServer().getPluginManager().callEvent(e);
 			
 			if (!e.isCancelled()) {
+				if (recipient instanceof Player && Config.MESSAGE.RECEIVE_SOUND.asSound() != null) ((Player)recipient).playSound(((Player) recipient).getLocation(), Config.MESSAGE.RECEIVE_SOUND.asSound(), 1.0F, 1.0F);
 				msgnr.sendMessage("Message.TemplateSend", sender, new HashMap<String, Object>(){
 					{
 						put("$player$", nameR);

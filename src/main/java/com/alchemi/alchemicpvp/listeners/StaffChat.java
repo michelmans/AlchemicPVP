@@ -2,6 +2,8 @@ package com.alchemi.alchemicpvp.listeners;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -11,6 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import com.alchemi.al.Messenger;
+import com.alchemi.alchemicpvp.Config;
 import com.alchemi.alchemicpvp.main;
 
 public class StaffChat implements Listener{
@@ -33,6 +36,26 @@ public class StaffChat implements Listener{
 	
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent e) {
+		if (e.getMessage().contains(Config.MESSAGE.MENTION_TAG.asString()) && Config.MESSAGE.MENTION_TAG.asString() != "") {
+			Matcher m = Pattern.compile("@\\w*").matcher(e.getMessage());
+			
+			while(m.find()) {
+				Player player = Bukkit.getPlayer(m.group().replace("@", ""));
+				if (player != null) {
+					player.playSound(player.getLocation(), Config.MESSAGE.MENTION_SOUND.asSound(), 1.0F, 1.0F);
+					if (e.getMessage().contains("&")) {
+						
+						Matcher m1 = Pattern.compile("&[1234567890klnor]").matcher(e.getMessage());
+						if (m1.find() && m1.start() < m.end()) {
+							
+							e.setMessage(e.getMessage().replace(m.group(), Messenger.cc(Config.MESSAGE.MENTION_COLOUR.asString() + m.group() + "&r" + m1.group())));
+						}
+					} else e.setMessage(e.getMessage().replace(m.group(), Messenger.cc(Config.MESSAGE.MENTION_COLOUR.asString() + m.group() + "&r")));
+					
+				}
+			}
+		}
+		
 		if (listeners.contains(e.getPlayer())) {
 			e.setCancelled(true);
 			send(e.getPlayer(), e.getMessage());

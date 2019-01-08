@@ -169,8 +169,11 @@ public class Config {
 	
 	public static enum MESSAGE implements ConfigInterface{
 		
+		MENTION_TAG("Message.mentionTag"),
+		MENTION_COLOUR("Message.mentionColour"),
 		RECEIVE_SOUND("Message.receiveSound"),
 		MENTION_SOUND("Message.mentionSound");
+		
 		
 		public final String key;
 		private Object value;
@@ -201,8 +204,11 @@ public class Config {
 
 		@Override
 		public Sound asSound() {
-			
-			return Sound.valueOf(asString());
+			try {
+				return Sound.valueOf(asString());
+			} catch(IllegalArgumentException | NullPointerException ex) {
+				return null;
+			}
 		}
 
 		@SuppressWarnings("unchecked")
