@@ -1,6 +1,6 @@
 name: AlchemicPVP
 main: com.alchemi.alchemicpvp.main
-version: 1.6.0
+version: 1.7.0 - alpha
 api-version: 1.13
 author: Alchemi
 description: A plugin which tracks player stats regarding to kills etc.
