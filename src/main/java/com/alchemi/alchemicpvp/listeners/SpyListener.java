@@ -25,7 +25,7 @@ public class SpyListener implements Listener{
 	
 	public void ignorePlayer(Player player) {
 		ignored.add(player);
-		main.messenger.sendMessage("Spy.IgnoreStart", spy, new HashMap<String, Object>(){
+		main.messenger.sendMsg("Spy.IgnoreStart", spy, new HashMap<String, Object>(){
 			{
 				put("$player$", player.getDisplayName());
 			}
@@ -33,7 +33,7 @@ public class SpyListener implements Listener{
 	}
 	
 	public boolean unIgnorePlayer(Player player) {
-		main.messenger.sendMessage("Spy.IgnoreStop", spy, new HashMap<String, Object>(){
+		main.messenger.sendMsg("Spy.IgnoreStop", spy, new HashMap<String, Object>(){
 			{
 				put("$player$", player.getDisplayName());
 			}
@@ -54,7 +54,7 @@ public class SpyListener implements Listener{
 	public void onMessage(EventMessage e) {
 		if (e.getSender() instanceof Player && !ignored.contains((Player) e.getSender()) && !main.instance.hasPermission(e.getSender(), "alchemicpvp.spy.hideFromBigBrother")&&
 				e.getSender() != spy && e.getRecipient() != spy) {
-			main.messenger.sendMessage("Spy.Message", spy, new HashMap<String, Object>(){
+			main.messenger.sendMsg("Spy.Message", spy, new HashMap<String, Object>(){
 				{
 					put("$sender$", ((Player)e.getSender()).getDisplayName());
 					if (e.getRecipient() instanceof Player) put("$recipient$", ((Player)e.getRecipient()).getDisplayName());

@@ -7,22 +7,22 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.metadata.MetadataValueAdapter;
 
 import com.alchemi.al.Library;
+import com.alchemi.al.objects.meta.BaseMeta;
 import com.alchemi.alchemicpvp.PlayerStats;
 import com.alchemi.alchemicpvp.main;
 
-public class StatsMeta extends MetadataValueAdapter {
+public class StatsMeta extends BaseMeta {
 
-	private PlayerStats stats;
+	private static PlayerStats stats;
 	
 	private CommandSender replyTo;
 	
 	public static final String NAME = "stats";
 	
 	public StatsMeta(Player player) {
-		super(main.instance);
+		super(main.instance, stats);
 		
 		File dataFile = new File(main.instance.playerData, player.getUniqueId().toString() + ".yml");
 		FileConfiguration fc = new YamlConfiguration();
@@ -42,6 +42,7 @@ public class StatsMeta extends MetadataValueAdapter {
 		}
 		
 		stats = new PlayerStats(fc, dataFile);
+		
 	}
 	
 	@Override
@@ -57,7 +58,7 @@ public class StatsMeta extends MetadataValueAdapter {
 	}
 	
 	public static StatsMeta getMeta(Player player) {
-		return (StatsMeta) Library.getMeta(player, NAME, StatsMeta.class);
+		return (StatsMeta) Library.getMeta(player, StatsMeta.class);
 	}
 	
 	public static StatsMeta getMeta(CommandSender sender) {
@@ -74,6 +75,11 @@ public class StatsMeta extends MetadataValueAdapter {
 
 	public void setReplyTo(CommandSender replyTo) {
 		this.replyTo = replyTo;
+	}
+
+	@Override
+	public String name() {
+		return NAME;
 	}
 
 }

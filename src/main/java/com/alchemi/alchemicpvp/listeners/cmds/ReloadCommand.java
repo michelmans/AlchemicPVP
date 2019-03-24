@@ -26,10 +26,10 @@ public class ReloadCommand implements CommandExecutor {
 				StatsMeta.getStats(player).reload();
 			}
 			Config.reload();
-			main.messenger.sendMessage("Reload", sender);
+			main.messenger.sendMsg("Reload", sender);
 			
 		} else if (sender instanceof Player) {
-			main.messenger.sendMessage("NoPermission", sender, new HashMap<String, Object>(){
+			main.messenger.sendMsg("NoPermission", sender, new HashMap<String, Object>(){
 				{
 					put("$command$", "/statsreload");
 				}

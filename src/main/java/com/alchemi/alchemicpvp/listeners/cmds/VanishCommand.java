@@ -20,7 +20,7 @@ public class VanishCommand implements CommandExecutor {
 			CHECK.vanishToggle((Player) sender);
 			
 		} else if (sender instanceof Player) {
-			main.messenger.sendMessage("NoPermission", sender, new HashMap<String, Object>(){
+			main.messenger.sendMsg("NoPermission", sender, new HashMap<String, Object>(){
 				{
 					put("$command$", "/vanish");
 				}

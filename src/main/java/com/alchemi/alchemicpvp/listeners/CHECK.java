@@ -25,7 +25,7 @@ import org.bukkit.scoreboard.Team;
 import org.bukkit.scoreboard.Team.Option;
 import org.bukkit.scoreboard.Team.OptionStatus;
 
-import com.alchemi.al.Messenger;
+import com.alchemi.al.configurations.Messenger;
 import com.alchemi.alchemicpvp.Config;
 import com.alchemi.alchemicpvp.main;
 import com.alchemi.alchemicpvp.meta.VanishMeta;
@@ -86,13 +86,13 @@ public class CHECK implements Listener{
 			player.setPlayerListName(Messenger.cc(prefix + player.getName()));
 			if (Config.STATS.POTION_EFFECT.asBoolean()) player.removePotionEffect(PotionEffectType.INVISIBILITY);
 			vanish = false;
-			main.messenger.sendMessage("Unvanish", player);
+			main.messenger.sendMsg("Unvanish", player);
 		}
 		else {
 			player.setPlayerListName(Messenger.cc(main.messenger.getMessage("Check.VanishTag") + prefix + player.getName()));
 			if (Config.STATS.POTION_EFFECT.asBoolean()) player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 100000, 9, true, false), true);
 			vanish = true;
-			main.messenger.sendMessage("Vanish", player);
+			main.messenger.sendMsg("Vanish", player);
 		}
 		
 		player.removeMetadata("vanish", main.instance);
@@ -131,7 +131,7 @@ public class CHECK implements Listener{
 	public void onShootBow(EntityShootBowEvent e) {
 		if (e.getEntityType().equals(EntityType.PLAYER) && ((Player)e.getEntity()).equals(player)) {
 			e.setCancelled(true);
-			main.messenger.sendMessage("Check.NoHurting", player);
+			main.messenger.sendMsg("Check.NoHurting", player);
 		}
 	}
 	
@@ -188,7 +188,7 @@ public class CHECK implements Listener{
 		
 		if (e.getDamager() instanceof Player && ((Player) e.getDamager()).equals(this.player)) {
 			e.setCancelled(true);
-			main.messenger.sendMessage("Check.NoHurting", player);
+			main.messenger.sendMsg("Check.NoHurting", player);
 		}
 	}
 	

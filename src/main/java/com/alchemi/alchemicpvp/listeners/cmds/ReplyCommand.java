@@ -8,7 +8,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.alchemi.al.Messenger;
+import com.alchemi.al.configurations.Messenger;
 import com.alchemi.alchemicpvp.Config;
 import com.alchemi.alchemicpvp.main;
 import com.alchemi.alchemicpvp.listeners.EventMessage;
@@ -30,7 +30,7 @@ public class ReplyCommand implements CommandExecutor {
 			}
 			
 			if (recipient instanceof Player && !((Player) recipient).isOnline()) {
-				msgnr.sendMessage("Message.PlayerOffline", sender, new HashMap<String, Object>(){
+				msgnr.sendMsg("Message.PlayerOffline", sender, new HashMap<String, Object>(){
 					{
 						put("$player$", recipient.getName());
 					}
@@ -62,13 +62,13 @@ public class ReplyCommand implements CommandExecutor {
 			
 			if (!e.isCancelled()) {
 				if (recipient instanceof Player && Config.MESSAGE.RECEIVE_SOUND.asSound() != null) ((Player)recipient).playSound(((Player) recipient).getLocation(), Config.MESSAGE.RECEIVE_SOUND.asSound(), 1.0F, 1.0F);
-				msgnr.sendMessage("Message.TemplateSend", sender, new HashMap<String, Object>(){
+				msgnr.sendMsg("Message.TemplateSend", sender, new HashMap<String, Object>(){
 					{
 						put("$player$", nameR);
 						put("$message$", e.getMessage());
 					}
 				});
-				msgnr.sendMessage("Message.TemplateReceive", recipient, new HashMap<String, Object>(){
+				msgnr.sendMsg("Message.TemplateReceive", recipient, new HashMap<String, Object>(){
 					{
 						put("$player$", nameS);
 						put("$message$", e.getMessage());

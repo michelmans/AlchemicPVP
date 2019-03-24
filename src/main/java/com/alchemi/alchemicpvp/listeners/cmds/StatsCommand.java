@@ -34,7 +34,7 @@ public class StatsCommand implements CommandExecutor {
 				OfflinePlayer player = Library.getOfflinePlayer(args[0]);
 				
 				if (player == null) {
-					main.messenger.sendMessage("Stats.NoPlayer", sender);
+					main.messenger.sendMsg("Stats.NoPlayer", sender);
 					return true;
 				}
 				
@@ -50,7 +50,7 @@ public class StatsCommand implements CommandExecutor {
 					fc.save(dataFile);
 				} catch (IOException e1) {}
 
-				main.messenger.sendMessage("Stats.Cleared", sender, new HashMap<String, Object>(){
+				main.messenger.sendMsg("Stats.Cleared", sender, new HashMap<String, Object>(){
 					{
 						put("$player$", args[0]);
 					}
@@ -61,7 +61,7 @@ public class StatsCommand implements CommandExecutor {
 				OfflinePlayer player = Library.getOfflinePlayer(args[0]);
 				
 				if (player == null) {
-					main.messenger.sendMessage("Stats.NoPlayer", sender, new HashMap<String, Object>(){
+					main.messenger.sendMsg("Stats.NoPlayer", sender, new HashMap<String, Object>(){
 						{
 							put("$player$", args[0]);
 						}
@@ -71,7 +71,7 @@ public class StatsCommand implements CommandExecutor {
 				
 				File statsFile = new File(main.instance.playerData, player.getUniqueId().toString() + ".yml");
 				if (!statsFile.exists()) {
-					main.messenger.sendMessage("Stats.NoPlayer", sender, new HashMap<String, Object>(){
+					main.messenger.sendMsg("Stats.NoPlayer", sender, new HashMap<String, Object>(){
 						{
 							put("$player$", args[0]);
 						}
@@ -91,7 +91,7 @@ public class StatsCommand implements CommandExecutor {
 				
 				
 			} else if (args.length > 0){
-				main.messenger.sendMessage("NoPermission", pl, new HashMap<String, Object>(){
+				main.messenger.sendMsg("NoPermission", pl, new HashMap<String, Object>(){
 					{
 						put("$command$", "/stats " + args[0]);
 					}
@@ -102,45 +102,45 @@ public class StatsCommand implements CommandExecutor {
 			}
 			
 			
-			if (!other) main.messenger.sendMessage("Stats.Header", pl);
+			if (!other) main.messenger.sendMsg("Stats.Header", pl);
 			else {
-				main.messenger.sendMessage("Stats.HeaderOther", pl, new HashMap<String, Object>(){
+				main.messenger.sendMsg("Stats.HeaderOther", pl, new HashMap<String, Object>(){
 					{
 						put("$player$", stats.getName());
 					}
 				});
 			}
 			
-			main.messenger.sendMessage("Stats.Kills", pl, new HashMap<String, Object>(){
+			main.messenger.sendMsg("Stats.Kills", pl, new HashMap<String, Object>(){
 				{
 					put("$amount$", stats.getKills());
 				}
 			});
-			main.messenger.sendMessage("Stats.Deaths", pl, new HashMap<String, Object>(){
+			main.messenger.sendMsg("Stats.Deaths", pl, new HashMap<String, Object>(){
 				{
 					put("$amount$", stats.getDeaths());
 				}
 			});
-			main.messenger.sendMessage("Stats.KDR", pl, new HashMap<String, Object>(){
+			main.messenger.sendMsg("Stats.KDR", pl, new HashMap<String, Object>(){
 				{
 					if (stats.getDeaths() > 0) put("$amount$", stats.getKDR());
 					else put("$amount$", "N/A");
 				}
 			});
-			main.messenger.sendMessage("Stats.cKillstreak", pl, new HashMap<String, Object>(){
+			main.messenger.sendMsg("Stats.cKillstreak", pl, new HashMap<String, Object>(){
 				{
 					put("$amount$", stats.getCurrentKillstreak());
 				}
 			});
-			main.messenger.sendMessage("Stats.bKillstreak", pl, new HashMap<String, Object>(){
+			main.messenger.sendMsg("Stats.bKillstreak", pl, new HashMap<String, Object>(){
 				{
 					put("$amount$", stats.getBestKillstreak());
 				}
 			});
 			
-			if (!other) main.messenger.sendMessage("Stats.Footer", pl);
+			if (!other) main.messenger.sendMsg("Stats.Footer", pl);
 			else {
-				main.messenger.sendMessage("Stats.FooterOther", pl, new HashMap<String, Object>(){
+				main.messenger.sendMsg("Stats.FooterOther", pl, new HashMap<String, Object>(){
 					{
 						put("$player$", stats.getName());
 					}
@@ -156,7 +156,7 @@ public class StatsCommand implements CommandExecutor {
 				OfflinePlayer player = Library.getOfflinePlayer(args[0]);
 				
 				if (player == null) {
-					main.messenger.sendMessage("Stats.NoPlayer", sender);
+					main.messenger.sendMsg("Stats.NoPlayer", sender);
 					return true;
 				}
 				
@@ -172,7 +172,7 @@ public class StatsCommand implements CommandExecutor {
 					fc.save(dataFile);
 				} catch (IOException e1) {}
 
-				main.messenger.sendMessage("Stats.Cleared", sender, new HashMap<String, Object>(){
+				main.messenger.sendMsg("Stats.Cleared", sender, new HashMap<String, Object>(){
 					{
 						put("$player$", args[0]);
 					}
@@ -183,14 +183,14 @@ public class StatsCommand implements CommandExecutor {
 			OfflinePlayer player = Library.getOfflinePlayer(args[0]);
 			
 			if (player == null) {
-				main.messenger.sendMessage("Stats.NoPlayer", sender);
+				main.messenger.sendMsg("Stats.NoPlayer", sender);
 				return true;
 			}
 			File statsFile = new File(main.instance.playerData, player.getUniqueId() + ".yml");
 			System.out.println(statsFile);
 			
 			if (!statsFile.exists()) {
-				main.messenger.sendMessage("Stats.NoPlayer", sender, new HashMap<String, Object>(){
+				main.messenger.sendMsg("Stats.NoPlayer", sender, new HashMap<String, Object>(){
 					{
 						put("$player$", args[0]);
 					}
@@ -207,39 +207,39 @@ public class StatsCommand implements CommandExecutor {
 				
 			}
 			
-			main.messenger.sendMessage("Stats.HeaderOther", sender, new HashMap<String, Object>(){
+			main.messenger.sendMsg("Stats.HeaderOther", sender, new HashMap<String, Object>(){
 				{
 					put("$player$", stats.getName());
 				}
 			});
 			
-			main.messenger.sendMessage("Stats.Kills", sender, new HashMap<String, Object>(){
+			main.messenger.sendMsg("Stats.Kills", sender, new HashMap<String, Object>(){
 				{
 					put("$amount$", stats.getKills());
 				}
 			});
-			main.messenger.sendMessage("Stats.Deaths", sender, new HashMap<String, Object>(){
+			main.messenger.sendMsg("Stats.Deaths", sender, new HashMap<String, Object>(){
 				{
 					put("$amount$", stats.getDeaths());
 				}
 			});
-			main.messenger.sendMessage("Stats.KDR", sender, new HashMap<String, Object>(){
+			main.messenger.sendMsg("Stats.KDR", sender, new HashMap<String, Object>(){
 				{
 					if (stats.getDeaths() > 0) put("$amount$", stats.getKDR());
 					else put("$amount$", "N/A");
 				}
 			});
-			main.messenger.sendMessage("Stats.cKillstreak", sender, new HashMap<String, Object>(){
+			main.messenger.sendMsg("Stats.cKillstreak", sender, new HashMap<String, Object>(){
 				{
 					put("$amount$", stats.getCurrentKillstreak());
 				}
 			});
-			main.messenger.sendMessage("Stats.bKillstreak", sender, new HashMap<String, Object>(){
+			main.messenger.sendMsg("Stats.bKillstreak", sender, new HashMap<String, Object>(){
 				{
 					put("$amount$", stats.getBestKillstreak());
 				}
 			});
-			main.messenger.sendMessage("Stats.FooterOther", sender, new HashMap<String, Object>(){
+			main.messenger.sendMsg("Stats.FooterOther", sender, new HashMap<String, Object>(){
 				{
 					put("$player$", stats.getName());
 				}

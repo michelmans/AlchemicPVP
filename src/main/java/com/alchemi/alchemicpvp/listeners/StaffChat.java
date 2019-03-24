@@ -12,7 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-import com.alchemi.al.Messenger;
+import com.alchemi.al.configurations.Messenger;
 import com.alchemi.alchemicpvp.Config;
 import com.alchemi.alchemicpvp.main;
 
@@ -22,12 +22,12 @@ public class StaffChat implements Listener{
 	
 	public void addListener(CommandSender sender) {
 		listeners.add(sender);
-		main.messenger.sendMessage("StaffChat.Start", sender);
+		main.messenger.sendMsg("StaffChat.Start", sender);
 	}
 	
 	public void removeListener(CommandSender sender) {
 		listeners.remove(sender);
-		main.messenger.sendMessage("StaffChat.Stop", sender);
+		main.messenger.sendMsg("StaffChat.Stop", sender);
 	}
 	
 	public boolean isListening(CommandSender sender) {

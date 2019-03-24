@@ -9,7 +9,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.alchemi.al.Messenger;
+import com.alchemi.al.configurations.Messenger;
 import com.alchemi.alchemicpvp.Config;
 import com.alchemi.alchemicpvp.main;
 import com.alchemi.alchemicpvp.meta.NickMeta;
@@ -32,7 +32,7 @@ public class NickCommand implements CommandExecutor {
 			Matcher m = Pattern.compile("&[1234567890klnor]").matcher(args[0]);
 			
 			if (args[0].length() > Config.NICKNAME.CHARACTERLIMIT.asInt()) {
-				main.messenger.sendMessage("Nick.TooLong", sender, new HashMap<String, Object>(){
+				main.messenger.sendMsg("Nick.TooLong", sender, new HashMap<String, Object>(){
 					{
 						put("$name$", args[0]);
 						put("$amount$", Config.NICKNAME.CHARACTERLIMIT.value());
@@ -72,14 +72,14 @@ public class NickCommand implements CommandExecutor {
 			player.setMetadata(NickMeta.NAME, new NickMeta(args[0]));
 			StatsMeta.getStats(player).setNickname(args[0]);
 			
-			main.messenger.sendMessage("Nick.New", sender, new HashMap<String, Object>(){
+			main.messenger.sendMsg("Nick.New", sender, new HashMap<String, Object>(){
 				{
 					put("$name$", args[0]);
 					put("$player$", sender.getName());
 				}
 			});
 		} else if (sender instanceof Player) {
-			main.messenger.sendMessage("NoPermission", sender, new HashMap<String, Object>(){
+			main.messenger.sendMsg("NoPermission", sender, new HashMap<String, Object>(){
 				{
 					put("$command$", "/nick");
 				}

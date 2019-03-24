@@ -1,17 +1,16 @@
 package com.alchemi.alchemicpvp.meta;
 
-import org.bukkit.metadata.MetadataValueAdapter;
-
+import com.alchemi.al.objects.meta.BaseMeta;
 import com.alchemi.alchemicpvp.main;
 
-public class NickMeta extends MetadataValueAdapter {
+public class NickMeta extends BaseMeta {
 
 	private final String nickname;
 	
 	public static final String NAME = "nickname";
 	
 	public NickMeta(String nick) {
-		super(main.instance);
+		super(main.instance, nick);
 		nickname = nick;
 		}
 
@@ -23,5 +22,10 @@ public class NickMeta extends MetadataValueAdapter {
 
 	@Override
 	public void invalidate() {}
+
+	@Override
+	public String name() {
+		return NAME;
+	}
 
 }

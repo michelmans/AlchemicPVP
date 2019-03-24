@@ -8,8 +8,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.alchemi.al.FileManager;
-import com.alchemi.al.Messenger;
+import com.alchemi.al.configurations.Messenger;
+import com.alchemi.al.deprecated.FileManager;
 import com.alchemi.alchemicpvp.listeners.CHECK;
 import com.alchemi.alchemicpvp.listeners.Events;
 import com.alchemi.alchemicpvp.listeners.SpyListener;
@@ -65,7 +65,7 @@ public class main extends JavaPlugin {
 		fileManager.saveDefaultYML("messages.yml");
 		fileManager.saveDefaultYML("config.yml");
 		
-		messenger = new Messenger(fileManager);
+		messenger = new Messenger(this);
 		
 		if(!fileManager.getConfig("messages.yml").isSet("File-Version-Do-Not-Edit") || !fileManager.getConfig("messages.yml").get("File-Version-Do-Not-Edit").equals(MESSAGES_FILE_VERSION)) {
 			messenger.print("Your messages file is outdated! Updating...");
@@ -84,8 +84,8 @@ public class main extends JavaPlugin {
 			Config.config.setComment("Stats.deathMessages", "# Should death messages be displayed\n# Default: true");
 			Config.config.setComment("Nickname.allowFormat", "# Allow the use of formatting in nicknames.\n# e.g. &k, &l, &6, etc.\n# Default: false");
 			Config.config.setComment("Nick.characterlimit", "# The limit of characters a nickname can have.\n# Default: 15");
-			Config.config.setComment("Message.mentionTag", "# What should be before a players name to mention them.\n# Set to \"\" to disable mentioning.\n# Default: @");
-			Config.config.setComment("Message.mentionColour", "# What format the mention should get.\n# Set to \"\" to disable the format.\n#Default: &b&n");
+			Config.config.setComment("Message.mentionTag", "# What should be before a players name to mention them.\n# Set to '' to disable mentioning.\n# Default: '@'");
+			Config.config.setComment("Message.mentionColour", "# What format the mention should get.\n# Set to '' to disable the format.\n#Default: '&b&n'");
 			Config.config.set("SPAWN", getServer().getWorlds().get(0).getSpawnLocation());
 			Config.config.set("File-Version-Do-Not-Edit", CONFIG_FILE_VERSION);
 			fileManager.save(Config.config);

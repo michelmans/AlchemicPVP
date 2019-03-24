@@ -21,7 +21,7 @@ public class SpawnCommand implements CommandExecutor {
 			Player player = (Player) sender;
 			Config.SPAWN = player.getLocation();
 			Config.save();
-			main.messenger.sendMessage("Check.Spawn", player, new HashMap<String, Object>(){
+			main.messenger.sendMsg("Check.Spawn", player, new HashMap<String, Object>(){
 				{
 					put("$x$", player.getLocation().getBlockX());
 					put("$y$", player.getLocation().getBlockY());
@@ -30,7 +30,7 @@ public class SpawnCommand implements CommandExecutor {
 			});
 			
 		} else if (sender instanceof Player) {
-			main.messenger.sendMessage("NoPermission", sender, new HashMap<String, Object>(){
+			main.messenger.sendMsg("NoPermission", sender, new HashMap<String, Object>(){
 				{
 					put("$command$", "/setcheckspawn");
 				}

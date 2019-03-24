@@ -21,7 +21,7 @@ public class UncheckCommand implements CommandExecutor {
 			Player player = (Player) sender;
 			CHECK check = main.instance.getCheckPlayer(player.getName());
 			if (check == null) {
-				main.messenger.sendMessage("Check.NotCheck", player);
+				main.messenger.sendMsg("Check.NotCheck", player);
 				return true;
 			}
 			
@@ -34,10 +34,10 @@ public class UncheckCommand implements CommandExecutor {
 			player.teleport(Config.SPAWN);
 			player.setAllowFlight(false);
 			
-			main.messenger.sendMessage("Check.Uncheck", sender);
+			main.messenger.sendMsg("Check.Uncheck", sender);
 			
 		} else if (sender instanceof Player) {
-			main.messenger.sendMessage("NoPermission", sender, new HashMap<String, Object>(){
+			main.messenger.sendMsg("NoPermission", sender, new HashMap<String, Object>(){
 				{
 					put("$command$", "/uncheck");
 				}

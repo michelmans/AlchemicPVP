@@ -17,7 +17,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
 import com.alchemi.al.Library;
-import com.alchemi.al.Messenger;
+import com.alchemi.al.configurations.Messenger;
 import com.alchemi.alchemicpvp.Config;
 import com.alchemi.alchemicpvp.PlayerStats;
 import com.alchemi.alchemicpvp.main;
@@ -38,18 +38,18 @@ public class Events implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent e) {
 		e.getPlayer().getInventory().clear();
 		
-		if (main.instance.hasPermission(e.getPlayer(), "alchemicpvp.spy")) e.getPlayer().performCommand("socialspy");
+		if (main.instance.hasPermission(e.getPlayer(), "alchemicpvp.spy") && !main.instance.spies.containsKey(e.getPlayer().getName())) e.getPlayer().performCommand("socialspy");
 		
-		if (!Library.hasMeta(e.getPlayer(), VanishMeta.NAME, VanishMeta.class)) e.getPlayer().setMetadata(VanishMeta.NAME, new VanishMeta(main.instance, false));
+		if (!Library.hasMeta(e.getPlayer(), VanishMeta.class)) e.getPlayer().setMetadata(VanishMeta.NAME, new VanishMeta(main.instance, false));
 		e.getPlayer().setMetadata(StatsMeta.NAME, new StatsMeta(e.getPlayer()));
-		if (!Library.hasMeta(e.getPlayer(), NickMeta.NAME, NickMeta.class)) e.getPlayer().setMetadata(NickMeta.NAME, new NickMeta(StatsMeta.getStats(e.getPlayer()).getNickname()));
+		if (!Library.hasMeta(e.getPlayer(), NickMeta.class)) e.getPlayer().setMetadata(NickMeta.NAME, new NickMeta(StatsMeta.getStats(e.getPlayer()).getNickname()));
 		
 		if (WhoCommand.whoIs(StatsMeta.getStats(e.getPlayer()).getNickname()) != null 
 				&& !WhoCommand.whoIs(StatsMeta.getStats(e.getPlayer()).getNickname()).equals(e.getPlayer())) {
 			
 			TextComponent mainComponent = new TextComponent(Messenger.cc(Messenger.parseVars(main.messenger.getMessage("Nick.Taken1"), new HashMap<String, Object>(){
 				{
-					put("$name$", Library.getMeta(e.getPlayer(), NickMeta.NAME, NickMeta.class).asString());
+					put("$name$", Library.getMeta(e.getPlayer(), NickMeta.class).asString());
 				}
 			}))) ;
 			TextComponent clickComponent = new TextComponent("\n" + Messenger.cc(main.messenger.getMessage("Nick.Taken2")));
@@ -58,7 +58,7 @@ public class Events implements Listener {
 			mainComponent.addExtra(clickComponent);
 			e.getPlayer().spigot().sendMessage(mainComponent);
 			
-		} else e.getPlayer().setDisplayName(Library.getMeta(e.getPlayer(), NickMeta.NAME, NickMeta.class).asString());
+		} else e.getPlayer().setDisplayName(Library.getMeta(e.getPlayer(), NickMeta.class).asString());
 		
 		
 	}
@@ -107,7 +107,7 @@ public class Events implements Listener {
 	
 	@EventHandler
 	public void onPlayerLeave(PlayerQuitEvent e) {
-		
+		if (main.instance.hasPermission(e.getPlayer(), "alchemicpvp.spy") && main.instance.spies.containsKey(e.getPlayer().getName())) e.getPlayer().performCommand("socialspy");
 		for (SpyListener sl : main.instance.spies.values()) {
 			if (sl.isIgnoring(e.getPlayer())) sl.unIgnorePlayer(e.getPlayer());
 		}

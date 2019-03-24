@@ -1,16 +1,17 @@
 package com.alchemi.alchemicpvp.meta;
 
-import org.bukkit.metadata.MetadataValueAdapter;
 import org.bukkit.plugin.Plugin;
 
-public class VanishMeta extends MetadataValueAdapter {
+import com.alchemi.al.objects.meta.BaseMeta;
+
+public class VanishMeta extends BaseMeta {
 
 	private boolean vanish;
 	
 	public static final String NAME = "vanish";
 	
 	public VanishMeta(Plugin owningPlugin, boolean vanish) {
-		super(owningPlugin);
+		super(owningPlugin, vanish);
 		this.vanish = vanish;
 	}
 
@@ -22,4 +23,9 @@ public class VanishMeta extends MetadataValueAdapter {
 	
 	@Override
 	public void invalidate() {}
+
+	@Override
+	public String name() {
+		return NAME;
+	}
 }

@@ -8,7 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.inventory.ItemStack;
 
-import com.alchemi.al.sexyconfs.SexyConfiguration;
+import com.alchemi.al.configurations.SexyConfiguration;
 
 public class Config {
 
