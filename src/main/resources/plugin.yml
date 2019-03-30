@@ -96,4 +96,4 @@ permissions:
   alchemicpvp.whois:
     description: Permission to look for the player behind the nickname.
   alchemicpvp.staffchat:
-description: Permission to use the staff chat.
+    description: Permission to use the staff chat.
