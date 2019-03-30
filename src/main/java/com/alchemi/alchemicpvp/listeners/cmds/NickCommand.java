@@ -60,7 +60,7 @@ public class NickCommand implements CommandExecutor {
 			}
 			
 			player.setDisplayName(args[0]);
-			player.setMetadata(NickMeta.NAME, new NickMeta(args[0]));
+			player.setMetadata(NickMeta.class.getSimpleName(), new NickMeta(args[0]));
 			StatsMeta.getStats(player).setNickname(args[0]);
 			
 			main.messenger.sendMessage(MESSAGES.NICK_NEW.value()

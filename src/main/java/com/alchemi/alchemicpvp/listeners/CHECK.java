@@ -96,8 +96,8 @@ public class CHECK implements Listener{
 			main.messenger.sendMessage(MESSAGES.VANISH.value(), player);
 		}
 		
-		player.removeMetadata("vanish", main.instance);
-		player.setMetadata("vanish", new VanishMeta(main.instance, vanish));
+		player.removeMetadata(VanishMeta.class.getSimpleName(), main.instance);
+		player.setMetadata(VanishMeta.class.getSimpleName(), new VanishMeta(main.instance, vanish));
 		
 	}
 	
