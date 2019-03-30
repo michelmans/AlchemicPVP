@@ -303,7 +303,7 @@ public class Config {
 		}
 		
 		public void get() { 
-			value = messages.getString(key);
+			value = messages.getString(key, "PLACEHOLDER - STRING NOT FOUND");
 			
 		}
 		
@@ -322,7 +322,10 @@ public class Config {
 		messages = SexyConfiguration.loadConfiguration(main.MESSAGES_FILE);
 		
 		if (!config.isSet("SPAWN")) SPAWN = Bukkit.getWorlds().get(0).getSpawnLocation();
-		SPAWN = new SexyLocation(config.getConfigurationSection("SPAWN")).getLocation();
+		else {
+			try { SPAWN = new SexyLocation(config.getConfigurationSection("SPAWN")).getLocation(); }
+			catch (Exception e) { SPAWN = Bukkit.getWorlds().get(0).getSpawnLocation(); }
+		}
 		for (SexyConfiguration file : new SexyConfiguration[] {messages, config}) {
 			int version;
 			if (file.equals(config)) version = main.CONFIG_FILE_VERSION; 
@@ -348,6 +351,8 @@ public class Config {
 		for (NICKNAME value : NICKNAME.values()) value.get();
 		
 		for (MESSAGE value : MESSAGE.values()) value.get();
+		
+		for (MESSAGES value : MESSAGES.values()) value.get();
 		
 		deathMessages = messages.getStringList("AlchemicPVP.DeathMessages");
 	}
