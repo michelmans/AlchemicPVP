@@ -77,9 +77,4 @@ public class StatsMeta extends BaseMeta {
 		this.replyTo = replyTo;
 	}
 
-	@Override
-	public String name() {
-		return NAME;
-	}
-
 }

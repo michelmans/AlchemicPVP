@@ -1,7 +1,6 @@
 package com.alchemi.alchemicpvp.listeners;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,6 +13,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import com.alchemi.al.configurations.Messenger;
 import com.alchemi.alchemicpvp.Config;
+import com.alchemi.alchemicpvp.Config.MESSAGES;
 import com.alchemi.alchemicpvp.main;
 
 public class StaffChat implements Listener{
@@ -22,12 +22,12 @@ public class StaffChat implements Listener{
 	
 	public void addListener(CommandSender sender) {
 		listeners.add(sender);
-		main.messenger.sendMsg("StaffChat.Start", sender);
+		main.messenger.sendMessage(MESSAGES.STAFFCHAT_START.value(), sender);
 	}
 	
 	public void removeListener(CommandSender sender) {
 		listeners.remove(sender);
-		main.messenger.sendMsg("StaffChat.Stop", sender);
+		main.messenger.sendMessage(MESSAGES.STAFFCHAT_STOP.value(), sender);
 	}
 	
 	public boolean isListening(CommandSender sender) {
@@ -65,23 +65,17 @@ public class StaffChat implements Listener{
 	public void send(CommandSender sender, String message) {
 		String toSend;
 		if (main.instance.hasPermission(sender, "alchemicpvp.staffchat")) {
-			toSend = Messenger.parseVars(main.messenger.getMessage("StaffChat.Staff"), new HashMap<String, Object>(){
-				{
-					if (sender instanceof Player) put("$player$", ((Player) sender).getDisplayName());
-					else put("$player$", "Console");
-				}
-			}) + message;
+			toSend = MESSAGES.STAFFCHAT_STAFF.value();
+			if (sender instanceof Player) toSend = toSend.replace("$player$", ((Player) sender).getDisplayName());
+			else toSend = toSend.replace("$player$", "Console");
+			toSend = toSend + message;
 		} else {
-			toSend = Messenger.parseVars(main.messenger.getMessage("StaffChat.NonStaff"), new HashMap<String, Object>(){
-				{
-					put("$player$", ((Player) sender).getDisplayName());
-				}
-			}) + message;
+			toSend = MESSAGES.STAFFCHAT_NONSTAFF.value().replace("$player$", ((Player) sender).getDisplayName()) + message;
 		}
 		
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			if (main.instance.hasPermission(player, "alchemicpvp.staffchat")) {
-				Messenger.sendMsg(toSend, player);
+				main.messenger.sendMessage(toSend, player);
 			}
 		}
 	}

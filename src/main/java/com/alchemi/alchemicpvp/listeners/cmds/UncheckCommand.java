@@ -1,7 +1,5 @@
 package com.alchemi.alchemicpvp.listeners.cmds;
 
-import java.util.HashMap;
-
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -9,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 
 import com.alchemi.alchemicpvp.Config;
+import com.alchemi.alchemicpvp.Config.MESSAGES;
 import com.alchemi.alchemicpvp.main;
 import com.alchemi.alchemicpvp.listeners.CHECK;
 
@@ -21,7 +20,7 @@ public class UncheckCommand implements CommandExecutor {
 			Player player = (Player) sender;
 			CHECK check = main.instance.getCheckPlayer(player.getName());
 			if (check == null) {
-				main.messenger.sendMsg("Check.NotCheck", player);
+				main.messenger.sendMessage(MESSAGES.CHECK_NOTCHECK.value(), player);
 				return true;
 			}
 			
@@ -31,17 +30,13 @@ public class UncheckCommand implements CommandExecutor {
 			for (PotionEffect pe : player.getActivePotionEffects()) {
 				player.removePotionEffect(pe.getType());
 			}
-			player.teleport(Config.SPAWN);
+			if (args.length < 0 || args[0].equals("true")) player.teleport(Config.SPAWN);
 			player.setAllowFlight(false);
 			
-			main.messenger.sendMsg("Check.Uncheck", sender);
+			main.messenger.sendMessage(MESSAGES.CHECK_UNCHECK.value(), sender);
 			
 		} else if (sender instanceof Player) {
-			main.messenger.sendMsg("NoPermission", sender, new HashMap<String, Object>(){
-				{
-					put("$command$", "/uncheck");
-				}
-			});
+			main.messenger.sendMessage(MESSAGES.NO_PERMISSION.value().replace("$command$", command.getName()), sender);
 		}
 		
 		

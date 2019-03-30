@@ -1,7 +1,6 @@
 package com.alchemi.alchemicpvp.listeners;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -9,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
+import com.alchemi.alchemicpvp.Config.MESSAGES;
 import com.alchemi.alchemicpvp.main;
 
 public class SpyListener implements Listener{
@@ -25,19 +25,11 @@ public class SpyListener implements Listener{
 	
 	public void ignorePlayer(Player player) {
 		ignored.add(player);
-		main.messenger.sendMsg("Spy.IgnoreStart", spy, new HashMap<String, Object>(){
-			{
-				put("$player$", player.getDisplayName());
-			}
-		});
+		main.messenger.sendMessage(MESSAGES.SPY_IGNORESTART.value().replace("$player$", player.getDisplayName()), spy);
 	}
 	
 	public boolean unIgnorePlayer(Player player) {
-		main.messenger.sendMsg("Spy.IgnoreStop", spy, new HashMap<String, Object>(){
-			{
-				put("$player$", player.getDisplayName());
-			}
-		});
+		main.messenger.sendMessage(MESSAGES.SPY_IGNORESTOP.value().replace("$player$", player.getDisplayName()), spy);
 		return ignored.remove(player);
 	}
 	
@@ -54,14 +46,12 @@ public class SpyListener implements Listener{
 	public void onMessage(EventMessage e) {
 		if (e.getSender() instanceof Player && !ignored.contains((Player) e.getSender()) && !main.instance.hasPermission(e.getSender(), "alchemicpvp.spy.hideFromBigBrother")&&
 				e.getSender() != spy && e.getRecipient() != spy) {
-			main.messenger.sendMsg("Spy.Message", spy, new HashMap<String, Object>(){
-				{
-					put("$sender$", ((Player)e.getSender()).getDisplayName());
-					if (e.getRecipient() instanceof Player) put("$recipient$", ((Player)e.getRecipient()).getDisplayName());
-					else put("$recipient$", "Console");
-					put("$message$", e.getMessage());
-				}
-			});
+			String msg = MESSAGES.SPY_MESSAGE.value().replace("$sender$", ((Player)e.getSender()).getDisplayName()).replace("$message$", e.getMessage());
+			
+			if (e.getRecipient() instanceof Player) msg = msg.replace("$recipient$", ((Player)e.getRecipient()).getDisplayName());
+			else msg = msg.replace("$recipient$", "Console");
+			
+			main.messenger.sendMessage(msg, spy);
 		}
 	}
 	

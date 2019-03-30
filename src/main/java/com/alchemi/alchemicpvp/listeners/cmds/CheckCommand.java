@@ -1,13 +1,12 @@
 package com.alchemi.alchemicpvp.listeners.cmds;
 
-import java.util.HashMap;
-
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.alchemi.alchemicpvp.Config.MESSAGES;
 import com.alchemi.alchemicpvp.main;
 import com.alchemi.alchemicpvp.listeners.CHECK;
 
@@ -19,37 +18,25 @@ public class CheckCommand implements CommandExecutor {
 		if (sender instanceof Player && main.instance.hasPermission(sender, "alchemicpvp.check")) {
 			
 			Player player = (Player) sender;
-			
 			if (main.instance.getCheckPlayer(player.getName()) != null) {
-				main.messenger.sendMsg("Check.AlreadyCheck", player);
+				main.messenger.sendMessage(MESSAGES.CHECK_ALREADYCHECK.value(), player);
 				return true;
 			}
 			
 			if (args.length > 0) {
-				if (Bukkit.getPlayer(args[0]) == null) main.messenger.sendMsg("Check.PlayerOffline", player, new HashMap<String, Object>(){
-					{
-						put("$player$", args[0]);
-					}
-				});
+				if (Bukkit.getPlayer(args[0]) == null) main.messenger.sendMessage(MESSAGES.CHECK_PLAYEROFFLINE.value().replace("$player$", args[0]), player);
+				
 				else {
 					player.teleport(Bukkit.getPlayer(args[0]));
-					main.messenger.sendMsg("Check.Teleport", player, new HashMap<String, Object>(){
-						{
-							put("$player$", args[0]);
-						}
-					});
+					main.messenger.sendMessage(MESSAGES.CHECK_TELEPORT.value().replace("$player$", args[0]), player);
 				}
 			}
 			
-			main.instance.registerCheck(new CHECK(player));
-			main.messenger.sendMsg("Check.Check", player);
+			main.instance.registerCheck(new CHECK(player)); 
+			main.messenger.sendMessage(MESSAGES.CHECK_CHECK.value(), player);
 			
 		}  else if (sender instanceof Player) {
-			main.messenger.sendMsg("NoPermission", sender, new HashMap<String, Object>(){
-				{
-					put("$command$", "/check");
-				}
-			});
+			main.messenger.sendMessage(MESSAGES.NO_PERMISSION.value().replace("$command$", command.getName()), sender);
 		}
 		
 		return true;

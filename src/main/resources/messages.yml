@@ -1,9 +1,12 @@
 AlchemicPVP:
   Tag: '&7[&1&lAlchemicPVP&r&7]'
   
-  NoPermission: '&c&oYou don''t have permission to use &9$command$&c.&r&c If you believe this is an error, &nplease contact an administrator.'
-  Reload: '&3Reloaded files.'
-  
+  Commands:
+      NoPermission: '&c&oYou don''t have permission to use &9$command$&c.&r&c If you believe this is an error, &nplease contact an administrator.'
+      Reload: '&3Reloaded files.'
+      WrongFormat: '&cPlease use: &9'
+      Unknown: '&cUnknown command. Use &9/as help &cfor more information.'
+      
   Stats:
     NoPlayer: '&cPlayer &f$player$ &cdoesn''t exist.'
     Cleared: '&3$player$''s stats have been cleared.'

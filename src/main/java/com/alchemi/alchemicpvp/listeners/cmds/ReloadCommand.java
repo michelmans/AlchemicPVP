@@ -1,7 +1,5 @@
 package com.alchemi.alchemicpvp.listeners.cmds;
 
-import java.util.HashMap;
-
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -9,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.alchemi.alchemicpvp.Config;
+import com.alchemi.alchemicpvp.Config.MESSAGES;
 import com.alchemi.alchemicpvp.main;
 import com.alchemi.alchemicpvp.meta.StatsMeta;
 
@@ -26,14 +25,10 @@ public class ReloadCommand implements CommandExecutor {
 				StatsMeta.getStats(player).reload();
 			}
 			Config.reload();
-			main.messenger.sendMsg("Reload", sender);
+			main.messenger.sendMessage("&9Configs reloaded.", sender);
 			
 		} else if (sender instanceof Player) {
-			main.messenger.sendMsg("NoPermission", sender, new HashMap<String, Object>(){
-				{
-					put("$command$", "/statsreload");
-				}
-			});
+			main.messenger.sendMessage(MESSAGES.NO_PERMISSION.value().replace("$command$", command.getName()), sender);
 		}
 		
 		return true;

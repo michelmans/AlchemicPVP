@@ -1,9 +1,11 @@
 package com.alchemi.alchemicpvp;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -31,15 +33,12 @@ import com.alchemi.alchemicpvp.listeners.tabcomplete.SpyTabComplete;
 import com.alchemi.alchemicpvp.listeners.tabcomplete.StatsTabComplete;
 
 import net.milkbowl.vault.chat.Chat;
-import net.milkbowl.vault.permission.Permission;
 
 public class main extends JavaPlugin {
 
 	public static main instance;
 	
-	private Permission perms;
 	public Chat chat;
-	private boolean VaultPerms = false;
 	public static boolean AnimatedNames = false;
 	
 	public static Messenger messenger;
@@ -47,8 +46,11 @@ public class main extends JavaPlugin {
 	
 	public StaffChat staffChat;
 	
-	private final int MESSAGES_FILE_VERSION = 5;
-	private final int CONFIG_FILE_VERSION = 3;
+	public static final int MESSAGES_FILE_VERSION = 5;
+	public static final int CONFIG_FILE_VERSION = 3;
+	
+	public static File MESSAGES_FILE;
+	public static File CONFIG_FILE;
 	
 	public File playerData;
 	
@@ -60,48 +62,25 @@ public class main extends JavaPlugin {
 	public void onEnable() {
 		instance = this;
 		
-		fileManager = new FileManager(this, new String[] {"messages.yml", "config.yml"}, null, null);
-		
-		fileManager.saveDefaultYML("messages.yml");
-		fileManager.saveDefaultYML("config.yml");
+		MESSAGES_FILE = new File(getDataFolder(), "messages.yml");
+		CONFIG_FILE = new File(getDataFolder(), "config.yml");
 		
 		messenger = new Messenger(this);
 		
-		if(!fileManager.getConfig("messages.yml").isSet("File-Version-Do-Not-Edit") || !fileManager.getConfig("messages.yml").get("File-Version-Do-Not-Edit").equals(MESSAGES_FILE_VERSION)) {
-			messenger.print("Your messages file is outdated! Updating...");
-			fileManager.reloadConfig("messages.yml");
-			fileManager.updateConfig("messages.yml");
-			fileManager.getConfig("messages.yml").set("File-Version-Do-Not-Edit", MESSAGES_FILE_VERSION);
-			fileManager.saveConfig("messages.yml");
-			messenger.print("File successfully updated!");
-		}
-		if(!getConfig().isSet("File-Version-Do-Not-Edit") || !getConfig().get("File-Version-Do-Not-Edit").equals(CONFIG_FILE_VERSION)) {
-			messenger.print("Your config file is outdated! Updating...");
-			fileManager.reloadConfig("config.yml");
-			fileManager.updateConfig("config.yml");
-			Config.config = fileManager.getConfig("config.yml");
-			Config.config.setComment("Stats.potionEffect", "# Whether a vanished player should get the invisiblity potion effect or not.\n# Note: this does not affect visibility for players without the alchemicpvp.check.bypass permission node.\n# Default: false");
-			Config.config.setComment("Stats.deathMessages", "# Should death messages be displayed\n# Default: true");
-			Config.config.setComment("Nickname.allowFormat", "# Allow the use of formatting in nicknames.\n# e.g. &k, &l, &6, etc.\n# Default: false");
-			Config.config.setComment("Nick.characterlimit", "# The limit of characters a nickname can have.\n# Default: 15");
-			Config.config.setComment("Message.mentionTag", "# What should be before a players name to mention them.\n# Set to '' to disable mentioning.\n# Default: '@'");
-			Config.config.setComment("Message.mentionColour", "# What format the mention should get.\n# Set to '' to disable the format.\n#Default: '&b&n'");
-			Config.config.set("SPAWN", getServer().getWorlds().get(0).getSpawnLocation());
-			Config.config.set("File-Version-Do-Not-Edit", CONFIG_FILE_VERSION);
-			fileManager.save(Config.config);
-			messenger.print("File successfully updated!");
+		try {
+			Config.enable();
+		} catch (IOException | InvalidConfigurationException e) {
+			
+			getServer().getPluginManager().disablePlugin(this);
+			System.err.println("[AlchemicPVP]: Unable to load configurations! Disabling plugin.");
+			e.printStackTrace();
+			
 		}
 		
-		Config.enable();
-		Config.reload();
-		
-		VaultPerms = setupPermission();
 		AnimatedNames = getServer().getPluginManager().getPlugin("AnimatedName") != null;
-		if (VaultPerms) messenger.print("Vault installed! Using Vault permissions.");
+		
 		if (setupChat()) {
-			
-			messenger.print("Vault installed! Using vault chat.");
-			
+			messenger.print("Vault dependent chat installed! Using Vault api chat.");
 		}
 		
 		staffChat = new StaffChat();
@@ -135,24 +114,17 @@ public class main extends JavaPlugin {
 		getCommand("socialspy").setTabCompleter(new SpyTabComplete());
 		getCommand("stats").setTabCompleter(new StatsTabComplete());
 		
+		messenger.print("Commands registered.");
+		
 	}
 
 	public boolean hasPermission(Player player, String perm) {
 		
-		return VaultPerms ? perms.has(player, perm) || player.isOp() : player.hasPermission(perm) || player.isOp();
+		return player.isOp() || player.hasPermission(perm);
 	}
 	
 	public boolean hasPermission(CommandSender sender, String perm) {
 		return sender instanceof Player ? sender.isOp() || hasPermission((Player) sender, perm) : true;
-	}
-	
-	private boolean setupPermission() {
-		if (getServer().getPluginManager().getPlugin("Vault") == null) return false;
-		RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
-		if (rsp == null) return false;
-		
-		perms = rsp.getProvider();
-		return perms != null;
 	}
 	
 	private boolean setupChat() {

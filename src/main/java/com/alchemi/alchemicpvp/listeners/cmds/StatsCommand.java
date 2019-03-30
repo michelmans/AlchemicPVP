@@ -2,7 +2,6 @@ package com.alchemi.alchemicpvp.listeners.cmds;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -14,6 +13,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import com.alchemi.al.Library;
+import com.alchemi.al.configurations.Messenger;
+import com.alchemi.alchemicpvp.Config.MESSAGES;
 import com.alchemi.alchemicpvp.PlayerStats;
 import com.alchemi.alchemicpvp.main;
 import com.alchemi.alchemicpvp.meta.StatsMeta;
@@ -34,7 +35,7 @@ public class StatsCommand implements CommandExecutor {
 				OfflinePlayer player = Library.getOfflinePlayer(args[0]);
 				
 				if (player == null) {
-					main.messenger.sendMsg("Stats.NoPlayer", sender);
+					main.messenger.sendMessage(MESSAGES.STATS_NOPLAYER.value().replace("$player$", args[0]), sender);
 					return true;
 				}
 				
@@ -50,32 +51,20 @@ public class StatsCommand implements CommandExecutor {
 					fc.save(dataFile);
 				} catch (IOException e1) {}
 
-				main.messenger.sendMsg("Stats.Cleared", sender, new HashMap<String, Object>(){
-					{
-						put("$player$", args[0]);
-					}
-				});
+				main.messenger.sendMessage(MESSAGES.STATS_CLEARED.value().replace("$player$", args[0]), sender);
 				return true;
 				
 			} else if (args.length > 0 && main.instance.hasPermission(pl, "alchemicpvp.stats.other")) {
 				OfflinePlayer player = Library.getOfflinePlayer(args[0]);
 				
 				if (player == null) {
-					main.messenger.sendMsg("Stats.NoPlayer", sender, new HashMap<String, Object>(){
-						{
-							put("$player$", args[0]);
-						}
-					});
+					main.messenger.sendMessage(MESSAGES.STATS_NOPLAYER.value().replace("$player$", args[0]), sender);
 					return true;
 				}
 				
 				File statsFile = new File(main.instance.playerData, player.getUniqueId().toString() + ".yml");
 				if (!statsFile.exists()) {
-					main.messenger.sendMsg("Stats.NoPlayer", sender, new HashMap<String, Object>(){
-						{
-							put("$player$", args[0]);
-						}
-					});
+					main.messenger.sendMessage(MESSAGES.STATS_NOPLAYER.value().replace("$player$", args[0]), sender);
 					return true;
 				}
 				
@@ -91,61 +80,34 @@ public class StatsCommand implements CommandExecutor {
 				
 				
 			} else if (args.length > 0){
-				main.messenger.sendMsg("NoPermission", pl, new HashMap<String, Object>(){
-					{
-						put("$command$", "/stats " + args[0]);
-					}
-				});
+				main.messenger.sendMessage(MESSAGES.SPY_PLAYEROFFLINE.value().replace("$player$", args[1]), sender);
 				return true;
 			} else {
 				stats = StatsMeta.getStats(pl);
 			}
 			
 			
-			if (!other) main.messenger.sendMsg("Stats.Header", pl);
+			String msg = "";
+			
+			if (!other) msg = MESSAGES.STATS_HEADER.value();
 			else {
-				main.messenger.sendMsg("Stats.HeaderOther", pl, new HashMap<String, Object>(){
-					{
-						put("$player$", stats.getName());
-					}
-				});
+				msg = MESSAGES.STATS_HEADEROTHER.value().replace("$player$", stats.getName());
 			}
 			
-			main.messenger.sendMsg("Stats.Kills", pl, new HashMap<String, Object>(){
-				{
-					put("$amount$", stats.getKills());
-				}
-			});
-			main.messenger.sendMsg("Stats.Deaths", pl, new HashMap<String, Object>(){
-				{
-					put("$amount$", stats.getDeaths());
-				}
-			});
-			main.messenger.sendMsg("Stats.KDR", pl, new HashMap<String, Object>(){
-				{
-					if (stats.getDeaths() > 0) put("$amount$", stats.getKDR());
-					else put("$amount$", "N/A");
-				}
-			});
-			main.messenger.sendMsg("Stats.cKillstreak", pl, new HashMap<String, Object>(){
-				{
-					put("$amount$", stats.getCurrentKillstreak());
-				}
-			});
-			main.messenger.sendMsg("Stats.bKillstreak", pl, new HashMap<String, Object>(){
-				{
-					put("$amount$", stats.getBestKillstreak());
-				}
-			});
+			msg = msg + "\n" + MESSAGES.STATS_KILLS.value().replace("$amount$", String.valueOf(stats.getKills()));
+			msg = msg + "\n" + MESSAGES.STATS_DEATHS.value().replace("$amount$", String.valueOf(stats.getDeaths()));
+			if (stats.getDeaths() > 0) msg = msg + "\n" + MESSAGES.STATS_KDR.value().replace("$amount$", String.format("%.2f", stats.getKDR()));
+			else msg = msg + "\n" + MESSAGES.STATS_KDR.value().replace("$amount$", "N/A");
+			msg = msg + "\n" + MESSAGES.STATS_CKILLSTREAK.value().replace("$amount$", String.valueOf(stats.getCurrentKillstreak()));
+			msg = msg + "\n" + MESSAGES.STATS_BKILLSTREAK.value().replace("$amount$", String.valueOf(stats.getBestKillstreak()));
 			
-			if (!other) main.messenger.sendMsg("Stats.Footer", pl);
-			else {
-				main.messenger.sendMsg("Stats.FooterOther", pl, new HashMap<String, Object>(){
-					{
-						put("$player$", stats.getName());
-					}
-				});
-			}
+			if (!other) msg = msg + "\n" + MESSAGES.STATS_FOOTER.value(); 
+			else msg = msg + "\n" + MESSAGES.STATS_FOOTEROTHER.value().replace("$player$", stats.getName());
+			
+			msg = Messenger.cc(msg);
+			
+			sender.sendMessage(msg);
+			
 			return true;
 			
 		}
@@ -156,7 +118,7 @@ public class StatsCommand implements CommandExecutor {
 				OfflinePlayer player = Library.getOfflinePlayer(args[0]);
 				
 				if (player == null) {
-					main.messenger.sendMsg("Stats.NoPlayer", sender);
+					main.messenger.sendMessage(MESSAGES.STATS_NOPLAYER.value().replace("$player$", args[0]), sender);
 					return true;
 				}
 				
@@ -172,29 +134,21 @@ public class StatsCommand implements CommandExecutor {
 					fc.save(dataFile);
 				} catch (IOException e1) {}
 
-				main.messenger.sendMsg("Stats.Cleared", sender, new HashMap<String, Object>(){
-					{
-						put("$player$", args[0]);
-					}
-				});
+				main.messenger.sendMessage(MESSAGES.STATS_CLEARED.value().replace("$player$", args[0]), sender);
 				
 			}
 		} else if (args.length > 0) {
 			OfflinePlayer player = Library.getOfflinePlayer(args[0]);
 			
 			if (player == null) {
-				main.messenger.sendMsg("Stats.NoPlayer", sender);
+				main.messenger.sendMessage(MESSAGES.STATS_NOPLAYER.value().replace("$player$", args[0]), sender);
 				return true;
 			}
 			File statsFile = new File(main.instance.playerData, player.getUniqueId() + ".yml");
 			System.out.println(statsFile);
 			
 			if (!statsFile.exists()) {
-				main.messenger.sendMsg("Stats.NoPlayer", sender, new HashMap<String, Object>(){
-					{
-						put("$player$", args[0]);
-					}
-				});
+				main.messenger.sendMessage(MESSAGES.STATS_NOPLAYER.value().replace("$player$", args[0]), sender);
 				return true;
 			}
 			PlayerStats stats;	
@@ -207,43 +161,22 @@ public class StatsCommand implements CommandExecutor {
 				
 			}
 			
-			main.messenger.sendMsg("Stats.HeaderOther", sender, new HashMap<String, Object>(){
-				{
-					put("$player$", stats.getName());
-				}
-			});
+			String msg = "";
 			
-			main.messenger.sendMsg("Stats.Kills", sender, new HashMap<String, Object>(){
-				{
-					put("$amount$", stats.getKills());
-				}
-			});
-			main.messenger.sendMsg("Stats.Deaths", sender, new HashMap<String, Object>(){
-				{
-					put("$amount$", stats.getDeaths());
-				}
-			});
-			main.messenger.sendMsg("Stats.KDR", sender, new HashMap<String, Object>(){
-				{
-					if (stats.getDeaths() > 0) put("$amount$", stats.getKDR());
-					else put("$amount$", "N/A");
-				}
-			});
-			main.messenger.sendMsg("Stats.cKillstreak", sender, new HashMap<String, Object>(){
-				{
-					put("$amount$", stats.getCurrentKillstreak());
-				}
-			});
-			main.messenger.sendMsg("Stats.bKillstreak", sender, new HashMap<String, Object>(){
-				{
-					put("$amount$", stats.getBestKillstreak());
-				}
-			});
-			main.messenger.sendMsg("Stats.FooterOther", sender, new HashMap<String, Object>(){
-				{
-					put("$player$", stats.getName());
-				}
-			});
+			msg = MESSAGES.STATS_HEADEROTHER.value().replace("$player$", stats.getName());
+			
+			msg = msg + "\n" + MESSAGES.STATS_KILLS.value().replace("$amount$", String.valueOf(stats.getKills()));
+			msg = msg + "\n" + MESSAGES.STATS_DEATHS.value().replace("$amount$", String.valueOf(stats.getDeaths()));
+			if (stats.getDeaths() > 0) msg = msg + "\n" + MESSAGES.STATS_KDR.value().replace("$amount$", String.format("%.2f", stats.getKDR()));
+			else msg = msg + "\n" + MESSAGES.STATS_KDR.value().replace("$amount$", "N/A");
+			msg = msg + "\n" + MESSAGES.STATS_CKILLSTREAK.value().replace("$amount$", String.valueOf(stats.getCurrentKillstreak()));
+			msg = msg + "\n" + MESSAGES.STATS_BKILLSTREAK.value().replace("$amount$", String.valueOf(stats.getBestKillstreak()));
+			
+			msg = msg + "\n" + MESSAGES.STATS_FOOTEROTHER.value().replace("$player$", stats.getName());
+			
+			msg = Messenger.cc(msg);
+			
+			sender.sendMessage(msg);
 			
 		}
 		

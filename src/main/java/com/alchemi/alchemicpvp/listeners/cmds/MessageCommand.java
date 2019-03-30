@@ -1,7 +1,6 @@
 package com.alchemi.alchemicpvp.listeners.cmds;
 
 import java.util.Arrays;
-import java.util.HashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -11,6 +10,7 @@ import org.bukkit.entity.Player;
 
 import com.alchemi.al.configurations.Messenger;
 import com.alchemi.alchemicpvp.Config;
+import com.alchemi.alchemicpvp.Config.MESSAGES;
 import com.alchemi.alchemicpvp.main;
 import com.alchemi.alchemicpvp.listeners.EventMessage;
 import com.alchemi.alchemicpvp.meta.StatsMeta;
@@ -31,11 +31,7 @@ public class MessageCommand implements CommandExecutor{
 			} else {
 				recipient = main.instance.getServer().getPlayer(args[0]);
 				if (recipient == null) {
-					msgnr.sendMsg("Message.PlayerOffline", sender, new HashMap<String, Object>(){
-						{
-							put("$player$", args[0]);
-						}
-					});
+					msgnr.sendMessage(MESSAGES.MESSAGE_PLAYEROFFLINE.value().replace("$player$", args[0]), sender);
 					return true;
 				}
 			}
@@ -65,18 +61,14 @@ public class MessageCommand implements CommandExecutor{
 			
 			if (!e.isCancelled()) {
 				if (recipient instanceof Player && Config.MESSAGE.RECEIVE_SOUND.asSound() != null) ((Player)recipient).playSound(((Player) recipient).getLocation(), Config.MESSAGE.RECEIVE_SOUND.asSound(), 1.0F, 1.0F);
-				msgnr.sendMsg("Message.TemplateSend", sender, new HashMap<String, Object>(){
-					{
-						put("$player$", nameR);
-						put("$message$", e.getMessage());
-					}
-				});
-				msgnr.sendMsg("Message.TemplateReceive", recipient, new HashMap<String, Object>(){
-					{
-						put("$player$", nameS);
-						put("$message$", e.getMessage());
-					}
-				});
+				msgnr.sendMessage(MESSAGES.MESSAGE_TEMPLATESEND.value()
+						.replace("$player$", nameR)
+						.replace("$message$", e.getMessage()), sender);
+				
+				msgnr.sendMessage(MESSAGES.MESSAGE_TEMPLATERECEIVE.value()
+						.replace("$player$", nameS)
+						.replace("$message$", e.getMessage()), recipient);
+				
 				if (recipient == Bukkit.getConsoleSender()) {
 					MessageCommand.setConsoleReply(sender);
 					StatsMeta.getMeta(sender).setReplyTo(recipient);

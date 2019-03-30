@@ -23,9 +23,4 @@ public class NickMeta extends BaseMeta {
 	@Override
 	public void invalidate() {}
 
-	@Override
-	public String name() {
-		return NAME;
-	}
-
 }

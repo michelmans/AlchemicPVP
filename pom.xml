@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.alchemi</groupId>
   <artifactId>AlchemicPVP</artifactId>
-  <version>1.7.0 - alpha</version>
+  <version>1.8.0</version>
   <name>AlchemicPVP</name>
   <build>
     <finalName>${project.name}</finalName>
@@ -57,7 +57,7 @@
     <dependency>
       <groupId>com.alchemi</groupId>
       <artifactId>AlchemicLibrary</artifactId>
-      <version>[1.4.0,)</version>
+      <version>LATEST</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>

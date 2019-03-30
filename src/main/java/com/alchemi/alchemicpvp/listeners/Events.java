@@ -103,6 +103,7 @@ public class Events implements Listener {
 		}, false);
 		else main.messenger.print(main.fileManager.getConfig("messages.yml").getStringList("AlchemicPVP.DeathMessages"));
 		
+		
 	}
 	
 	@EventHandler
