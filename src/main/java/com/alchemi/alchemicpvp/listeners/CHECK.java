@@ -18,13 +18,13 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.MetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Team;
 import org.bukkit.scoreboard.Team.Option;
 import org.bukkit.scoreboard.Team.OptionStatus;
 
+import com.alchemi.al.Library;
 import com.alchemi.al.configurations.Messenger;
 import com.alchemi.alchemicpvp.Config;
 import com.alchemi.alchemicpvp.Config.MESSAGES;
@@ -51,7 +51,7 @@ public class CHECK implements Listener{
 		checkers.addEntry(getPlayer());
 		
 		main.instance.getServer().getPluginManager().registerEvents(this, main.instance);
-		if (!((VanishMeta)player.getMetadata("vanish").get(0)).asBoolean()) vanishToggle(pl);
+		if (!Library.hasMeta(pl, VanishMeta.class) || !Library.getMeta(pl, VanishMeta.class).asBoolean()) vanishToggle(pl);
 	}
 	
 	public String getPlayer() {
@@ -62,15 +62,7 @@ public class CHECK implements Listener{
 		String prefix = main.instance.chat.getGroupPrefix(player.getWorld(), main.instance.chat.getPlayerGroups(player)[0]);
 		boolean vanish = false;
 		
-		if (player.getMetadata("vanish").size() > 0) {
-			for (MetadataValue meta : player.getMetadata("vanish")) {
-				if (meta instanceof VanishMeta) {
-					vanish = (boolean) meta.value();
-					System.out.println(vanish);
-					break;
-				}
-			}
-		}
+		if (Library.hasMeta(player, VanishMeta.class)) vanish = Library.getMeta(player, VanishMeta.class).asBoolean();
 		
 		for (Player OnPl : main.instance.getServer().getOnlinePlayers()) {
 			if (!main.instance.hasPermission(OnPl, "alchemicpvp.check.bypass")) {
@@ -103,7 +95,7 @@ public class CHECK implements Listener{
 	
 	public void remove() {
 		
-		if (((VanishMeta)player.getMetadata("vanish").get(0)).asBoolean()) vanishToggle(player);
+		if (Library.hasMeta(player, VanishMeta.class) && Library.getMeta(player, VanishMeta.class).asBoolean()) vanishToggle(player);
 		
 		checkers.removeEntry(getPlayer());
 				

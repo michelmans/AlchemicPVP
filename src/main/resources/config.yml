@@ -1,13 +1,41 @@
 Stats:
-  potionEffect: false
-  deathMessages: true
+    potionEffect: false
+    deathMessages: true
 
 Nickname:
-  allowFormat: false
-  characterlimit: 15
+    allowFormat: false
+    characterlimit: 15
   
 Message:
-  mentionTag: "@"
-  mentionColour: "&b&n"
-  receiveSound: "ENTITY_CHICKEN_EGG"
-  mentionSound: "ENTITY_ENDER_DRAGON_GROWL"
+    mentionTag: "@"
+    mentionColour: "&b&n"
+    receiveSound: "ENTITY_CHICKEN_EGG"
+    mentionSound: "ENTITY_ENDER_DRAGON_GROWL"
+  
+# Wether or not to immediatly consume consumables (potions, food, etc)
+immediateConsuming: true
+
+# Magic Wand settings
+wand:
+    enabled: true
+    name: '&5Magic Wand'
+    material: STICK
+    
+    # gives enchanted glow
+    enchanted: true
+    
+    # cooldown in seconds for wand use. Set to 0 for no cooldown
+    cooldown: 10
+
+# Dragon stick settings
+dragonstick:
+    enabled: true
+    name: '&6&lStick of the &4&lDragon'
+    material: BLAZE_ROD
+    
+    # gives enchanted glow
+    enchanted: true
+
+    # cooldown in seconds for wand use. Set to 0 for no cooldown
+    cooldown: 15
+  

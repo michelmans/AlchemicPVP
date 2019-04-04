@@ -1,5 +1,5 @@
 AlchemicPVP:
-  Tag: '&7[&1&lAlchemicPVP&r&7]'
+  Tag: '&7[&1&lAlchemicPVP&r&7] '
   
   Commands:
       NoPermission: '&c&oYou don''t have permission to use &9$command$&c.&r&c If you believe this is an error, &nplease contact an administrator.'
@@ -67,6 +67,10 @@ AlchemicPVP:
     Staff: '&7[&6&lStaffChat&r&7] $player$&r: '
     Start: '&3You are now participating in the staff chat.'
     Stop: '&cYou are no longer participating in the staff chat.'
+    
+  Sudo:
+    PlayerOffline: '$player$ &cis offline.'
+    sudo: '&3Forcing $player$ to run &9$command$&c.'
   
   DeathMessages:
   - '&7$killer$ &7killed $victim$ &7using $item$&7.'

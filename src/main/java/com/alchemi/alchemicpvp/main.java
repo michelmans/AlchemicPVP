@@ -14,6 +14,7 @@ import com.alchemi.al.configurations.Messenger;
 import com.alchemi.al.deprecated.FileManager;
 import com.alchemi.alchemicpvp.listeners.CHECK;
 import com.alchemi.alchemicpvp.listeners.Events;
+import com.alchemi.alchemicpvp.listeners.ItemListeners;
 import com.alchemi.alchemicpvp.listeners.SpyListener;
 import com.alchemi.alchemicpvp.listeners.StaffChat;
 import com.alchemi.alchemicpvp.listeners.cmds.CheckCommand;
@@ -26,6 +27,7 @@ import com.alchemi.alchemicpvp.listeners.cmds.SpawnCommand;
 import com.alchemi.alchemicpvp.listeners.cmds.SpyCommand;
 import com.alchemi.alchemicpvp.listeners.cmds.StaffChatCommand;
 import com.alchemi.alchemicpvp.listeners.cmds.StatsCommand;
+import com.alchemi.alchemicpvp.listeners.cmds.SudoCommand;
 import com.alchemi.alchemicpvp.listeners.cmds.UncheckCommand;
 import com.alchemi.alchemicpvp.listeners.cmds.VanishCommand;
 import com.alchemi.alchemicpvp.listeners.cmds.WhoCommand;
@@ -46,8 +48,8 @@ public class main extends JavaPlugin {
 	
 	public StaffChat staffChat;
 	
-	public static final int MESSAGES_FILE_VERSION = 5;
-	public static final int CONFIG_FILE_VERSION = 3;
+	public static final int MESSAGES_FILE_VERSION = 6;
+	public static final int CONFIG_FILE_VERSION = 5;
 	
 	public static File MESSAGES_FILE;
 	public static File CONFIG_FILE;
@@ -76,7 +78,7 @@ public class main extends JavaPlugin {
 			e.printStackTrace();
 			
 		}
-		
+		new ItemListeners();
 		AnimatedNames = getServer().getPluginManager().getPlugin("AnimatedName") != null;
 		
 		if (setupChat()) {
@@ -110,6 +112,7 @@ public class main extends JavaPlugin {
 		getCommand("nick").setExecutor(new NickCommand());
 		getCommand("whois").setExecutor(new WhoCommand());
 		getCommand("staffchat").setExecutor(new StaffChatCommand());
+		getCommand("sudo").setExecutor(new SudoCommand());
 		
 		getCommand("socialspy").setTabCompleter(new SpyTabComplete());
 		getCommand("stats").setTabCompleter(new StatsTabComplete());

@@ -4,6 +4,7 @@ version: ${project.version}
 api-version: 1.13
 author: Alchemi
 description: A plugin for better PvP.
+depend: [AlchemicLibrary]
 
 commands:
   stats:
@@ -65,6 +66,10 @@ commands:
     usage: /staffchat [message]
     description: Toggle staffchat usage or send a singular message.
     aliases: ["helpop", "adminchat", "ho", "ac", "sc"]
+    
+  sudo:
+    usage: /sudo <player> <command>
+    description: Force a player to run a command.
   
 permissions:
   alchemicpvp.stats.other:
@@ -97,3 +102,5 @@ permissions:
     description: Permission to look for the player behind the nickname.
   alchemicpvp.staffchat:
     description: Permission to use the staff chat.
+  alchemicpvp.sudo:
+    description: Permission to sudo a player.

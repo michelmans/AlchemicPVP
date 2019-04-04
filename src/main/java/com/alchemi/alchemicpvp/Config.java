@@ -40,6 +40,74 @@ public class Config {
 		Material asMaterial();
 	}
 	
+	public static enum WANDS implements ConfigInterface {
+		MAGIC_ENABLED("wand.enabled"),
+		MAGIC_NAME("wand.name"),
+		MAGIC_MATERIAL("wand.material"),
+		MAGIC_ENCHANTED("wand.enchanted"),
+		MAGIC_COOLDOWN("wand.cooldown"),
+		DRAGON_ENABLED("dragonstick.enabled"),
+		DRAGON_NAME("dragonstick.name"),
+		DRAGON_MATERIAL("dragonstick.material"),
+		DRAGON_ENCHANTED("dragonstick.enchanted"),
+		DRAGON_COOLDOWN("dragonstick.cooldown");
+
+		Object value;
+		String path;
+		
+		private WANDS(String path) {
+			this.path = path;
+		}
+		
+		@Override
+		public Object value() {
+			return this.value;
+		}
+
+		@Override
+		public void get() {
+
+			this.value = config.get(this.path);
+			
+		}
+
+		@Override
+		public boolean asBoolean() {
+			return Boolean.parseBoolean(asString());
+		}
+
+		@Override
+		public String asString() {
+			return String.valueOf(value);
+		}
+
+		@Override
+		public Sound asSound() {
+			return null;
+		}
+
+		@Override
+		public List<String> asStringList() {
+			return null;
+		}
+
+		@Override
+		public int asInt() {
+			return Integer.valueOf(asString());
+		}
+
+		@Override
+		public ItemStack asItemStack() {
+			return null;
+		}
+
+		@Override
+		public Material asMaterial() {
+			return Material.getMaterial(asString());
+		}
+		
+	}
+	
 	public static enum STATS implements ConfigInterface {
 		
 		POTION_EFFECT("Stats.potionEffect"),
@@ -290,6 +358,8 @@ public class Config {
 		NICK_NEW("AlchemicPVP.Nick.New"),
 		NICK_TOOLONG("AlchemicPVP.Nick.TooLong"),
 		NICK_NOFORMAT("AlchemicPVP.Nick.NoFormat"),
+		SUDO_PLAYEROFFLINE("AlchemicPVP.Sudo.PlayerOffline"),
+		SUDO_SUDO("AlchemicPVP.Sudo.sudo"),
 		STAFFCHAT_NONSTAFF("AlchemicPVP.StaffChat.NonStaff"),
 		STAFFCHAT_STAFF("AlchemicPVP.StaffChat.Staff"),
 		STAFFCHAT_START("AlchemicPVP.StaffChat.Start"),
@@ -314,12 +384,16 @@ public class Config {
 	
 	public static Location SPAWN;
 	
+	public static boolean immediateConsuming;
+	
 	public static List<String> deathMessages;
 	
 	public static void enable() throws IOException, InvalidConfigurationException {
 		
 		config = SexyConfiguration.loadConfiguration(main.CONFIG_FILE);
 		messages = SexyConfiguration.loadConfiguration(main.MESSAGES_FILE);
+		
+		immediateConsuming = config.getBoolean("immediateConsuming", true);
 		
 		if (!config.isSet("SPAWN")) SPAWN = Bukkit.getWorlds().get(0).getSpawnLocation();
 		else {
@@ -345,6 +419,8 @@ public class Config {
 				main.messenger.print("File successfully updated!");
 			} 
 		}
+		
+		for (WANDS value : WANDS.values()) value.get();
 					 
 		for (STATS value : STATS.values()) value.get();
 		
@@ -361,19 +437,21 @@ public class Config {
 		config = SexyConfiguration.loadConfiguration(main.CONFIG_FILE);
 		messages = SexyConfiguration.loadConfiguration(main.MESSAGES_FILE);
 		
-		for (STATS value : STATS.values()) {
-			value.get();
-		}
+		for (WANDS value : WANDS.values()) value.get();
+		 
+		for (STATS value : STATS.values()) value.get();
 		
-		for (NICKNAME value : NICKNAME.values()) {
-			value.get();
-		}
+		for (NICKNAME value : NICKNAME.values()) value.get();
 		
-		for (MESSAGE value : MESSAGE.values()) {
-			value.get();
-		}
+		for (MESSAGE value : MESSAGE.values()) value.get();
+		
+		for (MESSAGES value : MESSAGES.values()) value.get();
 		
 		deathMessages = messages.getStringList("AlchemicPVP.DeathMessages");
+		immediateConsuming = config.getBoolean("immediateConsuming", true);
+		
+		try { SPAWN = new SexyLocation(config.getConfigurationSection("SPAWN")).getLocation(); }
+		catch (Exception e) { SPAWN = Bukkit.getWorlds().get(0).getSpawnLocation(); }
 	}
 	
 	public static void save() {

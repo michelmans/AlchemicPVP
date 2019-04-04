@@ -2,17 +2,13 @@ package com.alchemi.alchemicpvp.listeners.cmds;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.alchemi.al.Library;
-import com.alchemi.al.objects.ItemFactory;
 import com.alchemi.alchemicpvp.Config.MESSAGES;
 import com.alchemi.alchemicpvp.main;
-import com.alchemi.alchemicpvp.listeners.ItemListeners;
 
 public class SmiteCommand implements CommandExecutor {
 
@@ -22,8 +18,6 @@ public class SmiteCommand implements CommandExecutor {
 			Location smite;
 			if (args.length == 0) {
 				if (sender instanceof Player) {
-					Library.giveItemStack(new ItemFactory(Material.STICK).setName("&5Magic wand"), ((Player)sender));
-					new ItemListeners((Player) sender);
 					smite = ((Player) sender).getLocation();
 					main.messenger.sendMessage(MESSAGES.SMITE_SMITTEN.value(), sender);
 					main.messenger.sendMessage(MESSAGES.SMITE_SMITESENT.value().replace("$player$", sender.getName()), sender);

@@ -1,11 +1,9 @@
 package com.alchemi.alchemicpvp.listeners;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 import org.bukkit.attribute.Attribute;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockIgniteEvent;
@@ -61,6 +59,11 @@ public class Events implements Listener {
 	
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent e) {
+		e.getEntity().getInventory().clear();
+		e.getEntity().updateInventory();
+		
+		e.setKeepInventory(true);
+		
 		if (e.getEntity().getKiller() == null) return;
 		
 		PlayerStats victim = StatsMeta.getStats(e.getEntity());
@@ -72,7 +75,6 @@ public class Events implements Listener {
 		killer.updateKillstreaks(1);
 		
 		e.getEntity().getKiller().setHealth(e.getEntity().getKiller().getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
-		
 		
 		//Death Messages
 		if (!Config.STATS.DEATHMESSAGES.asBoolean()) return;
@@ -88,15 +90,12 @@ public class Events implements Listener {
 		}
 		
 		Random rand = new Random();
-		List<String> deathMessages = main.fileManager.getConfig("messages.yml").getStringList("AlchemicPVP.DeathMessages");
 		
-		if (deathMessages.size() > 1) main.messenger.broadcast(deathMessages.get(rand.nextInt(deathMessages.size()))
-				.replace("$victim$", ((Player) e.getEntity()).getDisplayName())
+		if (Config.deathMessages.size() > 1) main.messenger.broadcast(Config.deathMessages.get(rand.nextInt(Config.deathMessages.size()))
+				.replace("$victim$", e.getEntity().getDisplayName())
 				.replace("$killer$", e.getEntity().getKiller().getDisplayName())
 				.replace("$item$", itemKill), false);
-		else main.messenger.print(main.fileManager.getConfig("messages.yml").getStringList("AlchemicPVP.DeathMessages"));
-		
-		
+		else main.messenger.print(Config.deathMessages);
 	}
 	
 	@EventHandler
