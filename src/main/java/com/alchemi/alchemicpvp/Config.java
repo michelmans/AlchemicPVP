@@ -455,6 +455,10 @@ public class Config {
 	}
 	
 	public static void save() {
+		for (WANDS value : WANDS.values()) {
+			config.set(value.path, value.value);
+		}
+		 
 		for (STATS value : STATS.values()) {
 			config.set(value.key, value.value);
 		}
@@ -466,8 +470,20 @@ public class Config {
 		for (MESSAGE value : MESSAGE.values()) {
 			config.set(value.key, value.value);
 		}
-		config.set("SPAWN", new SexyLocation(SPAWN).getSection());
-		main.fileManager.saveConfig("config.yml");
+		
+		for (MESSAGES value : MESSAGES.values()) {
+			messages.set(value.key, value.value);
+		}
+		config.createSection("SPAWN", new SexyLocation(SPAWN).getSection().getValues(true));
+		config.set("immediateConsuming", immediateConsuming);
+		messages.set("AlchemicPVP.DeathMessages", deathMessages);
+		try {
+			config.save();
+			messages.save();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 }

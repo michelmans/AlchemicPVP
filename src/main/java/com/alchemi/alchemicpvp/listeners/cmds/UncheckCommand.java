@@ -30,7 +30,7 @@ public class UncheckCommand implements CommandExecutor {
 			for (PotionEffect pe : player.getActivePotionEffects()) {
 				player.removePotionEffect(pe.getType());
 			}
-			if (args.length < 0 || args[0].equals("true")) player.teleport(Config.SPAWN);
+			if (args.length <= 0 || args[0].equals("true")) player.teleport(Config.SPAWN);
 			player.setAllowFlight(false);
 			
 			main.messenger.sendMessage(MESSAGES.CHECK_UNCHECK.value(), sender);
