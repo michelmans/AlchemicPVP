@@ -23,7 +23,7 @@ public class SpyTabComplete implements TabCompleter {
 		if (!(sender instanceof Player))
 			return tabSuggest;
 
-		if (!main.instance.hasPermission(sender, "alchemicpvp.spy"))
+		if (!main.getInstance().hasPermission(sender, "alchemicpvp.spy"))
 			return tabSuggest;
 		
 		if (args.length == 1) {
@@ -34,7 +34,7 @@ public class SpyTabComplete implements TabCompleter {
 		} else if (args.length == 2) {
 			
 			for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-				if (!main.instance.hasPermission(p, "alchemicpvp.spy.hideFromBigBrother")) list.add(p.getName());
+				if (!main.getInstance().hasPermission(p, "alchemicpvp.spy.hideFromBigBrother")) list.add(p.getName());
 			}
 			
 		}

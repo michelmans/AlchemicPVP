@@ -14,12 +14,12 @@ public class VanishCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-		if (sender instanceof Player && main.instance.hasPermission(sender, "alchemicpvp.vanish")) {
+		if (sender instanceof Player && main.getInstance().hasPermission(sender, "alchemicpvp.vanish")) {
 			
 			CHECK.vanishToggle((Player) sender);
 			
 		} else if (sender instanceof Player) {
-			main.messenger.sendMessage(MESSAGES.NO_PERMISSION.value().replace("$command$", command.getName()), sender);
+			main.getInstance().getMessenger().sendMessage(MESSAGES.NO_PERMISSION.value().replace("$command$", command.getName()), sender);
 		}
 		
 		return true;

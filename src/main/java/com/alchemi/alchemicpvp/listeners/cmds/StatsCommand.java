@@ -30,16 +30,16 @@ public class StatsCommand implements CommandExecutor {
 			
 			PlayerStats stats;
 			boolean other = false;
-			if (args.length > 1 && args[1].equals("clear") && main.instance.hasPermission(pl, "alchemicpvp.stats.clear")) {
+			if (args.length > 1 && args[1].equals("clear") && main.getInstance().hasPermission(pl, "alchemicpvp.stats.clear")) {
 
 				OfflinePlayer player = Library.getOfflinePlayer(args[0]);
 				
 				if (player == null) {
-					main.messenger.sendMessage(MESSAGES.STATS_NOPLAYER.value().replace("$player$", args[0]), sender);
+					main.getInstance().getMessenger().sendMessage(MESSAGES.STATS_NOPLAYER.value().replace("$player$", args[0]), sender);
 					return true;
 				}
 				
-				File dataFile = new File(main.instance.playerData, player.getUniqueId().toString() + ".yml");
+				File dataFile = new File(main.getInstance().playerData, player.getUniqueId().toString() + ".yml");
 				FileConfiguration fc = new YamlConfiguration();
 				fc.set("name", player.getName());
 				fc.set("kills", 0);
@@ -51,20 +51,20 @@ public class StatsCommand implements CommandExecutor {
 					fc.save(dataFile);
 				} catch (IOException e1) {}
 
-				main.messenger.sendMessage(MESSAGES.STATS_CLEARED.value().replace("$player$", args[0]), sender);
+				main.getInstance().getMessenger().sendMessage(MESSAGES.STATS_CLEARED.value().replace("$player$", args[0]), sender);
 				return true;
 				
-			} else if (args.length > 0 && main.instance.hasPermission(pl, "alchemicpvp.stats.other")) {
+			} else if (args.length > 0 && main.getInstance().hasPermission(pl, "alchemicpvp.stats.other")) {
 				OfflinePlayer player = Library.getOfflinePlayer(args[0]);
 				
 				if (player == null) {
-					main.messenger.sendMessage(MESSAGES.STATS_NOPLAYER.value().replace("$player$", args[0]), sender);
+					main.getInstance().getMessenger().sendMessage(MESSAGES.STATS_NOPLAYER.value().replace("$player$", args[0]), sender);
 					return true;
 				}
 				
-				File statsFile = new File(main.instance.playerData, player.getUniqueId().toString() + ".yml");
+				File statsFile = new File(main.getInstance().playerData, player.getUniqueId().toString() + ".yml");
 				if (!statsFile.exists()) {
-					main.messenger.sendMessage(MESSAGES.STATS_NOPLAYER.value().replace("$player$", args[0]), sender);
+					main.getInstance().getMessenger().sendMessage(MESSAGES.STATS_NOPLAYER.value().replace("$player$", args[0]), sender);
 					return true;
 				}
 				
@@ -80,7 +80,7 @@ public class StatsCommand implements CommandExecutor {
 				
 				
 			} else if (args.length > 0){
-				main.messenger.sendMessage(MESSAGES.SPY_PLAYEROFFLINE.value().replace("$player$", args[1]), sender);
+				main.getInstance().getMessenger().sendMessage(MESSAGES.SPY_PLAYEROFFLINE.value().replace("$player$", args[1]), sender);
 				return true;
 			} else {
 				stats = StatsMeta.getStats(pl);
@@ -118,11 +118,11 @@ public class StatsCommand implements CommandExecutor {
 				OfflinePlayer player = Library.getOfflinePlayer(args[0]);
 				
 				if (player == null) {
-					main.messenger.sendMessage(MESSAGES.STATS_NOPLAYER.value().replace("$player$", args[0]), sender);
+					main.getInstance().getMessenger().sendMessage(MESSAGES.STATS_NOPLAYER.value().replace("$player$", args[0]), sender);
 					return true;
 				}
 				
-				File dataFile = new File(main.instance.playerData, player.getUniqueId().toString() + ".yml");
+				File dataFile = new File(main.getInstance().playerData, player.getUniqueId().toString() + ".yml");
 				FileConfiguration fc = new YamlConfiguration();
 				fc.set("name", player.getName());
 				fc.set("kills", 0);
@@ -134,21 +134,21 @@ public class StatsCommand implements CommandExecutor {
 					fc.save(dataFile);
 				} catch (IOException e1) {}
 
-				main.messenger.sendMessage(MESSAGES.STATS_CLEARED.value().replace("$player$", args[0]), sender);
+				main.getInstance().getMessenger().sendMessage(MESSAGES.STATS_CLEARED.value().replace("$player$", args[0]), sender);
 				
 			}
 		} else if (args.length > 0) {
 			OfflinePlayer player = Library.getOfflinePlayer(args[0]);
 			
 			if (player == null) {
-				main.messenger.sendMessage(MESSAGES.STATS_NOPLAYER.value().replace("$player$", args[0]), sender);
+				main.getInstance().getMessenger().sendMessage(MESSAGES.STATS_NOPLAYER.value().replace("$player$", args[0]), sender);
 				return true;
 			}
-			File statsFile = new File(main.instance.playerData, player.getUniqueId() + ".yml");
+			File statsFile = new File(main.getInstance().playerData, player.getUniqueId() + ".yml");
 			System.out.println(statsFile);
 			
 			if (!statsFile.exists()) {
-				main.messenger.sendMessage(MESSAGES.STATS_NOPLAYER.value().replace("$player$", args[0]), sender);
+				main.getInstance().getMessenger().sendMessage(MESSAGES.STATS_NOPLAYER.value().replace("$player$", args[0]), sender);
 				return true;
 			}
 			PlayerStats stats;	

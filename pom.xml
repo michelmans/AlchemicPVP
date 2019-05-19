@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.alchemi</groupId>
   <artifactId>AlchemicPVP</artifactId>
-  <version>1.8.5</version>
+  <version>1.8.6</version>
   <name>AlchemicPVP</name>
   <build>
     <finalName>${project.name}</finalName>
@@ -38,6 +38,10 @@
       <id>vault-repo</id>
       <url>http://nexus.hc.to/content/repositories/pub_releases/</url>
     </repository>
+    <repository>
+        <id>sk89q-repo</id>
+        <url>http://maven.sk89q.com/repo/</url>
+    </repository>
   </repositories>
   
   <dependencies>
@@ -46,7 +50,6 @@
       <artifactId>spigot-api</artifactId>
       <version>1.13.2-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
-      
     </dependency>
     <dependency>
       <groupId>net.milkbowl.vault</groupId>
@@ -59,6 +62,12 @@
       <artifactId>AlchemicLibrary</artifactId>
       <version>LATEST</version>
       <scope>compile</scope>
+    </dependency>
+    <dependency>
+        <groupId>com.sk89q.worldguard</groupId>
+        <artifactId>worldguard-core</artifactId>
+        <version>LATEST</version>
+        <scope>provided</scope>
     </dependency>
   </dependencies>
 </project>

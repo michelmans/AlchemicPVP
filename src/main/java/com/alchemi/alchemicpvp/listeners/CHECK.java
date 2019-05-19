@@ -39,8 +39,8 @@ public class CHECK implements Listener{
 	
 	public CHECK(Player pl) {
 		
-		if (main.instance.getServer().getScoreboardManager().getMainScoreboard().getTeam("checkers") != null) checkers = main.instance.getServer().getScoreboardManager().getMainScoreboard().getTeam("checkers");
-		else checkers = main.instance.getServer().getScoreboardManager().getMainScoreboard().registerNewTeam("checkers");
+		if (main.getInstance().getServer().getScoreboardManager().getMainScoreboard().getTeam("checkers") != null) checkers = main.getInstance().getServer().getScoreboardManager().getMainScoreboard().getTeam("checkers");
+		else checkers = main.getInstance().getServer().getScoreboardManager().getMainScoreboard().registerNewTeam("checkers");
 		
 		checkers.setOption(Option.COLLISION_RULE, OptionStatus.NEVER);
 		
@@ -50,7 +50,7 @@ public class CHECK implements Listener{
 		
 		checkers.addEntry(getPlayer());
 		
-		main.instance.getServer().getPluginManager().registerEvents(this, main.instance);
+		main.getInstance().getServer().getPluginManager().registerEvents(this, main.getInstance());
 		if (!Library.hasMeta(pl, VanishMeta.class) || !Library.getMeta(pl, VanishMeta.class).asBoolean()) vanishToggle(pl);
 	}
 	
@@ -59,17 +59,17 @@ public class CHECK implements Listener{
 	}
 	
 	public static void vanishToggle(Player player) {
-		String prefix = main.instance.chat.getGroupPrefix(player.getWorld(), main.instance.chat.getPlayerGroups(player)[0]);
+		String prefix = main.getInstance().chat.getGroupPrefix(player.getWorld(), main.getInstance().chat.getPlayerGroups(player)[0]);
 		boolean vanish = false;
 		
 		if (Library.hasMeta(player, VanishMeta.class)) vanish = Library.getMeta(player, VanishMeta.class).asBoolean();
 		
-		for (Player OnPl : main.instance.getServer().getOnlinePlayers()) {
-			if (!main.instance.hasPermission(OnPl, "alchemicpvp.check.bypass")) {
+		for (Player OnPl : main.getInstance().getServer().getOnlinePlayers()) {
+			if (!main.getInstance().hasPermission(OnPl, "alchemicpvp.check.bypass")) {
 				if (vanish) {
-					OnPl.showPlayer(main.instance, player);
+					OnPl.showPlayer(main.getInstance(), player);
 				} else {
-					OnPl.hidePlayer(main.instance, player);
+					OnPl.hidePlayer(main.getInstance(), player);
 				}
 			}
 		}
@@ -79,17 +79,17 @@ public class CHECK implements Listener{
 			player.setPlayerListName(Messenger.cc(prefix + player.getName()));
 			if (Config.STATS.POTION_EFFECT.asBoolean()) player.removePotionEffect(PotionEffectType.INVISIBILITY);
 			vanish = false;
-			main.messenger.sendMessage(MESSAGES.UNVANISH.value(), player);
+			main.getInstance().getMessenger().sendMessage(MESSAGES.UNVANISH.value(), player);
 		}
 		else {
 			player.setPlayerListName(Messenger.cc(MESSAGES.CHECK_VANISHTAG.value() + prefix + player.getName()));
 			if (Config.STATS.POTION_EFFECT.asBoolean()) player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 100000, 9, true, false), true);
 			vanish = true;
-			main.messenger.sendMessage(MESSAGES.VANISH.value(), player);
+			main.getInstance().getMessenger().sendMessage(MESSAGES.VANISH.value(), player);
 		}
 		
-		player.removeMetadata(VanishMeta.class.getSimpleName(), main.instance);
-		player.setMetadata(VanishMeta.class.getSimpleName(), new VanishMeta(main.instance, vanish));
+		player.removeMetadata(VanishMeta.class.getSimpleName(), main.getInstance());
+		player.setMetadata(VanishMeta.class.getSimpleName(), new VanishMeta(main.getInstance(), vanish));
 		
 	}
 	
@@ -100,13 +100,13 @@ public class CHECK implements Listener{
 		checkers.removeEntry(getPlayer());
 				
 		HandlerList.unregisterAll(this);
-		main.instance.unRegisterCheck(getPlayer());
+		main.getInstance().unRegisterCheck(getPlayer());
 	}
 	
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent e) {
-		if ((((VanishMeta)player.getMetadata("vanish").get(0)).asBoolean()) && !main.instance.hasPermission(e.getPlayer(), "alchemicpvp.check.bypass")) {
-			e.getPlayer().hidePlayer(main.instance, player);
+		if ((((VanishMeta)player.getMetadata("vanish").get(0)).asBoolean()) && !main.getInstance().hasPermission(e.getPlayer(), "alchemicpvp.check.bypass")) {
+			e.getPlayer().hidePlayer(main.getInstance(), player);
 		}
 	}
 	
@@ -115,7 +115,7 @@ public class CHECK implements Listener{
 		if (e.getPlayer().equals(player)) {
 			e.getPlayer().performCommand("uncheck");
 		} else if (!e.getPlayer().canSee(player)) {
-			e.getPlayer().showPlayer(main.instance, player);
+			e.getPlayer().showPlayer(main.getInstance(), player);
 		}
 		
 	}
@@ -124,7 +124,7 @@ public class CHECK implements Listener{
 	public void onShootBow(EntityShootBowEvent e) {
 		if (e.getEntityType().equals(EntityType.PLAYER) && ((Player)e.getEntity()).equals(player)) {
 			e.setCancelled(true);
-			main.messenger.sendMessage(MESSAGES.CHECK_NOHURTING.value(), player);
+			main.getInstance().getMessenger().sendMessage(MESSAGES.CHECK_NOHURTING.value(), player);
 		}
 	}
 	
@@ -133,7 +133,7 @@ public class CHECK implements Listener{
 		
 		if (e.getPlayer().equals(player) && e.getItem() != null && !e.getItem().equals(air)) {
 			
-			main.instance.getServer().getScheduler().runTaskLater(main.instance, new Runnable() {
+			main.getInstance().getServer().getScheduler().runTaskLater(main.getInstance(), new Runnable() {
 				
 				@Override
 				public void run() {
@@ -151,7 +151,7 @@ public class CHECK implements Listener{
 		
 		if (player.equals(this.player) && !e.getCurrentItem().equals(air)) {
 			if (e.getSlotType() != SlotType.OUTSIDE) {
-				main.instance.getServer().getScheduler().runTaskLater(main.instance, new Runnable() {
+				main.getInstance().getServer().getScheduler().runTaskLater(main.getInstance(), new Runnable() {
 					
 					@Override
 					public void run() {
@@ -181,7 +181,7 @@ public class CHECK implements Listener{
 		
 		if (e.getDamager() instanceof Player && ((Player) e.getDamager()).equals(this.player)) {
 			e.setCancelled(true);
-			main.messenger.sendMessage(MESSAGES.CHECK_NOHURTING.value(), player);
+			main.getInstance().getMessenger().sendMessage(MESSAGES.CHECK_NOHURTING.value(), player);
 		}
 	}
 	

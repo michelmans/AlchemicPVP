@@ -15,38 +15,38 @@ public class SpyCommand implements CommandExecutor{
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		
-		if (sender instanceof Player && main.instance.hasPermission(sender, "alchemicpvp.spy")) {
+		if (sender instanceof Player && main.getInstance().hasPermission(sender, "alchemicpvp.spy")) {
 			
 			
-			if (args.length > 1 && args[0].equalsIgnoreCase("ignore") && main.instance.spies.containsKey(sender.getName())) {
+			if (args.length > 1 && args[0].equalsIgnoreCase("ignore") && main.getInstance().spies.containsKey(sender.getName())) {
 				
 				if (Bukkit.getPlayer(args[1]) == null) {
-					main.messenger.sendMessage(MESSAGES.SPY_PLAYEROFFLINE.value().replace("$player$", args[1]), sender);
+					main.getInstance().getMessenger().sendMessage(MESSAGES.SPY_PLAYEROFFLINE.value().replace("$player$", args[1]), sender);
 					return true;
 				}
-				main.instance.spies.get(sender.getName()).ignorePlayer(Bukkit.getPlayer(args[1]));
+				main.getInstance().spies.get(sender.getName()).ignorePlayer(Bukkit.getPlayer(args[1]));
 				return true;
-			} else if (args.length > 1 && args[0].equalsIgnoreCase("unignore") && main.instance.spies.containsKey(sender.getName())) {
+			} else if (args.length > 1 && args[0].equalsIgnoreCase("unignore") && main.getInstance().spies.containsKey(sender.getName())) {
 				
 				if (Bukkit.getPlayer(args[1]) == null) {
-					main.messenger.sendMessage(MESSAGES.SPY_PLAYEROFFLINE.value().replace("$player$", args[1]), sender);
+					main.getInstance().getMessenger().sendMessage(MESSAGES.SPY_PLAYEROFFLINE.value().replace("$player$", args[1]), sender);
 					return true;
 				}
-				main.instance.spies.get(sender.getName()).unIgnorePlayer(Bukkit.getPlayer(args[1]));
+				main.getInstance().spies.get(sender.getName()).unIgnorePlayer(Bukkit.getPlayer(args[1]));
 				return true;
 			}
 			
 			
-			if (main.instance.spies.containsKey(sender.getName())) {
-				main.instance.spies.remove(sender.getName());
-				main.messenger.sendMessage(MESSAGES.SPY_STOP.value(), sender);
+			if (main.getInstance().spies.containsKey(sender.getName())) {
+				main.getInstance().spies.remove(sender.getName());
+				main.getInstance().getMessenger().sendMessage(MESSAGES.SPY_STOP.value(), sender);
 			} else {
-				main.instance.spies.put(sender.getName(), new SpyListener((Player) sender));
-				main.messenger.sendMessage(MESSAGES.SPY_START.value(), sender);
+				main.getInstance().spies.put(sender.getName(), new SpyListener((Player) sender));
+				main.getInstance().getMessenger().sendMessage(MESSAGES.SPY_START.value(), sender);
 			}
 			
 		} else if (sender instanceof Player) {
-			main.messenger.sendMessage(MESSAGES.NO_PERMISSION.value().replace("$command$", command.getName()), sender);
+			main.getInstance().getMessenger().sendMessage(MESSAGES.NO_PERMISSION.value().replace("$command$", command.getName()), sender);
 		}
 		return true;
 	}

@@ -24,14 +24,14 @@ public class StatsTabComplete implements TabCompleter {
 			return tabSuggest;
 
 		if (args.length == 1 
-				&& (main.instance.hasPermission(sender, "alchemicpvp.stats.other") 
-						|| main.instance.hasPermission(sender, "alchemicpvp.stats.clear"))) {
+				&& (main.getInstance().hasPermission(sender, "alchemicpvp.stats.other") 
+						|| main.getInstance().hasPermission(sender, "alchemicpvp.stats.clear"))) {
 			
 			for (Player p : Bukkit.getServer().getOnlinePlayers()) {
 				list.add(p.getName());
 			}
 				
-		} else if (args.length == 2 && main.instance.hasPermission(sender, "alchemicpvp.statc.clear")) {
+		} else if (args.length == 2 && main.getInstance().hasPermission(sender, "alchemicpvp.statc.clear")) {
 			
 			list.add("clear");
 			

@@ -16,11 +16,11 @@ public class UncheckCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-		if (sender instanceof Player && main.instance.hasPermission(sender, "alchemicpvp.check")) {
+		if (sender instanceof Player && main.getInstance().hasPermission(sender, "alchemicpvp.check")) {
 			Player player = (Player) sender;
-			CHECK check = main.instance.getCheckPlayer(player.getName());
+			CHECK check = main.getInstance().getCheckPlayer(player.getName());
 			if (check == null) {
-				main.messenger.sendMessage(MESSAGES.CHECK_NOTCHECK.value(), player);
+				main.getInstance().getMessenger().sendMessage(MESSAGES.CHECK_NOTCHECK.value(), player);
 				return true;
 			}
 			
@@ -33,10 +33,10 @@ public class UncheckCommand implements CommandExecutor {
 			if (args.length <= 0 || args[0].equals("true")) player.teleport(Config.SPAWN);
 			player.setAllowFlight(false);
 			
-			main.messenger.sendMessage(MESSAGES.CHECK_UNCHECK.value(), sender);
+			main.getInstance().getMessenger().sendMessage(MESSAGES.CHECK_UNCHECK.value(), sender);
 			
 		} else if (sender instanceof Player) {
-			main.messenger.sendMessage(MESSAGES.NO_PERMISSION.value().replace("$command$", command.getName()), sender);
+			main.getInstance().getMessenger().sendMessage(MESSAGES.NO_PERMISSION.value().replace("$command$", command.getName()), sender);
 		}
 		
 		

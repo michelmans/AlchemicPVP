@@ -14,19 +14,19 @@ public class SudoCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		
-		if (main.instance.hasPermission(sender, "alchemicpvp.sudo")) {
+		if (main.getInstance().hasPermission(sender, "alchemicpvp.sudo")) {
 			
 			String msg = "";
 			if (args.length < 2) {
-				msg = MESSAGES.COMMANDS_WRONG_FORMAT.value() + main.instance.getCommand("sudo").getUsage();
-				main.messenger.sendMessage(msg, sender);
+				msg = MESSAGES.COMMANDS_WRONG_FORMAT.value() + main.getInstance().getCommand("sudo").getUsage();
+				main.getInstance().getMessenger().sendMessage(msg, sender);
 				return true;
 			} else {
 				
 				Player user = Bukkit.getPlayer(args[0]);
 				if (user == null) {
 					msg = MESSAGES.SUDO_PLAYEROFFLINE.value().replace("$player$", args[0]);
-					main.messenger.sendMessage(msg, sender);
+					main.getInstance().getMessenger().sendMessage(msg, sender);
 				}
 				
 				String cmd = "";
@@ -38,7 +38,7 @@ public class SudoCommand implements CommandExecutor {
 				
 				user.performCommand(cmd);
 				msg = MESSAGES.SUDO_SUDO.value().replace("$player$", user.getDisplayName()).replace("$command$", cmd);
-				main.messenger.sendMessage(msg, sender);
+				main.getInstance().getMessenger().sendMessage(msg, sender);
 			}
 			
 		}

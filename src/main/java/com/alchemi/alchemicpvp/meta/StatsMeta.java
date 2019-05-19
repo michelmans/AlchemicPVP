@@ -22,9 +22,9 @@ public class StatsMeta extends BaseMeta {
 	public static final String NAME = "stats";
 	
 	public StatsMeta(Player player) {
-		super(main.instance, stats);
+		super(main.getInstance(), stats);
 		
-		File dataFile = new File(main.instance.playerData, player.getUniqueId().toString() + ".yml");
+		File dataFile = new File(main.getInstance().playerData, player.getUniqueId().toString() + ".yml");
 		FileConfiguration fc = new YamlConfiguration();
 		if (!dataFile.exists()) {
 			fc.set("name", player.getName());

@@ -26,20 +26,20 @@ public class NickCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		
-		if (sender instanceof Player && main.instance.hasPermission(sender, "alchemicpvp.nick") && args.length == 1) {
+		if (sender instanceof Player && main.getInstance().hasPermission(sender, "alchemicpvp.nick") && args.length == 1) {
 			Player player = (Player) sender;
 			
 			Matcher m = Pattern.compile("&[1234567890klnor]").matcher(args[0]);
 			
 			if (args[0].length() > Config.NICKNAME.CHARACTERLIMIT.asInt()) {
-				main.messenger.sendMessage(MESSAGES.NICK_TOOLONG.value()
+				main.getInstance().getMessenger().sendMessage(MESSAGES.NICK_TOOLONG.value()
 						.replace("$name$", args[0])
 						.replace("$amount$", Config.NICKNAME.CHARACTERLIMIT.asString()), sender);
 				
 				return true;
 			} 
 			
-			if (m.find() && !main.instance.hasPermission(sender, "alchemicpvp.nick.format") && !Config.NICKNAME.ALLOW_FORMAT.asBoolean()) {
+			if (m.find() && !main.getInstance().hasPermission(sender, "alchemicpvp.nick.format") && !Config.NICKNAME.ALLOW_FORMAT.asBoolean()) {
 				sender.sendMessage(Messenger.cc(MESSAGES.NICK_NOFORMAT.value()
 						.replace("$name$", args[0])
 						.replace("$eg$", "&k, &6, &1, etc.")));
@@ -63,12 +63,12 @@ public class NickCommand implements CommandExecutor {
 			player.setMetadata(NickMeta.class.getSimpleName(), new NickMeta(args[0]));
 			StatsMeta.getStats(player).setNickname(args[0]);
 			
-			main.messenger.sendMessage(MESSAGES.NICK_NEW.value()
+			main.getInstance().getMessenger().sendMessage(MESSAGES.NICK_NEW.value()
 					.replace("$name$", args[0])
 					.replace("$player$", sender.getName()), sender);
 			
 		} else if (sender instanceof Player) {
-			main.messenger.sendMessage(MESSAGES.NO_PERMISSION.value().replace("$command$", command.getName()), sender);
+			main.getInstance().getMessenger().sendMessage(MESSAGES.NO_PERMISSION.value().replace("$command$", command.getName()), sender);
 		}
 		
 		return true;

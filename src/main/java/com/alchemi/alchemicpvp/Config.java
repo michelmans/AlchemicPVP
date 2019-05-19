@@ -1,8 +1,12 @@
 package com.alchemi.alchemicpvp;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -12,35 +16,60 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.inventory.ItemStack;
 
 import com.alchemi.al.configurations.SexyConfiguration;
-import com.alchemi.al.objects.SexyLocation;
+import com.alchemi.al.objects.base.ConfigBase;
+import com.alchemi.al.objects.handling.SexyLocation;
 
-public class Config {
+public class Config extends ConfigBase{
 
-	public static SexyConfiguration config;
-	public static SexyConfiguration messages;
-
-	private interface ConfigInterface {
+	public Config() throws FileNotFoundException, IOException, InvalidConfigurationException {
+		super(main.getInstance());
 		
-		Object value();
+		immediateConsuming = ConfigEnum.CONFIG.getConfig().getBoolean("immediateConsuming", true);
 		
-		void get();
+		if (!ConfigEnum.CONFIG.getConfig().isSet("SPAWN")) SPAWN = Bukkit.getWorlds().get(0).getSpawnLocation();
+		else {
+			try { SPAWN = new SexyLocation(ConfigEnum.CONFIG.getConfig().getConfigurationSection("SPAWN")).getLocation(); }
+			catch (Exception e) { SPAWN = Bukkit.getWorlds().get(0).getSpawnLocation(); }
+		}
 		
-		boolean asBoolean();
-		
-		String asString();
-		
-		Sound asSound();
-		
-		List<String> asStringList();
-		
-		int asInt();
-		
-		ItemStack asItemStack();
-		
-		Material asMaterial();
+		deathMessages = ConfigEnum.MESSAGES.getConfig().getStringList("AlchemicPVP.DeathMessages");
 	}
-	
-	public static enum WANDS implements ConfigInterface {
+
+	public static enum ConfigEnum implements IConfigEnum {
+		
+		CONFIG(new File(main.getInstance().getDataFolder(), "config.yml"), 5),
+		MESSAGES(new File(main.getInstance().getDataFolder(), "messages.yml"), 6);
+
+		final File file;
+		final int version;
+		SexyConfiguration config;
+		
+		private ConfigEnum(File file, int version) {
+			this.file = file;
+			this.version = version;
+			this.config = SexyConfiguration.loadConfiguration(file);
+		}
+		
+		@Override
+		public SexyConfiguration getConfig() {
+			return config;
+		}
+
+		@Override
+		public File getFile() {
+			return file;
+		}
+
+		@Override
+		public int getVersion() {
+			return version;
+		}
+		
+		
+		
+	}
+
+	public static enum WANDS implements IConfig {
 		MAGIC_ENABLED("wand.enabled"),
 		MAGIC_NAME("wand.name"),
 		MAGIC_MATERIAL("wand.material"),
@@ -67,7 +96,7 @@ public class Config {
 		@Override
 		public void get() {
 
-			this.value = config.get(this.path);
+			this.value = getConfig().get(this.path);
 			
 		}
 
@@ -105,10 +134,20 @@ public class Config {
 		public Material asMaterial() {
 			return Material.getMaterial(asString());
 		}
+
+		@Override
+		public SexyConfiguration getConfig() {
+			return ConfigEnum.CONFIG.getConfig();
+		}
+
+		@Override
+		public String key() {
+			return path;
+		}
 		
 	}
 	
-	public static enum STATS implements ConfigInterface {
+	public static enum STATS implements IConfig {
 		
 		POTION_EFFECT("Stats.potionEffect"),
 		DEATHMESSAGES("Stats.deathMessages");
@@ -121,11 +160,9 @@ public class Config {
 			get();
 		}
 		
-		
-		
 		@Override
 		public void get() {
-			value = config.get(key);
+			value = getConfig().get(key);
 		}
 
 		@Override
@@ -173,9 +210,19 @@ public class Config {
 		public Material asMaterial() {
 			return Material.valueOf(asString());
 		}
+
+		@Override
+		public String key() {
+			return key;
+		}
+
+		@Override
+		public SexyConfiguration getConfig() {
+			return ConfigEnum.CONFIG.getConfig();
+		}
 	}
 	
-	public static enum NICKNAME implements ConfigInterface{
+	public static enum NICKNAME implements IConfig{
 		
 		ALLOW_FORMAT("Nickname.allowFormat"),
 		CHARACTERLIMIT("Nickname.characterlimit");
@@ -189,7 +236,7 @@ public class Config {
 
 		@Override
 		public void get() {
-			value = config.get(key);
+			value = getConfig().get(key);
 		}
 
 		@Override
@@ -237,10 +284,20 @@ public class Config {
 		public Material asMaterial() {
 			return Material.valueOf(asString());
 		}
+
+		@Override
+		public String key() {
+			return key;
+		}
+
+		@Override
+		public SexyConfiguration getConfig() {
+			return ConfigEnum.CONFIG.getConfig();
+		}
 		
 	}
 	
-	public static enum MESSAGE implements ConfigInterface{
+	public static enum MESSAGE implements IConfig{
 		
 		MENTION_TAG("Message.mentionTag"),
 		MENTION_COLOUR("Message.mentionColour"),
@@ -257,7 +314,7 @@ public class Config {
 
 		@Override
 		public void get() {
-			value = config.get(key);
+			value = getConfig().get(key);
 		}
 
 		@Override
@@ -308,10 +365,20 @@ public class Config {
 		public Material asMaterial() {
 			return Material.valueOf(asString());
 		}
+
+		@Override
+		public String key() {
+			return key;
+		}
+
+		@Override
+		public SexyConfiguration getConfig() {
+			return ConfigEnum.CONFIG.getConfig();
+		}
 		
 	}
 
-	public static enum MESSAGES{
+	public static enum MESSAGES implements IMessage {
 		
 		NO_PERMISSION("AlchemicPVP.Commands.NoPermission"),
 		COMMANDS_WRONG_FORMAT("AlchemicPVP.Commands.WrongFormat"),
@@ -373,12 +440,22 @@ public class Config {
 		}
 		
 		public void get() { 
-			value = messages.getString(key, "PLACEHOLDER - STRING NOT FOUND");
+			value = getConfig().getString(key, "PLACEHOLDER - STRING NOT FOUND");
 			
 		}
 		
 		public String value() {
 			return value;
+		}
+
+		@Override
+		public String key() {
+			return key;
+		}
+
+		@Override
+		public SexyConfiguration getConfig() {
+			return ConfigEnum.MESSAGES.getConfig();
 		}
 	}
 	
@@ -388,102 +465,56 @@ public class Config {
 	
 	public static List<String> deathMessages;
 	
-	public static void enable() throws IOException, InvalidConfigurationException {
+	@Override
+	public void reload() {
+		super.reload();
+		deathMessages = ConfigEnum.MESSAGES.getConfig().getStringList("AlchemicPVP.DeathMessages");
+		immediateConsuming = ConfigEnum.CONFIG.getConfig().getBoolean("immediateConsuming", true);
 		
-		config = SexyConfiguration.loadConfiguration(main.CONFIG_FILE);
-		messages = SexyConfiguration.loadConfiguration(main.MESSAGES_FILE);
-		
-		immediateConsuming = config.getBoolean("immediateConsuming", true);
-		
-		if (!config.isSet("SPAWN")) SPAWN = Bukkit.getWorlds().get(0).getSpawnLocation();
-		else {
-			try { SPAWN = new SexyLocation(config.getConfigurationSection("SPAWN")).getLocation(); }
-			catch (Exception e) { SPAWN = Bukkit.getWorlds().get(0).getSpawnLocation(); }
-		}
-		for (SexyConfiguration file : new SexyConfiguration[] {messages, config}) {
-			int version;
-			if (file.equals(config)) version = main.CONFIG_FILE_VERSION; 
-			else if (file.equals(messages)) version = main.MESSAGES_FILE_VERSION; 
-			else version = 0;
-				  
-			if(!file.getFile().exists()) main.instance.saveResource(file.getFile().getName(), false);
-			  
-			if(!file.isSet("File-Version-Do-Not-Edit") ||
-					!file.get("File-Version-Do-Not-Edit").equals(version)) {
-				
-				main.messenger.print("Your $file$ is outdated! Updating...".replace("$file$", file.getFile().getName())); 
-				file.load(new InputStreamReader(main.instance.getResource(file.getFile().getName())));
-				file.update(SexyConfiguration.loadConfiguration(new InputStreamReader(main.instance.getResource(file.getFile().getName()))));
-				file.set("File-Version-Do-Not-Edit", version);
-				file.save();
-				main.messenger.print("File successfully updated!");
-			} 
-		}
-		
-		for (WANDS value : WANDS.values()) value.get();
-					 
-		for (STATS value : STATS.values()) value.get();
-		
-		for (NICKNAME value : NICKNAME.values()) value.get();
-		
-		for (MESSAGE value : MESSAGE.values()) value.get();
-		
-		for (MESSAGES value : MESSAGES.values()) value.get();
-		
-		deathMessages = messages.getStringList("AlchemicPVP.DeathMessages");
-	}
-	
-	public static void reload() {
-		config = SexyConfiguration.loadConfiguration(main.CONFIG_FILE);
-		messages = SexyConfiguration.loadConfiguration(main.MESSAGES_FILE);
-		
-		for (WANDS value : WANDS.values()) value.get();
-		 
-		for (STATS value : STATS.values()) value.get();
-		
-		for (NICKNAME value : NICKNAME.values()) value.get();
-		
-		for (MESSAGE value : MESSAGE.values()) value.get();
-		
-		for (MESSAGES value : MESSAGES.values()) value.get();
-		
-		deathMessages = messages.getStringList("AlchemicPVP.DeathMessages");
-		immediateConsuming = config.getBoolean("immediateConsuming", true);
-		
-		try { SPAWN = new SexyLocation(config.getConfigurationSection("SPAWN")).getLocation(); }
+		try { SPAWN = new SexyLocation(ConfigEnum.CONFIG.getConfig().getConfigurationSection("SPAWN")).getLocation(); }
 		catch (Exception e) { SPAWN = Bukkit.getWorlds().get(0).getSpawnLocation(); }
 	}
 	
-	public static void save() {
-		for (WANDS value : WANDS.values()) {
-			config.set(value.path, value.value);
-		}
-		 
-		for (STATS value : STATS.values()) {
-			config.set(value.key, value.value);
-		}
+	@Override
+	public void save() {
 		
-		for (NICKNAME value : NICKNAME.values()) {
-			config.set(value.key, value.value);
-		}
-		
-		for (MESSAGE value : MESSAGE.values()) {
-			config.set(value.key, value.value);
-		}
-		
-		for (MESSAGES value : MESSAGES.values()) {
-			messages.set(value.key, value.value);
-		}
-		config.createSection("SPAWN", new SexyLocation(SPAWN).getSection().getValues(true));
-		config.set("immediateConsuming", immediateConsuming);
-		messages.set("AlchemicPVP.DeathMessages", deathMessages);
+		ConfigEnum.CONFIG.getConfig().createSection("SPAWN", new SexyLocation(SPAWN).getSection().getValues(true));
+		ConfigEnum.CONFIG.getConfig().set("immediateConsuming", immediateConsuming);
+		ConfigEnum.MESSAGES.getConfig().set("AlchemicPVP.DeathMessages", deathMessages);
 		try {
-			config.save();
-			messages.save();
+			ConfigEnum.CONFIG.getConfig().save();
+			ConfigEnum.MESSAGES.getConfig().save();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
+		super.save();
+	}
+
+	@Override
+	protected IConfigEnum[] getConfigs() {
+		return ConfigEnum.values();
+	}
+
+	@Override
+	protected Set<IConfig> getEnums() {
+		return new HashSet<IConfig>() {
+			{
+				addAll(Arrays.asList(WANDS.values()));
+				addAll(Arrays.asList(STATS.values()));
+				addAll(Arrays.asList(NICKNAME.values()));
+				addAll(Arrays.asList(MESSAGE.values()));
+			}
+		};
+	}
+
+	@Override
+	protected Set<IMessage> getMessages() {
+		return new HashSet<IMessage>() {
+			{
+				addAll(Arrays.asList(MESSAGES.values()));
+			}
+		};
 	}
 	
 }

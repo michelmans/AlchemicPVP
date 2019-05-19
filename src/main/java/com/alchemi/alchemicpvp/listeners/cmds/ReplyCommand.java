@@ -15,7 +15,7 @@ import com.alchemi.alchemicpvp.meta.StatsMeta;
 
 public class ReplyCommand implements CommandExecutor {
 
-	private Messenger msgnr = main.messenger;
+	private Messenger msgnr = main.getInstance().getMessenger();
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

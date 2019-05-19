@@ -8,10 +8,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import com.alchemi.al.configurations.Messenger;
-import com.alchemi.al.deprecated.FileManager;
+import com.alchemi.al.objects.base.PluginBase;
 import com.alchemi.alchemicpvp.listeners.CHECK;
 import com.alchemi.alchemicpvp.listeners.Events;
 import com.alchemi.alchemicpvp.listeners.ItemListeners;
@@ -36,23 +35,16 @@ import com.alchemi.alchemicpvp.listeners.tabcomplete.StatsTabComplete;
 
 import net.milkbowl.vault.chat.Chat;
 
-public class main extends JavaPlugin {
+public class main extends PluginBase {
 
-	public static main instance;
+	private static main instance;
 	
 	public Chat chat;
 	public static boolean AnimatedNames = false;
 	
-	public static Messenger messenger;
-	public static FileManager fileManager;
-	
 	public StaffChat staffChat;
 	
-	public static final int MESSAGES_FILE_VERSION = 6;
-	public static final int CONFIG_FILE_VERSION = 5;
-	
-	public static File MESSAGES_FILE;
-	public static File CONFIG_FILE;
+	public static Config config;
 	
 	public File playerData;
 	
@@ -64,13 +56,10 @@ public class main extends JavaPlugin {
 	public void onEnable() {
 		instance = this;
 		
-		MESSAGES_FILE = new File(getDataFolder(), "messages.yml");
-		CONFIG_FILE = new File(getDataFolder(), "config.yml");
-		
-		messenger = new Messenger(this);
+		setMessenger(new Messenger(this));
 		
 		try {
-			Config.enable();
+			config = new Config();
 		} catch (IOException | InvalidConfigurationException e) {
 			
 			getServer().getPluginManager().disablePlugin(this);
@@ -153,4 +142,7 @@ public class main extends JavaPlugin {
 		if (checkedPlayers.containsKey(name)) checkedPlayers.remove(name);
 	}
 	
+	public static main getInstance() {
+		return instance;
+	}
 }

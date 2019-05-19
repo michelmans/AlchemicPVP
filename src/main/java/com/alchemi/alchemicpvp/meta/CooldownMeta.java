@@ -16,13 +16,13 @@ public class CooldownMeta extends BaseMeta {
 	public Player player;
 	
 	public CooldownMeta(int cooldown, Player player) {
-		super(main.instance, false);
+		super(main.getInstance(), false);
 		value = false;
 		remainingTicks = 20;
 		remaining = cooldown;
 		this.player = player;
 		player.setLevel(cooldown);
-		task = Bukkit.getScheduler().runTaskTimerAsynchronously(main.instance, new Runnable() {
+		task = Bukkit.getScheduler().runTaskTimerAsynchronously(main.getInstance(), new Runnable() {
 			
 			@Override
 			public void run() {

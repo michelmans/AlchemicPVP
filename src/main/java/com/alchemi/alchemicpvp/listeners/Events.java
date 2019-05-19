@@ -36,9 +36,9 @@ public class Events implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent e) {
 		e.getPlayer().getInventory().clear();
 		
-		if (main.instance.hasPermission(e.getPlayer(), "alchemicpvp.spy") && !main.instance.spies.containsKey(e.getPlayer().getName())) e.getPlayer().performCommand("socialspy");
+		if (main.getInstance().hasPermission(e.getPlayer(), "alchemicpvp.spy") && !main.getInstance().spies.containsKey(e.getPlayer().getName())) e.getPlayer().performCommand("socialspy");
 		
-		if (!Library.hasMeta(e.getPlayer(), VanishMeta.class)) e.getPlayer().setMetadata(VanishMeta.class.getSimpleName(), new VanishMeta(main.instance, false));
+		if (!Library.hasMeta(e.getPlayer(), VanishMeta.class)) e.getPlayer().setMetadata(VanishMeta.class.getSimpleName(), new VanishMeta(main.getInstance(), false));
 		e.getPlayer().setMetadata(StatsMeta.class.getSimpleName(), new StatsMeta(e.getPlayer()));
 		if (!Library.hasMeta(e.getPlayer(), NickMeta.class)) e.getPlayer().setMetadata(NickMeta.class.getSimpleName(), new NickMeta(StatsMeta.getStats(e.getPlayer()).getNickname()));
 		
@@ -91,17 +91,17 @@ public class Events implements Listener {
 		
 		Random rand = new Random();
 		
-		if (Config.deathMessages.size() > 1) main.messenger.broadcast(Config.deathMessages.get(rand.nextInt(Config.deathMessages.size()))
+		if (Config.deathMessages.size() > 1) main.getInstance().getMessenger().broadcast(Config.deathMessages.get(rand.nextInt(Config.deathMessages.size()))
 				.replace("$victim$", e.getEntity().getDisplayName())
 				.replace("$killer$", e.getEntity().getKiller().getDisplayName())
 				.replace("$item$", itemKill), false);
-		else main.messenger.print(Config.deathMessages);
+		else main.getInstance().getMessenger().print(Config.deathMessages);
 	}
 	
 	@EventHandler
 	public void onPlayerLeave(PlayerQuitEvent e) {
-		if (main.instance.hasPermission(e.getPlayer(), "alchemicpvp.spy") && main.instance.spies.containsKey(e.getPlayer().getName())) e.getPlayer().performCommand("socialspy");
-		for (SpyListener sl : main.instance.spies.values()) {
+		if (main.getInstance().hasPermission(e.getPlayer(), "alchemicpvp.spy") && main.getInstance().spies.containsKey(e.getPlayer().getName())) e.getPlayer().performCommand("socialspy");
+		for (SpyListener sl : main.getInstance().spies.values()) {
 			if (sl.isIgnoring(e.getPlayer())) sl.unIgnorePlayer(e.getPlayer());
 		}
 	}

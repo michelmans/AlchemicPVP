@@ -15,28 +15,28 @@ public class CheckCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-		if (sender instanceof Player && main.instance.hasPermission(sender, "alchemicpvp.check")) {
+		if (sender instanceof Player && main.getInstance().hasPermission(sender, "alchemicpvp.check")) {
 			
 			Player player = (Player) sender;
-			if (main.instance.getCheckPlayer(player.getName()) != null) {
-				main.messenger.sendMessage(MESSAGES.CHECK_ALREADYCHECK.value(), player);
+			if (main.getInstance().getCheckPlayer(player.getName()) != null) {
+				main.getInstance().getMessenger().sendMessage(MESSAGES.CHECK_ALREADYCHECK.value(), player);
 				return true;
 			}
 			
 			if (args.length > 0) {
-				if (Bukkit.getPlayer(args[0]) == null) main.messenger.sendMessage(MESSAGES.CHECK_PLAYEROFFLINE.value().replace("$player$", args[0]), player);
+				if (Bukkit.getPlayer(args[0]) == null) main.getInstance().getMessenger().sendMessage(MESSAGES.CHECK_PLAYEROFFLINE.value().replace("$player$", args[0]), player);
 				
 				else {
 					player.teleport(Bukkit.getPlayer(args[0]));
-					main.messenger.sendMessage(MESSAGES.CHECK_TELEPORT.value().replace("$player$", args[0]), player);
+					main.getInstance().getMessenger().sendMessage(MESSAGES.CHECK_TELEPORT.value().replace("$player$", args[0]), player);
 				}
 			}
 			
-			main.instance.registerCheck(new CHECK(player)); 
-			main.messenger.sendMessage(MESSAGES.CHECK_CHECK.value(), player);
+			main.getInstance().registerCheck(new CHECK(player)); 
+			main.getInstance().getMessenger().sendMessage(MESSAGES.CHECK_CHECK.value(), player);
 			
 		}  else if (sender instanceof Player) {
-			main.messenger.sendMessage(MESSAGES.NO_PERMISSION.value().replace("$command$", command.getName()), sender);
+			main.getInstance().getMessenger().sendMessage(MESSAGES.NO_PERMISSION.value().replace("$command$", command.getName()), sender);
 		}
 		
 		return true;

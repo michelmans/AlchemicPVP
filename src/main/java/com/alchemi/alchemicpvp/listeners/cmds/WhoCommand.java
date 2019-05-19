@@ -14,13 +14,13 @@ public class WhoCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		
-		if (main.instance.hasPermission(sender, "alchemicpvp.whois") && args.length > 0) {
+		if (main.getInstance().hasPermission(sender, "alchemicpvp.whois") && args.length > 0) {
 			Player answer = whoIs(args[0]);
 			if (answer == null) {
-				main.messenger.sendMessage(MESSAGES.NICK_NOONE.value().replace("$nick$", args[0]), sender);
+				main.getInstance().getMessenger().sendMessage(MESSAGES.NICK_NOONE.value().replace("$nick$", args[0]), sender);
 				return true;
 			}
-			main.messenger.sendMessage(MESSAGES.NICK_IS.value()
+			main.getInstance().getMessenger().sendMessage(MESSAGES.NICK_IS.value()
 					.replace("$name$", answer.getDisplayName())
 					.replace("$player$", answer.getName()), sender);
 		}

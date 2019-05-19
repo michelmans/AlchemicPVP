@@ -14,27 +14,27 @@ public class SmiteCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		if (main.instance.hasPermission(sender, "alchemicpvp.smite")) {
+		if (main.getInstance().hasPermission(sender, "alchemicpvp.smite")) {
 			Location smite;
 			if (args.length == 0) {
 				if (sender instanceof Player) {
 					smite = ((Player) sender).getLocation();
-					main.messenger.sendMessage(MESSAGES.SMITE_SMITTEN.value(), sender);
-					main.messenger.sendMessage(MESSAGES.SMITE_SMITESENT.value().replace("$player$", sender.getName()), sender);
+					main.getInstance().getMessenger().sendMessage(MESSAGES.SMITE_SMITTEN.value(), sender);
+					main.getInstance().getMessenger().sendMessage(MESSAGES.SMITE_SMITESENT.value().replace("$player$", sender.getName()), sender);
 				} else {
-					main.messenger.sendMessage(MESSAGES.SMITE_PROVIDE.value(), sender);
+					main.getInstance().getMessenger().sendMessage(MESSAGES.SMITE_PROVIDE.value(), sender);
 					return true;
 				}
 			} else {
 				if (Bukkit.getPlayer(args[0]) == null || !Bukkit.getPlayer(args[0]).isOnline()) {
-					main.messenger.sendMessage(MESSAGES.SMITE_PLAYEROFFLINE.value().replace("$player$", args[0]), sender);
+					main.getInstance().getMessenger().sendMessage(MESSAGES.SMITE_PLAYEROFFLINE.value().replace("$player$", args[0]), sender);
 					return true;
 				}
 				
 				smite = Bukkit.getPlayer(args[0]).getLocation();
 				
-				main.messenger.sendMessage(MESSAGES.SMITE_SMITTEN.value(), Bukkit.getPlayer(args[0]));
-				main.messenger.sendMessage(MESSAGES.SMITE_SMITESENT.value().replace("$player$", args[0]), sender);
+				main.getInstance().getMessenger().sendMessage(MESSAGES.SMITE_SMITTEN.value(), Bukkit.getPlayer(args[0]));
+				main.getInstance().getMessenger().sendMessage(MESSAGES.SMITE_SMITESENT.value().replace("$player$", args[0]), sender);
 				
 			}
 			
@@ -42,7 +42,7 @@ public class SmiteCommand implements CommandExecutor {
 			
 			
 		} else if (sender instanceof Player) {
-			main.messenger.sendMessage(MESSAGES.NO_PERMISSION.value().replace("$command$", command.getName()), sender);
+			main.getInstance().getMessenger().sendMessage(MESSAGES.NO_PERMISSION.value().replace("$command$", command.getName()), sender);
 		}
 		
 		return true;

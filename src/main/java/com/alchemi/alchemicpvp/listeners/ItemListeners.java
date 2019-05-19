@@ -27,7 +27,7 @@ import com.alchemi.alchemicpvp.meta.CooldownMeta;
 public class ItemListeners implements Listener{
 
 	public ItemListeners() {
-		Bukkit.getServer().getPluginManager().registerEvents(this, main.instance);
+		Bukkit.getServer().getPluginManager().registerEvents(this, main.getInstance());
 	}
 	
 	@EventHandler

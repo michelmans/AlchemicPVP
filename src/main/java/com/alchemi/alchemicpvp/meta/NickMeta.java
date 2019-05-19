@@ -10,7 +10,7 @@ public class NickMeta extends BaseMeta {
 	public static final String NAME = "nickname";
 	
 	public NickMeta(String nick) {
-		super(main.instance, nick);
+		super(main.getInstance(), nick);
 		nickname = nick;
 		}
 

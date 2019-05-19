@@ -22,12 +22,12 @@ public class StaffChat implements Listener{
 	
 	public void addListener(CommandSender sender) {
 		listeners.add(sender);
-		main.messenger.sendMessage(MESSAGES.STAFFCHAT_START.value(), sender);
+		main.getInstance().getMessenger().sendMessage(MESSAGES.STAFFCHAT_START.value(), sender);
 	}
 	
 	public void removeListener(CommandSender sender) {
 		listeners.remove(sender);
-		main.messenger.sendMessage(MESSAGES.STAFFCHAT_STOP.value(), sender);
+		main.getInstance().getMessenger().sendMessage(MESSAGES.STAFFCHAT_STOP.value(), sender);
 	}
 	
 	public boolean isListening(CommandSender sender) {
@@ -64,7 +64,7 @@ public class StaffChat implements Listener{
 	
 	public void send(CommandSender sender, String message) {
 		String toSend;
-		if (main.instance.hasPermission(sender, "alchemicpvp.staffchat")) {
+		if (main.getInstance().hasPermission(sender, "alchemicpvp.staffchat")) {
 			toSend = MESSAGES.STAFFCHAT_STAFF.value();
 			if (sender instanceof Player) toSend = toSend.replace("$player$", ((Player) sender).getDisplayName());
 			else toSend = toSend.replace("$player$", "Console");
@@ -74,8 +74,8 @@ public class StaffChat implements Listener{
 		}
 		
 		for (Player player : Bukkit.getOnlinePlayers()) {
-			if (main.instance.hasPermission(player, "alchemicpvp.staffchat")) {
-				main.messenger.sendMessage(toSend, player);
+			if (main.getInstance().hasPermission(player, "alchemicpvp.staffchat")) {
+				main.getInstance().getMessenger().sendMessage(toSend, player);
 			}
 		}
 	}

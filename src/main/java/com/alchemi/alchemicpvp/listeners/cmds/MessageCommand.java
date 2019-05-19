@@ -17,7 +17,7 @@ import com.alchemi.alchemicpvp.meta.StatsMeta;
 
 public class MessageCommand implements CommandExecutor{
 
-	private Messenger msgnr = main.messenger;
+	private Messenger msgnr = main.getInstance().getMessenger();
 	private static CommandSender consoleReply; 
 	
 	@Override
@@ -29,7 +29,7 @@ public class MessageCommand implements CommandExecutor{
 			if (args[0].equals("Console")) {
 				recipient = Bukkit.getConsoleSender();
 			} else {
-				recipient = main.instance.getServer().getPlayer(args[0]);
+				recipient = main.getInstance().getServer().getPlayer(args[0]);
 				if (recipient == null) {
 					msgnr.sendMessage(MESSAGES.MESSAGE_PLAYEROFFLINE.value().replace("$player$", args[0]), sender);
 					return true;
