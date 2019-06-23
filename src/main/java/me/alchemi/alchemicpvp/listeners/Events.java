@@ -15,6 +15,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.block.BlockIgniteEvent.IgniteCause;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -28,6 +29,7 @@ import me.alchemi.alchemicpvp.Config.Messages;
 import me.alchemi.alchemicpvp.PlayerStats;
 import me.alchemi.alchemicpvp.main;
 import me.alchemi.alchemicpvp.listeners.cmds.WhoCommand;
+import me.alchemi.alchemicpvp.meta.FireExtMeta;
 import me.alchemi.alchemicpvp.meta.NickMeta;
 import me.alchemi.alchemicpvp.meta.StatsMeta;
 import me.alchemi.alchemicpvp.meta.VanishMeta;
@@ -66,6 +68,8 @@ public class Events implements Listener {
 	
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent e) {
+		
+		
 		e.getEntity().getInventory().clear();
 		e.getEntity().updateInventory();
 		
@@ -186,15 +190,28 @@ public class Events implements Listener {
 			}
 			
 			if (loc.getWorld().getBlockAt(loc).isEmpty()) {
+				
 				Block fire = loc.getWorld().getBlockAt(loc);
 				fire.setType(Material.FIRE);
 				Fire fireData = (Fire) fire.getBlockData();
-				fireData.setFace(e.getHitBlockFace().getOppositeFace(), true);
+				try {
+					fireData.setFace(e.getHitBlockFace().getOppositeFace(), true);
+				} catch (IllegalArgumentException ex) {}
 				fire.setBlockData(fireData);
+				fire.setMetadata(FireExtMeta.class.getName(), new FireExtMeta(fire));
 				
 			}
 		}
 	}
+		
+	@EventHandler
+	public void onExplosion(EntityExplodeEvent e) {
+		if (e.getEntity().getCustomName().equals("firebawl")) {
+			e.setCancelled(true);
+		}
+	}
+	
+	
 	
 	@EventHandler
 	public void onStrike(BlockIgniteEvent e) {

@@ -60,7 +60,9 @@ public abstract class AbstractWand extends ItemStack{
 		Vector direction = player.getEyeLocation().getDirection();
 		Location loc = player.getEyeLocation().add(direction.normalize());
 		
-		return loc.getWorld().rayTraceEntities(loc, direction, 9);
+		RayTraceResult ray = loc.getWorld().rayTraceEntities(loc, direction, 9);
+		
+		return ray != null ? ray : loc.getWorld().rayTraceBlocks(loc, direction, 9);
 	}
 	
 	

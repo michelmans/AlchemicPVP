@@ -10,6 +10,8 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.RayTraceResult;
@@ -92,6 +94,9 @@ public class MagicWand extends AbstractWand implements Listener{
 				
 				e.getPlayer().setMetadata(CooldownMeta.class.getName(), new CooldownMeta(COOLDOWN, e.getPlayer()));
 				target.getWorld().strikeLightning(target);
+				if (ray.getHitEntity() != null) {
+					ray.getHitEntity().setLastDamageCause(new EntityDamageByEntityEvent(e.getPlayer(), ray.getHitEntity(), DamageCause.LIGHTNING, 5));
+				}
 				
 			} else if ((e.getAction().equals(Action.RIGHT_CLICK_AIR)
 					|| e.getAction().equals(Action.RIGHT_CLICK_BLOCK))

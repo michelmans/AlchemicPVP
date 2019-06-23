@@ -82,6 +82,7 @@ public class DragonStick extends AbstractWand implements Listener{
 				
 				fireball.setGravity(true);
 				fireball.setIsIncendiary(true);
+				fireball.setCustomName("firebawl");
 				
 				e.getPlayer().setMetadata(CooldownMeta.class.getName(), new CooldownMeta(COOLDOWN, e.getPlayer()));
 				

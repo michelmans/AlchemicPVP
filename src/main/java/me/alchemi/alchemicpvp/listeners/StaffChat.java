@@ -5,9 +5,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
@@ -34,23 +36,24 @@ public class StaffChat implements Listener{
 		return listeners.contains(sender);
 	}
 	
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onChat(AsyncPlayerChatEvent e) {
 		if (e.getMessage().contains(Config.MESSAGE.MENTION_TAG.asString()) && Config.MESSAGE.MENTION_TAG.asString() != "") {
-			Matcher m = Pattern.compile("@\\w*").matcher(e.getMessage());
+			Matcher m = Pattern.compile(Config.MESSAGE.MENTION_TAG.asString() + "\\w*").matcher(e.getMessage());
 			
 			while(m.find()) {
-				Player player = Bukkit.getPlayer(m.group().replace("@", ""));
+				Player player = Bukkit.getPlayer(m.group().replace(Config.MESSAGE.MENTION_TAG.asString(), ""));
+				
 				if (player != null) {
-					player.playSound(player.getLocation(), Config.MESSAGE.MENTION_SOUND.asSound(), 1.0F, 1.0F);
 					if (e.getMessage().contains("&")) {
 						
-						Matcher m1 = Pattern.compile("&[1234567890klnor]").matcher(e.getMessage());
+						Matcher m1 = Pattern.compile("&[1234567890abcdefklnor]").matcher(e.getMessage());
 						if (m1.find() && m1.start() < m.end()) {
 							
-							e.setMessage(e.getMessage().replace(m.group(), Messenger.formatString(Config.MESSAGE.MENTION_COLOUR.asString() + m.group() + "&r" + m1.group())));
+							e.setMessage(e.getMessage().replace(m.group(), Messenger.formatString(Config.MESSAGE.MENTION_COLOUR.asString() + "@" + ChatColor.stripColor(player.getDisplayName()) + "&r" + m1.group())));
 						}
-					} else e.setMessage(e.getMessage().replace(m.group(), Messenger.formatString(Config.MESSAGE.MENTION_COLOUR.asString() + m.group() + "&r")));
+					} else e.setMessage(e.getMessage().replace(m.group(), Messenger.formatString(Config.MESSAGE.MENTION_COLOUR.asString() + "@" + ChatColor.stripColor(player.getDisplayName()) + "&r")));
+					player.playSound(player.getLocation(), Config.MESSAGE.MENTION_SOUND.asSound(), 1.0F, 1.0F);
 					
 				}
 			}
