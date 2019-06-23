@@ -12,6 +12,7 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
 
 import me.alchemi.al.objects.meta.PersistentMeta;
 import me.alchemi.alchemicpvp.Config;
@@ -33,7 +34,7 @@ public class ItemListeners implements Listener{
 			e.getPlayer().removeMetadata(TaskIntMeta.class.getName(), main.getInstance());
 		}
 		
-		if (Config.immediateConsuming 
+		if (Config.immediateConsuming
 				&& (e.getMaterial().isEdible() || e.getMaterial().equals(Material.POTION))) {
 			
 			if (e.getItem().hasItemMeta() && e.getItem().getItemMeta() instanceof PotionMeta
@@ -51,7 +52,7 @@ public class ItemListeners implements Listener{
 				
 				if (pData.isUpgraded()) amplifier++;
 				
-				e.getPlayer().addPotionEffect(pData.getType().getEffectType().createEffect(duration, amplifier));
+				if (pData.getType() != PotionType.UNCRAFTABLE) e.getPlayer().addPotionEffect(pData.getType().getEffectType().createEffect(duration, amplifier));
 				e.getPlayer().getInventory().remove(e.getItem());
 				e.getPlayer().updateInventory();
 				

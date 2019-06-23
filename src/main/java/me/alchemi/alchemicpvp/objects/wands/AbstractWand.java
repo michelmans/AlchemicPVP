@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -60,7 +61,7 @@ public abstract class AbstractWand extends ItemStack{
 		Vector direction = player.getEyeLocation().getDirection();
 		Location loc = player.getEyeLocation().add(direction.normalize());
 		
-		RayTraceResult ray = loc.getWorld().rayTraceEntities(loc, direction, 9);
+		RayTraceResult ray = loc.getWorld().rayTraceEntities(loc, direction, 9, Entity -> Entity instanceof LivingEntity);
 		
 		return ray != null ? ray : loc.getWorld().rayTraceBlocks(loc, direction, 9);
 	}
