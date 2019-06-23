@@ -38,11 +38,8 @@ public class Cube {
 		int planeIndex = 0;
 		int dist = -1;
 		int i = 0;
-		System.out.println("-------------------");
 		for (Plane plane : planes) {
 			int d = plane.getDistance(loc);
-			
-			System.out.println("\tindex " + i + " dist " + d);
 			
 			if ((d < dist || dist == -1)
 					&& (i > 0 && d != 0) ) {
@@ -55,8 +52,6 @@ public class Cube {
 			
 			i++;
 		}
-		System.out.println(planeIndex);
-		System.out.println("===================");
 		return planeIndex;
 	}
 	

@@ -256,14 +256,11 @@ public class Plane {
 				+ Math.pow(cross.getBlockY(), 2) 
 				+ Math.pow(cross.getBlockZ(), 2));
 		
-		System.out.println("ux + vy + wz + D = 0"
-				.replace("u", String.valueOf(cross.getBlockX()))
-				.replace("v", String.valueOf(cross.getBlockY()))
-				.replace("w", String.valueOf(cross.getBlockZ()))
-				.replace("D", String.valueOf(D)));
-		System.out.println(direction1);
-		System.out.println(direction2);
-		System.out.println(support);
+//		System.out.println("ux + vy + wz + D = 0"
+//				.replace("u", String.valueOf(cross.getBlockX()))
+//				.replace("v", String.valueOf(cross.getBlockY()))
+//				.replace("w", String.valueOf(cross.getBlockZ()))
+//				.replace("D", String.valueOf(D)));
 		
 		return (int) Math.floor(t/n);
 	}
