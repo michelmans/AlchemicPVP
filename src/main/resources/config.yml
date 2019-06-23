@@ -15,6 +15,14 @@ Message:
 # Wether or not to immediatly consume consumables (potions, food, etc)
 immediateConsuming: true
 
+WorldGuard:
+    disableWandPvP: true
+    
+    # How much blocks from the players location relative to the border should be shown.
+    # If visibleBorderLeeway is set to 2, the players will see 25 blocks in the border (5*5).
+    # Default: 2 
+    visibleBorderLeeway: 2
+
 # Magic Wand settings
 wand:
     enabled: true
@@ -26,6 +34,15 @@ wand:
     
     # cooldown in seconds for wand use. Set to 0 for no cooldown
     cooldown: 10
+    
+    secondaryCooldown: 5
+    
+    secondaryDamage: 0.25
+    
+    # the lore for the item
+    lore:
+    - 'Left Click: &3strike your foes with &6lightning from olympus itself&3!'
+    - 'Right Click: &3punish those who oppose you!'
 
 # Dragon stick settings
 dragonstick:
@@ -38,4 +55,13 @@ dragonstick:
 
     # cooldown in seconds for wand use. Set to 0 for no cooldown
     cooldown: 15
+    
+    secondaryCooldown: 5
+    
+    secondaryDamage: 0.4
+    
+    # the lore for the item
+    lore:
+    - 'Left Click: &3make thine enemies explode!'
+    - 'Right Click: &3burn thine enemies ALIVE!'
   

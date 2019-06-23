@@ -1,10 +1,11 @@
 name: AlchemicPVP
-main: com.alchemi.alchemicpvp.main
+main: me.alchemi.alchemicpvp.main
 version: ${project.version}
 api-version: 1.13
 author: Alchemi
 description: A plugin for better PvP.
 depend: [AlchemicLibrary]
+softdepend: [WorldGuard]
 
 commands:
   stats:
@@ -70,6 +71,42 @@ commands:
   sudo:
     usage: /sudo <player> <command>
     description: Force a player to run a command.
+    
+  tpo:
+    usage: /tpo <player>
+    description: Tp to a player.
+    permission: alchemicpvp.tpo
+  
+  tpohere:
+    usage: /tpohere <player>
+    description: Tp a player to you.
+    permission: alchemicpvp.tpo.others
+  
+  tp:
+    usage: /tp <x> <y> <z>
+    description: Tp to a location.
+    permission: alchemicpvp.tppos
+    aliases: [tppos]
+  
+  gamemode:
+    usage: /gamemode <survival|creative|adventure|spectator> [player]
+    description: Change your gamemode.
+    permission: minecraft.command.gamemode
+    aliases: [gm]
+    
+  fly:
+    usage: /fly [player]
+    description: Spread your wings and fly away!
+    permission: alchemicpvp.fly
+  
+  invsee:
+    usage: /invsee <player>
+    description: Look at a players inventory
+    permission: alchemicpvp.invsee
+    
+  givewand:
+    usage: /givewand <magic|dragon> [player]
+    description: Give a player a wand.
   
 permissions:
   alchemicpvp.stats.other:
@@ -104,3 +141,13 @@ permissions:
     description: Permission to use the staff chat.
   alchemicpvp.sudo:
     description: Permission to sudo a player.
+  alchemicpvp.tpo:
+    description: Permission to tp to a player.
+  alchemicpvp.tpo.others:
+    description: Permission to tp a player to you.
+  alchemicpvp.tppos:
+    description: Permission to tp to a position.
+  alchemicpvp.invsee:
+    description: Permission to see a players inventory.
+  alchemicpvp.fly:
+    description: Permission to fly.

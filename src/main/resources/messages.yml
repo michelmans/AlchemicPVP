@@ -2,10 +2,10 @@ AlchemicPVP:
   Tag: '&7[&1&lAlchemicPVP&r&7] '
   
   Commands:
-      NoPermission: '&c&oYou don''t have permission to use &9$command$&c.&r&c If you believe this is an error, &nplease contact an administrator.'
-      Reload: '&3Reloaded files.'
-      WrongFormat: '&cPlease use: &9'
-      Unknown: '&cUnknown command. Use &9/as help &cfor more information.'
+    NoPermission: '&c&oYou don''t have permission to use &9$command$&c.&r&c If you believe this is an error, &nplease contact an administrator.'
+    Reload: '&3Reloaded files.'
+    WrongFormat: '&cPlease use: &9'
+    Unknown: '&cUnknown command. Use &9/as help &cfor more information.'
       
   Stats:
     NoPlayer: '&cPlayer &f$player$ &cdoesn''t exist.'
@@ -23,8 +23,8 @@ AlchemicPVP:
   Check:
     PlayerOffline: '$player$ &cis offline.'
     Teleport: '&3You have been teleported to &f$player$&3.'
-    Check: '&3You now posses the powers of a &6god&3 and you can &6fly&3.'
-    Uncheck: '&3You no longer posses &cgodly powers&3 and you''re &cgrounded&3, mister.'
+    Enable: '&3You now posses the powers of a &6god&3 and you can &6fly&3.'
+    Disable: '&3You no longer posses &cgodly powers&3 and you''re &cgrounded&3, mister.'
     NotCheck: '&cYou are not in checkmode.'
     AlreadyCheck: '&cYou already are in checkmode.'
     NoHurting: '&cYou cannot hurt players while in checkmode.'
@@ -33,6 +33,23 @@ AlchemicPVP:
   
   Vanish: '&3You are no longer visible to other players.'
   Unvanish: '&3You are now visible to other players.'
+  
+  TP:
+    PlayerOffline: '$player$ &cis offline.'
+    NoLocation: '&cPlease input a valid location.'
+    Teleport: '&3Teleporting...'
+    
+  Gamemode:
+    PlayerOffline: '$player$ &cis offline.'
+    SetOther: '&3Player $player$ &3is now in &6$gamemode$ &3mode.'
+    SetOwn: '&3You''re now in &6$gamemode$ &3mode.'
+  
+  Invsee:
+    PlayerOffline: '$player$ &cis offline.'
+  
+  Fly:
+    Enable: '&3You can &lfly &3now!'
+    Disable: '&3You''re &cgrounded&3, mister.'
   
   Message:
     PlayerOffline: '$player$ &cis offline.'
@@ -43,7 +60,7 @@ AlchemicPVP:
     PlayerOFfline: '$player$ &cis offline.'
     Provide: '&cPlease provide a victim.'
     Smitten: '&6Experience the wrath of &4almighty zeus!'
-    SmiteSent: '&6$player$ has been smitten.'
+    Sent: '&6$player$ has been smitten.'
   
   Spy:
     PlayerOffline: '$player$ &cis offline.'
@@ -70,7 +87,7 @@ AlchemicPVP:
     
   Sudo:
     PlayerOffline: '$player$ &cis offline.'
-    sudo: '&3Forcing $player$ to run &9$command$&c.'
+    Run: '&3Forcing $player$ to run &9$command$&c.'
   
   DeathMessages:
   - '&7$killer$ &7killed $victim$ &7using $item$&7.'

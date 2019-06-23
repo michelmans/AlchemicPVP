@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.alchemi</groupId>
+  <groupId>me.alchemi</groupId>
   <artifactId>AlchemicPVP</artifactId>
-  <version>1.8.6</version>
+  <version>1.8.7</version>
   <name>AlchemicPVP</name>
   <build>
     <finalName>${project.name}</finalName>
@@ -58,16 +58,22 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>com.alchemi</groupId>
+      <groupId>me.alchemi</groupId>
       <artifactId>AlchemicLibrary</artifactId>
       <version>LATEST</version>
-      <scope>compile</scope>
+      <scope>provided</scope>
     </dependency>
     <dependency>
-        <groupId>com.sk89q.worldguard</groupId>
-        <artifactId>worldguard-core</artifactId>
-        <version>LATEST</version>
-        <scope>provided</scope>
+      <groupId>com.sk89q.worldguard</groupId>
+      <artifactId>worldguard-core</artifactId>
+      <version>LATEST</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.sk89q.worldguard</groupId>
+      <artifactId>worldguard-legacy</artifactId>
+      <version>LATEST</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 </project>
