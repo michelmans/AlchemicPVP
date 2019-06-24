@@ -52,7 +52,7 @@ public class ItemListeners implements Listener{
 				
 				if (pData.isUpgraded()) amplifier++;
 				
-				if (pData.getType() != PotionType.UNCRAFTABLE) e.getPlayer().addPotionEffect(pData.getType().getEffectType().createEffect(duration, amplifier));
+				if (pData.getType() != PotionType.UNCRAFTABLE && pData.getType().getEffectType() != null) e.getPlayer().addPotionEffect(pData.getType().getEffectType().createEffect(duration, amplifier));
 				e.getPlayer().getInventory().remove(e.getItem());
 				e.getPlayer().updateInventory();
 				
@@ -162,7 +162,7 @@ public class ItemListeners implements Listener{
 					e.getPlayer().removeMetadata(BooleanMeta.class.getName(), main.getInstance());
 					
 				}
-			}, 80);
+			}, 5);
 			
 			e.setCancelled(true);
 		}

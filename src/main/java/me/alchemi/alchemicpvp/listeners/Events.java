@@ -3,6 +3,7 @@ package me.alchemi.alchemicpvp.listeners;
 import java.util.Arrays;
 import java.util.Random;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -15,7 +16,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.block.BlockIgniteEvent.IgniteCause;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
@@ -30,13 +30,11 @@ import me.alchemi.alchemicpvp.Config.Messages;
 import me.alchemi.alchemicpvp.PlayerStats;
 import me.alchemi.alchemicpvp.main;
 import me.alchemi.alchemicpvp.listeners.cmds.WhoCommand;
-import me.alchemi.alchemicpvp.meta.BooleanMeta;
 import me.alchemi.alchemicpvp.meta.CooldownMeta;
 import me.alchemi.alchemicpvp.meta.FireExtMeta;
 import me.alchemi.alchemicpvp.meta.NickMeta;
 import me.alchemi.alchemicpvp.meta.SecondCooldownMeta;
 import me.alchemi.alchemicpvp.meta.StatsMeta;
-import me.alchemi.alchemicpvp.meta.TaskIntMeta;
 import me.alchemi.alchemicpvp.meta.VanishMeta;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -79,8 +77,6 @@ public class Events implements Listener {
 		e.getEntity().updateInventory();
 		e.getEntity().removeMetadata(CooldownMeta.class.getName(), main.getInstance());
 		e.getEntity().removeMetadata(SecondCooldownMeta.class.getName(), main.getInstance());
-		e.getEntity().removeMetadata(BooleanMeta.class.getName(), main.getInstance());
-		e.getEntity().removeMetadata(TaskIntMeta.class.getName(), main.getInstance());
 		
 		e.setKeepInventory(true);
 		
@@ -202,7 +198,7 @@ public class Events implements Listener {
 				
 				Block fire = loc.getWorld().getBlockAt(loc);
 				fire.setType(Material.FIRE);
-				Fire fireData = (Fire) fire.getBlockData();
+				Fire fireData = (Fire) Bukkit.createBlockData(Material.FIRE);
 				try {
 					fireData.setFace(e.getHitBlockFace().getOppositeFace(), true);
 				} catch (IllegalArgumentException ex) {}
@@ -211,11 +207,6 @@ public class Events implements Listener {
 				
 			}
 		}
-	}
-	
-	@EventHandler
-	public void onDamage(EntityDamageByEntityEvent e) {
-		main.getInstance().getMessenger().broadcast(String.valueOf(e.getFinalDamage()));
 	}
 		
 	@EventHandler

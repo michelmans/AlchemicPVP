@@ -68,8 +68,6 @@ public class WorldGuard implements Listener{
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent e) {
 		
-		clearBorders();
-		
 		ApplicableRegionSet set = container.createQuery().getApplicableRegions(BukkitAdapter.adapt(e.getFrom()));
 		if (set.testState(null, BORDER_FLAG)) {
 			for (ProtectedRegion region : set) {
@@ -83,6 +81,15 @@ public class WorldGuard implements Listener{
 					Cube c = new Cube(minL, maxL);
 					if (c.getDistance(e.getTo()) <= 5) {
 						placedBorders.addAll(c.setClosestPlaneBlock(Material.RED_STAINED_GLASS, e.getPlayer().getLocation()));
+						Bukkit.getScheduler().runTaskLater(main.getInstance(), new Runnable() {
+							
+							@Override
+							public void run() {
+								
+								clearBorders();
+								
+							}
+						}, 20);
 					}
 					
 					if (!region.contains(BukkitAdapter.asBlockVector(e.getTo()))) {

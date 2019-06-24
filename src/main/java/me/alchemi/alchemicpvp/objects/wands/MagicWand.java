@@ -94,7 +94,7 @@ public class MagicWand extends AbstractWand implements Listener{
 				
 				e.getPlayer().setMetadata(CooldownMeta.class.getName(), new CooldownMeta(COOLDOWN, e.getPlayer()));
 				target.getWorld().strikeLightning(target);
-				if (ray.getHitEntity() != null) {
+				if (ray != null && ray.getHitEntity() != null) {
 					ray.getHitEntity().setLastDamageCause(new EntityDamageByEntityEvent(e.getPlayer(), ray.getHitEntity(), DamageCause.LIGHTNING, 5));
 				}
 				
