@@ -19,6 +19,15 @@ AlchemicPVP:
     cKillstreak: '&3Current killstreak: &9$amount$'
     bKillstreak: '&3Best killstreak: &9$amount$'
     Footer: '&1&l&o===> &r&l&3STATS &o&1<==='
+    
+    Scoreboard:
+      Title: '&3Your stats'
+      Kills: '&3Kills&f: &6'
+      Deaths: '&3Deaths&f: &4'
+      KDR: '&3K/D ratio&f: &9'
+      cKillstreak: '&3Current killstreak&f: &9'
+      bKillstreak: '&3Best killstreak&f: &9'
+      Footer: '===&1&lAlchemic&4&lPvP&r==='
   
   Check:
     PlayerOffline: '$player$ &cis offline.'

@@ -17,11 +17,14 @@ public class ReloadCommand implements CommandExecutor {
 
 		if (sender instanceof Player && main.getInstance().hasPermission(sender, "alchemicpvp.reload")) {
 			
-			for (Player player : Bukkit.getOnlinePlayers()) {
-				StatsMeta.getStats(player).reload();
-			}
 			main.config.reload();
 			main.getInstance().getMessenger().sendMessage("&9Configs reloaded.", sender);
+			
+			for (Player player : Bukkit.getOnlinePlayers()) {
+				StatsMeta.getStats(player).reload();
+				main.getInstance().getSsb().addPlayer(player);
+			}
+			
 			
 		} else if (sender instanceof Player) {
 			main.getInstance().getMessenger().sendMessage(Messages.COMMANDS_NOPERMISSION.value().replace("$command$", command.getName()), sender);

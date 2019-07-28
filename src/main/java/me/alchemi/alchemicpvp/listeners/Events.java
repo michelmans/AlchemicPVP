@@ -5,7 +5,6 @@ import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Fire;
@@ -23,6 +22,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
+import me.alchemi.al.api.MaterialWrapper;
 import me.alchemi.al.configurations.Messenger;
 import me.alchemi.al.objects.meta.PersistentMeta;
 import me.alchemi.alchemicpvp.Config;
@@ -46,7 +46,7 @@ public class Events implements Listener {
 
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent e) {
-		e.getPlayer().getInventory().clear();
+		if (Config.clearInventory) e.getPlayer().getInventory().clear();
 		
 		if (main.getInstance().hasPermission(e.getPlayer(), "alchemicpvp.spy") && !main.getInstance().spies.containsKey(e.getPlayer().getName())) e.getPlayer().performCommand("socialspy");
 		
@@ -66,6 +66,7 @@ public class Events implements Listener {
 			
 		} else e.getPlayer().setDisplayName(PersistentMeta.getMeta(e.getPlayer(), NickMeta.class).asString());
 		
+		main.getInstance().getSsb().addPlayer(e.getPlayer());
 		
 	}
 	
@@ -93,7 +94,7 @@ public class Events implements Listener {
 		e.getEntity().getKiller().setHealth(e.getEntity().getKiller().getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
 		
 		//Death Messages
-		if (!Config.STATS.DEATHMESSAGES.asBoolean()) return;
+		if (!Config.Stats.DEATHMESSAGES.asBoolean()) return;
 		
 		ItemStack killItem = e.getEntity().getKiller().getInventory().getItemInMainHand();
 		String item = killItem.hasItemMeta() ? killItem.getItemMeta().hasDisplayName() ? killItem.getItemMeta().getDisplayName() : killItem.getType().toString().replaceAll("_", " ").toLowerCase() : killItem.getType().toString().replaceAll("_", " ").toLowerCase(); 
@@ -133,6 +134,11 @@ public class Events implements Listener {
 						|| e.getEntityType().equals(EntityType.FIREBALL)
 						|| e.getEntityType().equals(EntityType.DRAGON_FIREBALL))) {
 			Location loc = e.getHitBlock().getLocation();
+			
+			if (main.worldGuard && !main.getInstance().getWorldGuard().isPvPDenied(loc)) {
+				return;
+			}
+			
 			switch(e.getHitBlockFace()) {
 			case DOWN:
 				break;
@@ -197,8 +203,8 @@ public class Events implements Listener {
 			if (loc.getWorld().getBlockAt(loc).isEmpty()) {
 				
 				Block fire = loc.getWorld().getBlockAt(loc);
-				fire.setType(Material.FIRE);
-				Fire fireData = (Fire) Bukkit.createBlockData(Material.FIRE);
+				fire.setType(MaterialWrapper.FIRE.getMaterial());
+				Fire fireData = (Fire) Bukkit.createBlockData(MaterialWrapper.FIRE.getMaterial());
 				try {
 					fireData.setFace(e.getHitBlockFace().getOppositeFace(), true);
 				} catch (IllegalArgumentException ex) {}

@@ -1,6 +1,7 @@
 Stats:
     potionEffect: false
     deathMessages: true
+    scoreboard: true
 
 Nickname:
     allowFormat: false
@@ -11,9 +12,20 @@ Message:
     mentionColour: "&b&n"
     receiveSound: "ENTITY_CHICKEN_EGG"
     mentionSound: "ENTITY_ENDER_DRAGON_GROWL"
+
+Scoreboard:
+    linesAmount: 8
+    kills: 6
+    deaths: 5
+    kdr: 4
+    ckillstreak: 3
+    bkillstreak: 2
   
 # Wether or not to immediatly consume consumables (potions, food, etc)
 immediateConsuming: true
+
+# Wether or not to clear a players inventory upon login
+clearInventory: true
 
 WorldGuard:
     disableWandPvP: true
@@ -22,6 +34,10 @@ WorldGuard:
     # If visibleBorderLeeway is set to 2, the players will see 25 blocks in the border (5*5).
     # Default: 2 
     visibleBorderLeeway: 2
+    
+    # The block with which the border will be shown.
+    # Default: RED_STAINED_GLASS
+    visibleBorderBlock: RED_STAINED_GLASS
 
 # Magic Wand settings
 wand:

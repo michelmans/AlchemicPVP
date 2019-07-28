@@ -30,15 +30,15 @@ public class NickCommand implements CommandExecutor {
 			
 			Matcher m = Pattern.compile("&[1234567890klnor]").matcher(args[0]);
 			
-			if (args[0].length() > Config.NICKNAME.CHARACTERLIMIT.asInt()) {
+			if (args[0].length() > Config.Nickname.CHARACTERLIMIT.asInt()) {
 				main.getInstance().getMessenger().sendMessage(Messages.NICK_TOOLONG.value()
 						.replace("$name$", args[0])
-						.replace("$amount$", Config.NICKNAME.CHARACTERLIMIT.asString()), sender);
+						.replace("$amount$", Config.Nickname.CHARACTERLIMIT.asString()), sender);
 				
 				return true;
 			} 
 			
-			if (m.find() && !main.getInstance().hasPermission(sender, "alchemicpvp.nick.format") && !Config.NICKNAME.ALLOW_FORMAT.asBoolean()) {
+			if (m.find() && !main.getInstance().hasPermission(sender, "alchemicpvp.nick.format") && !Config.Nickname.ALLOW_FORMAT.asBoolean()) {
 				sender.sendMessage(Messenger.formatString(Messages.NICK_NOFORMAT.value()
 						.replace("$name$", args[0])
 						.replace("$eg$", "&k, &6, &1, etc.")));

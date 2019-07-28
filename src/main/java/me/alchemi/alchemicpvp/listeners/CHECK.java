@@ -1,7 +1,6 @@
 package me.alchemi.alchemicpvp.listeners;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,18 +23,19 @@ import org.bukkit.scoreboard.Team;
 import org.bukkit.scoreboard.Team.Option;
 import org.bukkit.scoreboard.Team.OptionStatus;
 
+import me.alchemi.al.api.MaterialWrapper;
 import me.alchemi.al.configurations.Messenger;
 import me.alchemi.al.objects.meta.PersistentMeta;
 import me.alchemi.alchemicpvp.Config;
-import me.alchemi.alchemicpvp.main;
 import me.alchemi.alchemicpvp.Config.Messages;
+import me.alchemi.alchemicpvp.main;
 import me.alchemi.alchemicpvp.meta.VanishMeta;
 
 public class CHECK implements Listener{
 
 	private final Player player;
 	private static Team checkers;
-	private static ItemStack air = new ItemStack(Material.AIR);
+	private static ItemStack air = new ItemStack(MaterialWrapper.AIR.getMaterial());
 	
 	public CHECK(Player pl) {
 		
@@ -77,13 +77,13 @@ public class CHECK implements Listener{
 		Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "animatednames reload");
 		if (vanish) {
 			player.setPlayerListName(Messenger.formatString(prefix + player.getName()));
-			if (Config.STATS.POTION_EFFECT.asBoolean()) player.removePotionEffect(PotionEffectType.INVISIBILITY);
+			if (Config.Stats.POTION_EFFECT.asBoolean()) player.removePotionEffect(PotionEffectType.INVISIBILITY);
 			vanish = false;
 			main.getInstance().getMessenger().sendMessage(Messages.UNVANISH.value(), player);
 		}
 		else {
 			player.setPlayerListName(Messenger.formatString(Messages.CHECK_VANISHTAG.value() + prefix + player.getName()));
-			if (Config.STATS.POTION_EFFECT.asBoolean()) player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 100000, 9, true, false), true);
+			if (Config.Stats.POTION_EFFECT.asBoolean()) player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 100000, 9, true, false), true);
 			vanish = true;
 			main.getInstance().getMessenger().sendMessage(Messages.VANISH.value(), player);
 		}

@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,6 +22,8 @@ import com.sk89q.worldguard.protection.flags.registry.FlagRegistry;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 
+import me.alchemi.al.api.MaterialWrapper;
+import me.alchemi.alchemicpvp.Config.Worldguard;
 import me.alchemi.alchemicpvp.main;
 import me.alchemi.alchemicpvp.objects.Cube;
 
@@ -58,6 +59,13 @@ public class WorldGuard implements Listener{
 		return set.testState(localPlayer, Flags.PVP);
 	}
 	
+	public boolean isPvPDenied(Location loc) {
+		
+		ApplicableRegionSet set = container.createQuery().getApplicableRegions(BukkitAdapter.adapt(loc));
+		return set.testState(null, Flags.PVP);
+		
+	}
+	
 	public void sendPvPDeny(Player player) {
 		LocalPlayer localPlayer = WorldGuardPlugin.inst().wrapPlayer(player);
 		ApplicableRegionSet set = container.createQuery().getApplicableRegions(BukkitAdapter.adapt(player.getLocation()));
@@ -80,21 +88,27 @@ public class WorldGuard implements Listener{
 					
 					Cube c = new Cube(minL, maxL);
 					if (c.getDistance(e.getTo()) <= 5) {
-						placedBorders.addAll(c.setClosestPlaneBlock(Material.RED_STAINED_GLASS, e.getPlayer().getLocation()));
+						
+						int index = c.getClosestPlaneIndex(e.getPlayer().getLocation()); 
+						List<Location> removeable = c.getPlane(index).placeBlockAt(e.getPlayer().getLocation(), Worldguard.VISIBLE_BORDER_BLOCK.asMaterial()); 
 						Bukkit.getScheduler().runTaskLater(main.getInstance(), new Runnable() {
 							
 							@Override
 							public void run() {
 								
-								clearBorders();
+								for (Location loc : removeable) {
+									loc.getWorld().getBlockAt(loc).setType(MaterialWrapper.AIR.getMaterial());
+								}
 								
 							}
-						}, 20);
-					}
-					
-					if (!region.contains(BukkitAdapter.asBlockVector(e.getTo()))) {
+						}, 50);
 						
-						e.setCancelled(true);
+						if (!region.contains(BukkitAdapter.asBlockVector(e.getTo()))) {
+							
+							e.setCancelled(true);
+							
+							
+						}
 						
 					}
 				}
@@ -104,7 +118,7 @@ public class WorldGuard implements Listener{
 	
 	public void clearBorders() {
 		for (Location loc : placedBorders) {
-			loc.getWorld().getBlockAt(loc).setType(Material.AIR);
+			loc.getWorld().getBlockAt(loc).setType(MaterialWrapper.AIR.getMaterial());
 		}
 		placedBorders.clear();
 	}

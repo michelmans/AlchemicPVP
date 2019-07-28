@@ -57,7 +57,7 @@ public class ReplyCommand implements CommandExecutor {
 			Bukkit.getServer().getPluginManager().callEvent(e);
 			
 			if (!e.isCancelled()) {
-				if (recipient instanceof Player && Config.MESSAGE.RECEIVE_SOUND.asSound() != null) ((Player)recipient).playSound(((Player) recipient).getLocation(), Config.MESSAGE.RECEIVE_SOUND.asSound(), 1.0F, 1.0F);
+				if (recipient instanceof Player && Config.Message.RECEIVE_SOUND.asSound() != null) ((Player)recipient).playSound(((Player) recipient).getLocation(), Config.Message.RECEIVE_SOUND.asSound(), 1.0F, 1.0F);
 				msgnr.sendMessage(Messages.MESSAGE_TEMPLATESEND.value()
 						.replace("$player$", nameR)
 						.replace("$message$", e.getMessage()), sender);

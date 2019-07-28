@@ -16,6 +16,7 @@ import org.bukkit.Sound;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.inventory.ItemStack;
 
+import me.alchemi.al.api.MaterialWrapper;
 import me.alchemi.al.configurations.Messenger;
 import me.alchemi.al.configurations.SexyConfiguration;
 import me.alchemi.al.objects.base.ConfigBase;
@@ -27,6 +28,7 @@ public class Config extends ConfigBase{
 		super(main.getInstance());
 		
 		immediateConsuming = ConfigEnum.CONFIG.getConfig().getBoolean("immediateConsuming", true);
+		clearInventory = ConfigEnum.CONFIG.getConfig().getBoolean("clearInventory", true);
 		
 		if (!ConfigEnum.CONFIG.getConfig().isSet("SPAWN")) SPAWN = Bukkit.getWorlds().get(0).getSpawnLocation();
 		else {
@@ -39,8 +41,8 @@ public class Config extends ConfigBase{
 
 	public static enum ConfigEnum implements IConfigEnum {
 		
-		CONFIG(new File(main.getInstance().getDataFolder(), "config.yml"), 8),
-		MESSAGES(new File(main.getInstance().getDataFolder(), "messages.yml"), 8);
+		CONFIG(new File(main.getInstance().getDataFolder(), "config.yml"), 11),
+		MESSAGES(new File(main.getInstance().getDataFolder(), "messages.yml"), 10);
 
 		final File file;
 		final int version;
@@ -148,7 +150,7 @@ public class Config extends ConfigBase{
 
 		@Override
 		public Material asMaterial() {
-			return Material.getMaterial(asString());
+			return MaterialWrapper.getWrapper(asString());
 		}
 
 		@Override
@@ -160,18 +162,31 @@ public class Config extends ConfigBase{
 		public String key() {
 			return path;
 		}
+
+		@Override
+		public List<Float> asFloatList() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public List<Integer> asIntList() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 		
 	}
 	
-	public static enum STATS implements IConfig {
+	public static enum Stats implements IConfig {
 		
 		POTION_EFFECT("Stats.potionEffect"),
-		DEATHMESSAGES("Stats.deathMessages");
+		DEATHMESSAGES("Stats.deathMessages"),
+		SCOREBOARD("Stats.scoreboard");
 		
 		private Object value;
 		public final String key;
 		
-		STATS(String key){
+		Stats(String key){
 			this.key = key;
 			get();
 		}
@@ -224,7 +239,7 @@ public class Config extends ConfigBase{
 
 		@Override
 		public Material asMaterial() {
-			return Material.valueOf(asString());
+			return MaterialWrapper.getWrapper(asString());
 		}
 
 		@Override
@@ -236,16 +251,127 @@ public class Config extends ConfigBase{
 		public SexyConfiguration getConfig() {
 			return ConfigEnum.CONFIG.getConfig();
 		}
+
+		@Override
+		public double asDouble() {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public List<Float> asFloatList() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public List<Integer> asIntList() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+	}
+
+	public static enum Worldguard implements IConfig {
+		DISABLE_WAND_PVP("WorldGuard.disableWandPvP"),
+		VISIBLE_BORDER_LEEWAY("WorldGuard.visibleBorderLeeway"),
+		VISIBLE_BORDER_BLOCK("WorldGuard.visibleBorderBlock");
+
+		Object value;
+		String key;
+		
+		private Worldguard(String key) {
+			this.key = key;
+			get();
+		}
+		
+		@Override
+		public Object value() {
+			return value;
+		}
+
+		@Override
+		public String key() {
+			return key;
+		}
+
+		@Override
+		public SexyConfiguration getConfig() {
+			return ConfigEnum.CONFIG.getConfig();
+		}
+
+		@Override
+		public void get() {
+			
+			value = getConfig().get(key);
+			
+		}
+
+		@Override
+		public boolean asBoolean() {
+			return Boolean.valueOf(asString());
+		}
+
+		@Override
+		public String asString() {
+			return String.valueOf(value);
+		}
+
+		@Override
+		public Sound asSound() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public List<String> asStringList() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public int asInt() {
+			return Integer.valueOf(asString());
+		}
+
+		@Override
+		public ItemStack asItemStack() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Material asMaterial() {
+			return MaterialWrapper.getWrapper(asString());
+		}
+
+		@Override
+		public double asDouble() {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public List<Float> asFloatList() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public List<Integer> asIntList() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
 	}
 	
-	public static enum NICKNAME implements IConfig{
+	public static enum Nickname implements IConfig{
 		
 		ALLOW_FORMAT("Nickname.allowFormat"),
 		CHARACTERLIMIT("Nickname.characterlimit");
 		
 		public final String key;
 		private Object value;
-		NICKNAME(String key){
+		Nickname(String key){
 			this.key = key;
 			
 		}
@@ -298,7 +424,7 @@ public class Config extends ConfigBase{
 
 		@Override
 		public Material asMaterial() {
-			return Material.valueOf(asString());
+			return MaterialWrapper.getWrapper(asString());
 		}
 
 		@Override
@@ -310,10 +436,28 @@ public class Config extends ConfigBase{
 		public SexyConfiguration getConfig() {
 			return ConfigEnum.CONFIG.getConfig();
 		}
+
+		@Override
+		public double asDouble() {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public List<Float> asFloatList() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public List<Integer> asIntList() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 		
 	}
 	
-	public static enum MESSAGE implements IConfig{
+	public static enum Message implements IConfig{
 		
 		MENTION_TAG("Message.mentionTag"),
 		MENTION_COLOUR("Message.mentionColour"),
@@ -323,7 +467,7 @@ public class Config extends ConfigBase{
 		
 		public final String key;
 		private Object value;
-		MESSAGE(String key){
+		Message(String key){
 			this.key = key;
 			
 		}
@@ -379,7 +523,7 @@ public class Config extends ConfigBase{
 
 		@Override
 		public Material asMaterial() {
-			return Material.valueOf(asString());
+			return MaterialWrapper.getWrapper(asString());
 		}
 
 		@Override
@@ -390,6 +534,120 @@ public class Config extends ConfigBase{
 		@Override
 		public SexyConfiguration getConfig() {
 			return ConfigEnum.CONFIG.getConfig();
+		}
+
+		@Override
+		public double asDouble() {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public List<Float> asFloatList() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public List<Integer> asIntList() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
+	}
+	
+	public static enum Scoreboard implements IConfig {
+		LINESAMOUNT("Scoreboard.linesAmount"),
+		KILLS("Scoreboard.kills"),
+		DEATHS("Scoreboard.deaths"),
+		KDR("Scoreboard.kdr"),
+		CKILLSTREAK("Scoreboard.ckillstreak"),
+		BKILLSTREAK("Scoreboard.bkillstreak");
+
+		public final String key;
+		private Object value;
+		
+		private Scoreboard(String key) {
+			this.key = key;
+			get();
+		}
+		
+		@Override
+		public Object value() {
+			return value;
+		}
+
+		@Override
+		public String key() {
+			return key;
+		}
+
+		@Override
+		public SexyConfiguration getConfig() {
+			return ConfigEnum.CONFIG.getConfig();
+		}
+
+		@Override
+		public void get() {
+			this.value = getConfig().get(key);
+			
+		}
+
+		@Override
+		public boolean asBoolean() {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public String asString() {
+			return String.valueOf(value);
+		}
+
+		@Override
+		public Sound asSound() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public List<String> asStringList() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public int asInt() {
+			return Integer.valueOf(asString());
+		}
+
+		@Override
+		public ItemStack asItemStack() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Material asMaterial() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public double asDouble() {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public List<Float> asFloatList() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public List<Integer> asIntList() {
+			return getConfig().getIntegerList(key);
 		}
 		
 	}
@@ -410,6 +668,13 @@ public class Config extends ConfigBase{
 		STATS_CKILLSTREAK("AlchemicPVP.Stats.cKillstreak"),
 		STATS_BKILLSTREAK("AlchemicPVP.Stats.bKillstreak"),
 		STATS_FOOTER("AlchemicPVP.Stats.Footer"),
+		STATS_SCOREBOARD_TITLE("AlchemicPVP.Stats.Scoreboard.Title"),
+		STATS_SCOREBOARD_KILLS("AlchemicPVP.Stats.Scoreboard.Kills"),
+		STATS_SCOREBOARD_DEATHS("AlchemicPVP.Stats.Scoreboard.Deaths"),
+		STATS_SCOREBOARD_KDR("AlchemicPVP.Stats.Scoreboard.KDR"),
+		STATS_SCOREBOARD_CKILLSTREAK("AlchemicPVP.Stats.Scoreboard.cKillstreak"),
+		STATS_SCOREBOARD_BKILLSTREAK("AlchemicPVP.Stats.Scoreboard.bKillstreak"),
+		STATS_SCOREBOARD_FOOTER("AlchemicPVP.Stats.Scoreboard.Footer"),
 		CHECK_PLAYEROFFLINE("AlchemicPVP.Check.PlayerOffline"),
 		CHECK_TELEPORT("AlchemicPVP.Check.Teleport"),
 		CHECK_ENABLE("AlchemicPVP.Check.Enable"),
@@ -424,7 +689,7 @@ public class Config extends ConfigBase{
 		TP_PLAYEROFFLINE("AlchemicPVP.TP.PlayerOffline"),
 		TP_NOLOCATION("AlchemicPVP.TP.NoLocation"),
 		TP_TELEPORT("AlchemicPVP.TP.Teleport"),
-		GAMEMODE_PLAYEROFFLINE("AlchemicPvp.Gamemode.PlayerOffline"),
+		GAMEMODE_PLAYEROFFLINE("AlchemicPVP.Gamemode.PlayerOffline"),
 		GAMEMODE_SETOTHER("AlchemicPVP.Gamemode.SetOther"),
 		GAMEMODE_SETOWN("AlchemicPVP.Gamemode.SetOwn"),
 		INVSEE_PLAYEROFFLINE("AlchemicPVP.Invsee.PlayerOffline"),
@@ -489,12 +754,15 @@ public class Config extends ConfigBase{
 	
 	public static boolean immediateConsuming;
 	
+	public static boolean clearInventory;
+	
 	public static List<String> deathMessages;
 	
 	@Override
 	public void reload() {
 		super.reload();
 		deathMessages = ConfigEnum.MESSAGES.getConfig().getStringList("AlchemicPVP.DeathMessages");
+		clearInventory = ConfigEnum.CONFIG.getConfig().getBoolean("clearInventory", true);
 		immediateConsuming = ConfigEnum.CONFIG.getConfig().getBoolean("immediateConsuming", true);
 		
 		try { SPAWN = new SexyLocation(ConfigEnum.CONFIG.getConfig().getConfigurationSection("SPAWN")).getLocation(); }
@@ -527,9 +795,9 @@ public class Config extends ConfigBase{
 		return new HashSet<IConfig>() {
 			{
 				addAll(Arrays.asList(Wands.values()));
-				addAll(Arrays.asList(STATS.values()));
-				addAll(Arrays.asList(NICKNAME.values()));
-				addAll(Arrays.asList(MESSAGE.values()));
+				addAll(Arrays.asList(Stats.values()));
+				addAll(Arrays.asList(Nickname.values()));
+				addAll(Arrays.asList(Message.values()));
 			}
 		};
 	}

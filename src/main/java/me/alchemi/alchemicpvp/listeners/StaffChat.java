@@ -38,11 +38,11 @@ public class StaffChat implements Listener{
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onChat(AsyncPlayerChatEvent e) {
-		if (e.getMessage().contains(Config.MESSAGE.MENTION_TAG.asString()) && Config.MESSAGE.MENTION_TAG.asString() != "") {
-			Matcher m = Pattern.compile(Config.MESSAGE.MENTION_TAG.asString() + "\\w*").matcher(e.getMessage());
+		if (e.getMessage().contains(Config.Message.MENTION_TAG.asString()) && Config.Message.MENTION_TAG.asString() != "") {
+			Matcher m = Pattern.compile(Config.Message.MENTION_TAG.asString() + "\\w*").matcher(e.getMessage());
 			
 			while(m.find()) {
-				Player player = Bukkit.getPlayer(m.group().replace(Config.MESSAGE.MENTION_TAG.asString(), ""));
+				Player player = Bukkit.getPlayer(m.group().replace(Config.Message.MENTION_TAG.asString(), ""));
 				
 				if (player != null) {
 					if (e.getMessage().contains("&")) {
@@ -50,10 +50,10 @@ public class StaffChat implements Listener{
 						Matcher m1 = Pattern.compile("&[1234567890abcdefklnor]").matcher(e.getMessage());
 						if (m1.find() && m1.start() < m.end()) {
 							
-							e.setMessage(e.getMessage().replace(m.group(), Messenger.formatString(Config.MESSAGE.MENTION_COLOUR.asString() + "@" + ChatColor.stripColor(player.getDisplayName()) + "&r" + m1.group())));
+							e.setMessage(e.getMessage().replace(m.group(), Messenger.formatString(Config.Message.MENTION_COLOUR.asString() + "@" + ChatColor.stripColor(player.getDisplayName()) + "&r" + m1.group())));
 						}
-					} else e.setMessage(e.getMessage().replace(m.group(), Messenger.formatString(Config.MESSAGE.MENTION_COLOUR.asString() + "@" + ChatColor.stripColor(player.getDisplayName()) + "&r")));
-					player.playSound(player.getLocation(), Config.MESSAGE.MENTION_SOUND.asSound(), 1.0F, 1.0F);
+					} else e.setMessage(e.getMessage().replace(m.group(), Messenger.formatString(Config.Message.MENTION_COLOUR.asString() + "@" + ChatColor.stripColor(player.getDisplayName()) + "&r")));
+					player.playSound(player.getLocation(), Config.Message.MENTION_SOUND.asSound(), 1.0F, 1.0F);
 					
 				}
 			}

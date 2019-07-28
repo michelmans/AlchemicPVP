@@ -15,14 +15,14 @@ import me.alchemi.alchemicpvp.main;
 
 public class StatsMeta extends BaseMeta {
 
-	private static PlayerStats stats;
+	private PlayerStats stats;
 	
 	private CommandSender replyTo;
 	
 	public static final String NAME = "stats";
 	
 	public StatsMeta(Player player) {
-		super(main.getInstance(), stats);
+		super(main.getInstance(), null);
 		
 		File dataFile = new File(main.getInstance().playerData, player.getUniqueId().toString() + ".yml");
 		FileConfiguration fc = new YamlConfiguration();

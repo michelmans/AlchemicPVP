@@ -44,6 +44,7 @@ import me.alchemi.alchemicpvp.listeners.tabcomplete.GiveWandComplete;
 import me.alchemi.alchemicpvp.listeners.tabcomplete.SpyTabComplete;
 import me.alchemi.alchemicpvp.listeners.tabcomplete.StatsTabComplete;
 import me.alchemi.alchemicpvp.listeners.tabcomplete.TpTabComplete;
+import me.alchemi.alchemicpvp.objects.StatsScoreboard;
 import me.alchemi.alchemicpvp.objects.wands.DragonStick;
 import me.alchemi.alchemicpvp.objects.wands.MagicWand;
 import me.alchemi.alchemicpvp.objects.worldguard.WorldGuard;
@@ -63,6 +64,8 @@ public class main extends PluginBase {
 	public StaffChat staffChat;
 	
 	private WorldGuard wg;
+	
+	private StatsScoreboard ssb;
 	
 	public static Config config;
 	
@@ -97,7 +100,7 @@ public class main extends PluginBase {
 			
 		}
 		new ItemListeners();
-		AnimatedNames = getServer().getPluginManager().getPlugin("AnimatedName") != null;
+		AnimatedNames = getServer().getPluginManager().getPlugin("AnimatedNames") != null;
 		
 		if (setupChat()) {
 			messenger.print("Vault dependent chat installed! Using Vault api chat.");
@@ -114,6 +117,8 @@ public class main extends PluginBase {
 		if (!playerData.exists()) playerData.mkdir();
 		
 		if (worldGuard) wg.onEnable();
+		
+		ssb = new StatsScoreboard();
 		
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			Bukkit.getPluginManager().callEvent(new PlayerJoinEvent(player, "YOmOmma"));
@@ -202,4 +207,13 @@ public class main extends PluginBase {
 	public WorldGuard getWorldGuard() {
 		return wg;
 	}
+
+	/**
+	 * @return the ssb
+	 */
+	public final StatsScoreboard getSsb() {
+		return ssb;
+	}
+	
+	
 }

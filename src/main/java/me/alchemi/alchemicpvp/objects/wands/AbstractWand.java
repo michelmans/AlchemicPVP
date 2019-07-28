@@ -2,7 +2,6 @@ package me.alchemi.alchemicpvp.objects.wands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -12,6 +11,7 @@ import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
 
 import me.alchemi.al.Library;
+import me.alchemi.al.api.MaterialWrapper;
 import me.alchemi.al.objects.handling.ItemFactory;
 import me.alchemi.al.objects.meta.PersistentMeta;
 import me.alchemi.alchemicpvp.main;
@@ -22,7 +22,7 @@ import me.alchemi.alchemicpvp.meta.TaskIntMeta;
 public abstract class AbstractWand extends ItemStack{
 
 	public static final String CHARGELOCALIZEDNAME = "alchemicpvp:item.wand.charge";
-	protected ItemFactory CHARGE = new ItemFactory(Material.FIRE_CHARGE).setName("&6&oCharge").setLocalizedName(CHARGELOCALIZEDNAME);
+	protected ItemFactory CHARGE = new ItemFactory(MaterialWrapper.FIRE_CHARGE.getMaterial()).setName("&6&oCharge").setLocalizedName(CHARGELOCALIZEDNAME);
 
 	public static enum WandType {
 		MAGIC(MagicWand.class), DRAGON(DragonStick.class);

@@ -8,6 +8,8 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.util.Vector;
 
+import me.alchemi.alchemicpvp.Config;
+
 public class Plane {
 
 	private float minX;
@@ -88,23 +90,23 @@ public class Plane {
 		int z2 = (int) maxZ;
 		
 		if (x1 == x2) {
-			y1 = loc.getBlockY() - 2;
-			y2 = loc.getBlockY() + 2;
+			y1 = loc.getBlockY() - Config.Worldguard.VISIBLE_BORDER_LEEWAY.asInt();
+			y2 = loc.getBlockY() + Config.Worldguard.VISIBLE_BORDER_LEEWAY.asInt();
 			
-			z1 = loc.getBlockZ() - 2;
-			z2 = loc.getBlockZ() + 2;
+			z1 = loc.getBlockZ() - Config.Worldguard.VISIBLE_BORDER_LEEWAY.asInt();
+			z2 = loc.getBlockZ() + Config.Worldguard.VISIBLE_BORDER_LEEWAY.asInt();
 		} else if (y1 == y2) {
-			x1 = loc.getBlockX() - 2;
-			x2 = loc.getBlockX() + 2;
+			x1 = loc.getBlockX() - Config.Worldguard.VISIBLE_BORDER_LEEWAY.asInt();
+			x2 = loc.getBlockX() + Config.Worldguard.VISIBLE_BORDER_LEEWAY.asInt();
 			
-			z1 = loc.getBlockZ() - 2;
-			z2 = loc.getBlockZ() + 2;
+			z1 = loc.getBlockZ() - Config.Worldguard.VISIBLE_BORDER_LEEWAY.asInt();
+			z2 = loc.getBlockZ() + Config.Worldguard.VISIBLE_BORDER_LEEWAY.asInt();
 		} else if (z1 == z2) {
-			y1 = loc.getBlockY() - 2;
-			y2 = loc.getBlockY() + 2;
+			y1 = loc.getBlockY() - Config.Worldguard.VISIBLE_BORDER_LEEWAY.asInt();
+			y2 = loc.getBlockY() + Config.Worldguard.VISIBLE_BORDER_LEEWAY.asInt();
 			
-			x1 = loc.getBlockX() - 2;
-			x2 = loc.getBlockX() + 2;
+			x1 = loc.getBlockX() - Config.Worldguard.VISIBLE_BORDER_LEEWAY.asInt();
+			x2 = loc.getBlockX() + Config.Worldguard.VISIBLE_BORDER_LEEWAY.asInt();
 		}
 		
 		for (int x = x1; x <= x2; x++) {

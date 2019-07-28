@@ -3,7 +3,6 @@ package me.alchemi.alchemicpvp.listeners;
 import java.util.Arrays;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -14,6 +13,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
+import me.alchemi.al.api.MaterialWrapper;
 import me.alchemi.al.objects.meta.PersistentMeta;
 import me.alchemi.alchemicpvp.Config;
 import me.alchemi.alchemicpvp.main;
@@ -35,10 +35,11 @@ public class ItemListeners implements Listener{
 		}
 		
 		if (Config.immediateConsuming
-				&& (e.getMaterial().isEdible() || e.getMaterial().equals(Material.POTION))) {
+				&& (e.getMaterial().isEdible() || e.getMaterial().equals(MaterialWrapper.POTION.getMaterial()))) {
 			
 			if (e.getItem().hasItemMeta() && e.getItem().getItemMeta() instanceof PotionMeta
 					&& (!PersistentMeta.hasMeta(e.getPlayer(), BooleanMeta.class))) {
+				
 				PotionMeta potionMeta = ((PotionMeta) e.getItem().getItemMeta());
 				if (potionMeta.hasCustomEffects()) e.getPlayer().addPotionEffects(potionMeta.getCustomEffects());
 				

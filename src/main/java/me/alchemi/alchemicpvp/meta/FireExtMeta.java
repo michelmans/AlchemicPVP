@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 
+import me.alchemi.al.api.MaterialWrapper;
 import me.alchemi.al.objects.meta.BaseMeta;
 import me.alchemi.alchemicpvp.main;
 
@@ -42,7 +42,7 @@ public class FireExtMeta extends BaseMeta {
 	}
 	
 	private void update() {
-		block.setType(Material.AIR);
+		block.setType(MaterialWrapper.AIR.getMaterial());
 	}
 	
 	private void remove() {

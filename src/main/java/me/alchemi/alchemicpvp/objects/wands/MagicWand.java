@@ -64,8 +64,6 @@ public class MagicWand extends AbstractWand implements Listener{
 	@Override
 	public void onItemUse(PlayerInteractEvent e) {
 		
-		
-		
 		if ( e.getItem() != null && e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasLocalizedName() && e.getItem().getItemMeta().getLocalizedName().equals(CHARGELOCALIZEDNAME)) {
 			
 			if (Arrays.asList(Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK).contains(e.getAction())) e.setCancelled(true);
@@ -80,6 +78,8 @@ public class MagicWand extends AbstractWand implements Listener{
 			RayTraceResult ray = AbstractWand.getTarget(e.getPlayer());
 			Location target = ray != null ? ray.getHitPosition().toLocation(e.getPlayer().getWorld()) : null; 
 			
+			
+			
 			if ((e.getAction().equals(Action.LEFT_CLICK_AIR)
 					|| e.getAction().equals(Action.LEFT_CLICK_BLOCK))
 					&& (!PersistentMeta.hasMeta(e.getPlayer(), CooldownMeta.class)
@@ -90,6 +90,11 @@ public class MagicWand extends AbstractWand implements Listener{
 					Location eyeLoc = e.getPlayer().getEyeLocation();
 					
 					target = eyeLoc.add(direction);
+				}
+				
+				if (main.worldGuard && !main.getInstance().getWorldGuard().isPvPDenied(target)) {
+					main.getInstance().getWorldGuard().sendPvPDeny(e.getPlayer());
+					return;
 				}
 				
 				e.getPlayer().setMetadata(CooldownMeta.class.getName(), new CooldownMeta(COOLDOWN, e.getPlayer()));
