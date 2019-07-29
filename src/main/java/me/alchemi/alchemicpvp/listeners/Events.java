@@ -46,6 +46,8 @@ public class Events implements Listener {
 
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent e) {
+		
+		
 		if (Config.clearInventory) e.getPlayer().getInventory().clear();
 		
 		if (main.getInstance().hasPermission(e.getPlayer(), "alchemicpvp.spy") && !main.getInstance().spies.containsKey(e.getPlayer().getName())) e.getPlayer().performCommand("socialspy");
@@ -68,11 +70,16 @@ public class Events implements Listener {
 		
 		main.getInstance().getSsb().addPlayer(e.getPlayer());
 		
+		if (main.getInstance().toKill(e.getPlayer())) {
+			e.getPlayer().setHealth(0.0D);
+			PlayerStats stats = StatsMeta.getStats(e.getPlayer());
+			stats.setDeaths(stats.getDeaths() + 2);
+		}
+		
 	}
 	
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent e) {
-		
 		
 		e.getEntity().getInventory().clear();
 		e.getEntity().updateInventory();
@@ -97,7 +104,7 @@ public class Events implements Listener {
 		if (!Config.Stats.DEATHMESSAGES.asBoolean()) return;
 		
 		ItemStack killItem = e.getEntity().getKiller().getInventory().getItemInMainHand();
-		String item = killItem.hasItemMeta() ? killItem.getItemMeta().hasDisplayName() ? killItem.getItemMeta().getDisplayName() : killItem.getType().toString().replaceAll("_", " ").toLowerCase() : killItem.getType().toString().replaceAll("_", " ").toLowerCase(); 
+		String item = killItem.hasItemMeta() ? killItem.getItemMeta().hasDisplayName() ? killItem.getItemMeta().getDisplayName() : killItem.getType().getKey().getKey().replaceAll("_", " ").toLowerCase() : killItem.getType().getKey().getKey().replaceAll("_", " ").toLowerCase(); 
 		
 		String itemKill;
 		if (Arrays.asList(new String[] {"a", "i", "e", "o", "u", "y"}).contains(String.valueOf(item.charAt(0)).toLowerCase())) {
@@ -113,6 +120,8 @@ public class Events implements Listener {
 				.replace("$killer$", e.getEntity().getKiller().getDisplayName())
 				.replace("$item$", itemKill), false);
 		else main.getInstance().getMessenger().print(Config.deathMessages);
+		
+		e.getEntity().spigot().respawn();
 	}
 	
 	@EventHandler

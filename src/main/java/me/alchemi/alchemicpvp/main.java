@@ -2,9 +2,13 @@ package me.alchemi.alchemicpvp;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
@@ -16,6 +20,7 @@ import me.alchemi.al.objects.base.PluginBase;
 import me.alchemi.alchemicpvp.listeners.CHECK;
 import me.alchemi.alchemicpvp.listeners.Events;
 import me.alchemi.alchemicpvp.listeners.ItemListeners;
+import me.alchemi.alchemicpvp.listeners.PunishListener;
 import me.alchemi.alchemicpvp.listeners.SpyListener;
 import me.alchemi.alchemicpvp.listeners.StaffChat;
 import me.alchemi.alchemicpvp.listeners.cmds.CheckCommand;
@@ -75,6 +80,8 @@ public class main extends PluginBase {
 	
 	public HashMap<String, SpyListener> spies = new HashMap<String, SpyListener>();
 	
+	private List<UUID> toKill = new ArrayList<UUID>();
+	
 	@Override
 	public void onLoad() {
 		worldGuard = Bukkit.getPluginManager().getPlugin("WorldGuard") != null;
@@ -117,6 +124,8 @@ public class main extends PluginBase {
 		if (!playerData.exists()) playerData.mkdir();
 		
 		if (worldGuard) wg.onEnable();
+		
+		if (Bukkit.getPluginManager().getPlugin("CombatLogX") != null) new PunishListener();
 		
 		ssb = new StatsScoreboard();
 		
@@ -214,6 +223,38 @@ public class main extends PluginBase {
 	public final StatsScoreboard getSsb() {
 		return ssb;
 	}
+
+	/**
+	 * @return the toKill
+	 */
+	public List<UUID> getToKill() {
+		return toKill;
+	}
+
+	/**
+	 * @param toKill the toKill to set
+	 */
+	public void addToKill(OfflinePlayer toKill) {
+		this.toKill.add(toKill.getUniqueId());
+	}
 	
+	public void addToKill(UUID uuid) {
+		this.toKill.add(uuid);
+	}
+	
+	/**
+	 * @param killed the killed to remove
+	 */
+	public void removeToKill(OfflinePlayer killed) {
+		this.toKill.remove(killed.getUniqueId());
+	}
+	
+	public void removeToKill(UUID uuid) {
+		this.toKill.remove(uuid);
+	}
+	
+	public boolean toKill(Player toKill) {
+		return this.toKill.contains(toKill.getUniqueId());
+	}
 	
 }
