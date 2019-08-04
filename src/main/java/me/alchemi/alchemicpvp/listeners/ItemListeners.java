@@ -32,6 +32,7 @@ public class ItemListeners implements Listener{
 		if (PersistentMeta.hasMeta(e.getPlayer(), TaskIntMeta.class)) {
 			Bukkit.getScheduler().cancelTask(PersistentMeta.getMeta(e.getPlayer(), TaskIntMeta.class).asInt());
 			e.getPlayer().removeMetadata(TaskIntMeta.class.getName(), main.getInstance());
+			
 		}
 		
 		if (Config.immediateConsuming
@@ -39,7 +40,6 @@ public class ItemListeners implements Listener{
 			
 			if (e.getItem().hasItemMeta() && e.getItem().getItemMeta() instanceof PotionMeta
 					&& (!PersistentMeta.hasMeta(e.getPlayer(), BooleanMeta.class))) {
-				
 				PotionMeta potionMeta = ((PotionMeta) e.getItem().getItemMeta());
 				if (potionMeta.hasCustomEffects()) e.getPlayer().addPotionEffects(potionMeta.getCustomEffects());
 				
@@ -64,7 +64,7 @@ public class ItemListeners implements Listener{
 				
 				boolean ignoreLimit = false;
 				
-				switch(e.getMaterial()) {
+				switch(MaterialWrapper.wrap(e.getMaterial())) {
 				case GOLDEN_APPLE:
 					foodLvl += 4;
 					saturation += 9.6;

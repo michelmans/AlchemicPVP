@@ -1,7 +1,6 @@
 name: AlchemicPVP
 main: me.alchemi.alchemicpvp.main
 version: ${project.version}
-api-version: 1.13
 author: Alchemi
 description: A plugin for better PvP.
 depend: [AlchemicLibrary]
@@ -37,16 +36,6 @@ commands:
     usage: /reply <message>
     description: Reply to a message.
     aliases: ["r"]
-   
-  smite:
-    usage: /smite <heathen>
-    description: SEND A BOLT OF LIGHTING TO THAT HEATHEN.
-    aliases: ["wrath"]
-    
-  vanish:
-    usage: /vanish
-    description: Toggle vanish.
-    aliases: ["v"]
     
   socialspy:
     usage: /socialspy [ignore] [player]
@@ -62,15 +51,6 @@ commands:
     usage: /whois [nickname]
     description: Search for the player behind the nickname.
     aliases: ["who", "doctorwho?", "realname"]
-    
-  staffchat:
-    usage: /staffchat [message]
-    description: Toggle staffchat usage or send a singular message.
-    aliases: ["helpop", "adminchat", "ho", "ac", "sc"]
-    
-  sudo:
-    usage: /sudo <player> <command>
-    description: Force a player to run a command.
     
   tpo:
     usage: /tpo <player>
@@ -98,11 +78,6 @@ commands:
     usage: /fly [player]
     description: Spread your wings and fly away!
     permission: alchemicpvp.fly
-  
-  invsee:
-    usage: /invsee <player>
-    description: Look at a players inventory
-    permission: alchemicpvp.invsee
     
   givewand:
     usage: /givewand <magic|dragon> [player]
@@ -123,10 +98,6 @@ permissions:
     default: false
   alchemicpvp.spawn:
     description: Allows to set spawnpoint.
-  alchemicpvp.smite:
-    description: Permission to SMITE HEATHENS.
-  alchemicpvp.vanish:
-    description: Permission to toggle vanish.
   alchemicpvp.spy:
     description: Permission to be big brother.
   alchemicpvp.spy.hideFromBigBrother:
@@ -137,17 +108,11 @@ permissions:
     description: Permission to format your nickname.
   alchemicpvp.whois:
     description: Permission to look for the player behind the nickname.
-  alchemicpvp.staffchat:
-    description: Permission to use the staff chat.
-  alchemicpvp.sudo:
-    description: Permission to sudo a player.
   alchemicpvp.tpo:
     description: Permission to tp to a player.
   alchemicpvp.tpo.others:
     description: Permission to tp a player to you.
   alchemicpvp.tppos:
     description: Permission to tp to a position.
-  alchemicpvp.invsee:
-    description: Permission to see a players inventory.
   alchemicpvp.fly:
     description: Permission to fly.

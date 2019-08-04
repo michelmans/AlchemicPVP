@@ -22,27 +22,21 @@ import me.alchemi.alchemicpvp.listeners.Events;
 import me.alchemi.alchemicpvp.listeners.ItemListeners;
 import me.alchemi.alchemicpvp.listeners.PunishListener;
 import me.alchemi.alchemicpvp.listeners.SpyListener;
-import me.alchemi.alchemicpvp.listeners.StaffChat;
 import me.alchemi.alchemicpvp.listeners.cmds.CheckCommand;
 import me.alchemi.alchemicpvp.listeners.cmds.FlyCommand;
 import me.alchemi.alchemicpvp.listeners.cmds.GameModeCommand;
 import me.alchemi.alchemicpvp.listeners.cmds.GiveWandCommand;
-import me.alchemi.alchemicpvp.listeners.cmds.InvseeCommand;
 import me.alchemi.alchemicpvp.listeners.cmds.MessageCommand;
 import me.alchemi.alchemicpvp.listeners.cmds.NickCommand;
 import me.alchemi.alchemicpvp.listeners.cmds.ReloadCommand;
 import me.alchemi.alchemicpvp.listeners.cmds.ReplyCommand;
-import me.alchemi.alchemicpvp.listeners.cmds.SmiteCommand;
 import me.alchemi.alchemicpvp.listeners.cmds.SpawnCommand;
 import me.alchemi.alchemicpvp.listeners.cmds.SpyCommand;
-import me.alchemi.alchemicpvp.listeners.cmds.StaffChatCommand;
 import me.alchemi.alchemicpvp.listeners.cmds.StatsCommand;
-import me.alchemi.alchemicpvp.listeners.cmds.SudoCommand;
 import me.alchemi.alchemicpvp.listeners.cmds.TpCommand;
 import me.alchemi.alchemicpvp.listeners.cmds.TpoCommand;
 import me.alchemi.alchemicpvp.listeners.cmds.TpoHereCommand;
 import me.alchemi.alchemicpvp.listeners.cmds.UncheckCommand;
-import me.alchemi.alchemicpvp.listeners.cmds.VanishCommand;
 import me.alchemi.alchemicpvp.listeners.cmds.WhoCommand;
 import me.alchemi.alchemicpvp.listeners.tabcomplete.GameModeTabComplete;
 import me.alchemi.alchemicpvp.listeners.tabcomplete.GiveWandComplete;
@@ -65,8 +59,6 @@ public class main extends PluginBase {
 	
 	public DragonStick dragon;
 	public MagicWand magic;
-	
-	public StaffChat staffChat;
 	
 	private WorldGuard wg;
 	
@@ -113,11 +105,8 @@ public class main extends PluginBase {
 			messenger.print("Vault dependent chat installed! Using Vault api chat.");
 		}
 		
-		staffChat = new StaffChat();
 		registerCommands();
 		getServer().getPluginManager().registerEvents(new Events(), this);
-		getServer().getPluginManager().registerEvents(staffChat, this);
-		
 		
 		playerData = new File(getDataFolder(), "playerdata");
 		
@@ -152,20 +141,15 @@ public class main extends PluginBase {
 		getCommand("statsreload").setExecutor(new ReloadCommand());
 		getCommand("reply").setExecutor(new ReplyCommand());
 		getCommand("message").setExecutor(new MessageCommand());
-		getCommand("smite").setExecutor(new SmiteCommand());
-		getCommand("vanish").setExecutor(new VanishCommand());
 		getCommand("socialspy").setExecutor(new SpyCommand());
 		getCommand("nick").setExecutor(new NickCommand());
 		getCommand("whois").setExecutor(new WhoCommand());
-		getCommand("staffchat").setExecutor(new StaffChatCommand());
-		getCommand("sudo").setExecutor(new SudoCommand());
 		getCommand("givewand").setExecutor(new GiveWandCommand());
 		getCommand("tpo").setExecutor(new TpoCommand());
 		getCommand("tpohere").setExecutor(new TpoHereCommand());
 		getCommand("tp").setExecutor(new TpCommand());
 		getCommand("gamemode").setExecutor(new GameModeCommand());
 		getCommand("fly").setExecutor(new FlyCommand());
-		getCommand("invsee").setExecutor(new InvseeCommand());
 		
 		getCommand("socialspy").setTabCompleter(new SpyTabComplete());
 		getCommand("stats").setTabCompleter(new StatsTabComplete());
