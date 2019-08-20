@@ -31,15 +31,14 @@
 	<classpathentry kind="var" path="M2_REPO/net/wesjd/anvilgui/1.2.2-SNAPSHOT/anvilgui-1.2.2-SNAPSHOT.jar"/>
 	<classpathentry kind="src" path="/AlchemicLibrary-api"/>
 	<classpathentry kind="var" path="M2_REPO/com/sk89q/worldguard/worldguard-core/7.0.1-SNAPSHOT/worldguard-core-7.0.1-SNAPSHOT.jar" sourcepath="M2_REPO/com/sk89q/worldguard/worldguard-core/7.0.1-SNAPSHOT/worldguard-core-7.0.1-SNAPSHOT-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/com/sk89q/worldguard/worldguard-libs/core/7.0.1-SNAPSHOT/core-7.0.1-SNAPSHOT.jar" sourcepath="M2_REPO/com/sk89q/worldguard/worldguard-libs/core/7.0.1-SNAPSHOT/core-7.0.1-SNAPSHOT-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/sk89q/worldedit/worldedit-core/7.0.1-SNAPSHOT/worldedit-core-7.0.1-SNAPSHOT.jar" sourcepath="M2_REPO/com/sk89q/worldedit/worldedit-core/7.0.1-SNAPSHOT/worldedit-core-7.0.1-SNAPSHOT-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/sk89q/worldedit/worldedit-libs/core/7.0.1-SNAPSHOT/core-7.0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="var" path="M2_REPO/de/schlichtherle/truezip/6.8.3/truezip-6.8.3.jar" sourcepath="M2_REPO/de/schlichtherle/truezip/6.8.3/truezip-6.8.3-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/mozilla/rhino/1.7.11/rhino-1.7.11.jar" sourcepath="M2_REPO/org/mozilla/rhino/1.7.11/rhino-1.7.11-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-api/1.7.26/slf4j-api-1.7.26.jar" sourcepath="M2_REPO/org/slf4j/slf4j-api/1.7.26/slf4j-api-1.7.26-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/com/sk89q/squirrelid/0.2.0/squirrelid-0.2.0.jar" sourcepath="M2_REPO/com/sk89q/squirrelid/0.2.0/squirrelid-0.2.0-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/flywaydb/flyway-core/3.0/flyway-core-3.0.jar" sourcepath="M2_REPO/org/flywaydb/flyway-core/3.0/flyway-core-3.0-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/khelekore/prtree/1.5.0/prtree-1.5.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/sk89q/worldguard/worldguard-legacy/7.0.0-SNAPSHOT/worldguard-legacy-7.0.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/sk89q/worldguard/worldguard-legacy/7.0.0-SNAPSHOT/worldguard-legacy-7.0.0-SNAPSHOT-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/sk89q/worldedit/worldedit-bukkit/7.0.0-SNAPSHOT/worldedit-bukkit-7.0.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/sk89q/worldedit/worldedit-bukkit/7.0.0-SNAPSHOT/worldedit-bukkit-7.0.0-SNAPSHOT-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/sk89q/worldedit/worldedit-libs/bukkit/7.0.0-SNAPSHOT/bukkit-7.0.0-SNAPSHOT.jar"/>
@@ -50,7 +49,6 @@
 	<classpathentry kind="var" path="M2_REPO/com/zachsthings/libcomponents/libcomponents-bukkit/1.2/libcomponents-bukkit-1.2.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/zachsthings/libcomponents/libcomponents-core/1.2/libcomponents-core-1.2.jar"/>
 	<classpathentry kind="var" path="M2_REPO/net/sf/opencsv/opencsv/2.0/opencsv-2.0.jar"/>
-	<classpathentry kind="lib" path="CombatLogX.jar"/>
 	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
 		<attributes>
 			<attribute name="optional" value="true"/>

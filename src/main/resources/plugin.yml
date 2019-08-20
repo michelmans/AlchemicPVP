@@ -3,116 +3,114 @@ main: me.alchemi.alchemicpvp.main
 version: ${project.version}
 author: Alchemi
 description: A plugin for better PvP.
-depend: [AlchemicLibrary]
-softdepend: [WorldGuard]
-
+depend:
+- AlchemicLibrary
+softdepend:
+- WorldGuard
 commands:
-  stats:
-    usage: /stats
-    description: View your stats
-    
-  check:
-    usage: /check [player]
-    description: Check on a player, with optional teleport.
-    
-  uncheck:
-    usage: /uncheck
-    description: Remove all check effects.
-    
-  setcheckspawn:
-    usage: /setcheckspawn
-    description: Sets the return point for the /uncheck command.
-    
-  statsreload:
-    usage: /statsreload
-    description: Reload all files.
-    
-  message:
-    usage: /message <recipient> <message>
-    description: Send a private message.
-    aliases: ["msg", "tell", "t", "w", "whisper"]
-    
-  reply:
-    usage: /reply <message>
-    description: Reply to a message.
-    aliases: ["r"]
-    
-  socialspy:
-    usage: /socialspy [ignore] [player]
-    description: Toggle big brother.
-    aliases: ["spy"]
-  
-  nick:
-    usage: /nick [nickname]
-    description: Set a nickname.
-    aliases: ["nickname"]
-  
-  whois:
-    usage: /whois [nickname]
-    description: Search for the player behind the nickname.
-    aliases: ["who", "doctorwho?", "realname"]
-    
-  tpo:
-    usage: /tpo <player>
-    description: Tp to a player.
-    permission: alchemicpvp.tpo
-  
-  tpohere:
-    usage: /tpohere <player>
-    description: Tp a player to you.
-    permission: alchemicpvp.tpo.others
-  
-  tp:
-    usage: /tp <x> <y> <z>
-    description: Tp to a location.
-    permission: alchemicpvp.tppos
-    aliases: [tppos]
-  
-  gamemode:
-    usage: /gamemode <survival|creative|adventure|spectator> [player]
-    description: Change your gamemode.
-    permission: minecraft.command.gamemode
-    aliases: [gm]
-    
-  fly:
-    usage: /fly [player]
-    description: Spread your wings and fly away!
-    permission: alchemicpvp.fly
-    
-  givewand:
-    usage: /givewand <magic|dragon> [player]
-    description: Give a player a wand.
-  
+   stats:
+      usage: /stats
+      description: View your stats
+   check:
+      usage: /check [player]
+      description: Check on a player, with optional teleport.
+   uncheck:
+      usage: /uncheck
+      description: Remove all check effects.
+   setcheckspawn:
+      usage: /setcheckspawn
+      description: Sets the return point for the /uncheck command.
+   statsreload:
+      usage: /statsreload
+      description: Reload all files.
+   message:
+      usage: /message <recipient> <message>
+      description: Send a private message.
+      aliases:
+      - msg
+      - tell
+      - t
+      - w
+      - whisper
+   reply:
+      usage: /reply <message>
+      description: Reply to a message.
+      aliases:
+      - r
+   socialspy:
+      usage: /socialspy [ignore] [player]
+      description: Toggle big brother.
+      aliases:
+      - spy
+   nick:
+      usage: /nick [nickname]
+      description: Set a nickname.
+      aliases:
+      - nickname
+   whois:
+      usage: /whois [nickname]
+      description: Search for the player behind the nickname.
+      aliases:
+      - who
+      - doctorwho?
+      - realname
+   tpo:
+      usage: /tpo <player>
+      description: Tp to a player.
+      permission: alchemicpvp.tpo
+   tpohere:
+      usage: /tpohere <player>
+      description: Tp a player to you.
+      permission: alchemicpvp.tpo.others
+   tp:
+      usage: /tp <x> <y> <z>
+      description: Tp to a location.
+      permission: alchemicpvp.tppos
+      aliases:
+      - tppos
+   gamemode:
+      usage: /gamemode <survival|creative|adventure|spectator> [player]
+      description: Change your gamemode.
+      permission: minecraft.command.gamemode
+      aliases:
+      - gm
+   fly:
+      usage: /fly [player]
+      description: Spread your wings and fly away!
+      permission: alchemicpvp.fly
+   givewand:
+      usage: /givewand <magic|dragon> [player]
+      description: Give a player a wand.
 permissions:
-  alchemicpvp.stats.other:
-    description: Permission to view an other players stats.
-    default: false
-  alchemicpvp.stats.clear:
-    description: Permission to clear someone's stats.
-    default: false
-  alchemicpvp.check:
-    description: Permission to check on players.
-    default: false
-  alchemicpvp.check.bypass:
-    description: Allows to see player in checkmode.
-    default: false
-  alchemicpvp.spawn:
-    description: Allows to set spawnpoint.
-  alchemicpvp.spy:
-    description: Permission to be big brother.
-  alchemicpvp.spy.hideFromBigBrother:
-    description: Permission to hide from big brother.
-  alchemicpvp.nick:
-    description: Permission for a nickname.
-  alchemicpvp.nick.format:
-    description: Permission to format your nickname.
-  alchemicpvp.whois:
-    description: Permission to look for the player behind the nickname.
-  alchemicpvp.tpo:
-    description: Permission to tp to a player.
-  alchemicpvp.tpo.others:
-    description: Permission to tp a player to you.
-  alchemicpvp.tppos:
-    description: Permission to tp to a position.
-  alchemicpvp.fly:
-    description: Permission to fly.
+   alchemicpvp.stats.other:
+      description: Permission to view an other players stats.
+      default: false
+   alchemicpvp.stats.clear:
+      description: Permission to clear someone's stats.
+      default: false
+   alchemicpvp.check:
+      description: Permission to check on players.
+      default: false
+   alchemicpvp.check.bypass:
+      description: Allows to see player in checkmode.
+      default: false
+   alchemicpvp.spawn:
+      description: Allows to set spawnpoint.
+   alchemicpvp.spy:
+      description: Permission to be big brother.
+   alchemicpvp.spy.hideFromBigBrother:
+      description: Permission to hide from big brother.
+   alchemicpvp.nick:
+      description: Permission for a nickname.
+   alchemicpvp.nick.format:
+      description: Permission to format your nickname.
+   alchemicpvp.whois:
+      description: Permission to look for the player behind the nickname.
+   alchemicpvp.tpo:
+      description: Permission to tp to a player.
+   alchemicpvp.tpo.others:
+      description: Permission to tp a player to you.
+   alchemicpvp.tppos:
+      description: Permission to tp to a position.
+   alchemicpvp.fly:
+      description: Permission to fly.
