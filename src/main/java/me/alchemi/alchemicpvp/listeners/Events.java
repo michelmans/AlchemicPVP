@@ -134,7 +134,12 @@ public class Events implements Listener {
 	
 	@EventHandler
 	public void onProjectileHit(ProjectileHitEvent e) {
-		if (e.getHitEntity() != null && e.getHitEntity() instanceof LivingEntity && e.getEntity() instanceof Arrow && e.getEntity().getCustomName().equals("flame")) {
+		if (e.getHitEntity() != null
+				&& e.getEntity() != null
+				&& e.getHitEntity() instanceof LivingEntity 
+				&& e.getEntity() instanceof Arrow
+				&& e.getEntity().getCustomName() != null
+				&& e.getEntity().getCustomName().equals("flame")) {
 			((LivingEntity)e.getHitEntity()).setNoDamageTicks(0);
 		}
 		

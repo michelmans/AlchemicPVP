@@ -7,6 +7,7 @@ depend:
 - AlchemicLibrary
 softdepend:
 - WorldGuard
+- CombatLogX
 commands:
    stats:
       usage: /stats
