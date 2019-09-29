@@ -19,7 +19,6 @@ public class SpawnCommand implements CommandExecutor {
 			
 			Player player = (Player) sender;
 			Config.SPAWN = player.getLocation();
-			System.out.println(Config.SPAWN.serialize());
 			main.config.save();
 			main.getInstance().getMessenger().sendMessage(Messages.CHECK_SPAWN.value()
 					.replace("$x$", String.valueOf(player.getLocation().getBlockX()))

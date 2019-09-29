@@ -145,7 +145,6 @@ public class StatsCommand implements CommandExecutor {
 				return true;
 			}
 			File statsFile = new File(main.getInstance().playerData, player.getUniqueId() + ".yml");
-			System.out.println(statsFile);
 			
 			if (!statsFile.exists()) {
 				main.getInstance().getMessenger().sendMessage(Messages.STATS_NOPLAYER.value().replace("$player$", args[0]), sender);

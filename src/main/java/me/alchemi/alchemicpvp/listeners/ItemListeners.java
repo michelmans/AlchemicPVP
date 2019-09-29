@@ -37,8 +37,8 @@ public class ItemListeners implements Listener{
 		
 		if (Config.immediateConsuming
 				&& e.getItem() != null
-				&& (MaterialWrapper.getFromItemStack(e.getItem()).isEdible() 
-						|| MaterialWrapper.getFromItemStack(e.getItem()).equals(MaterialWrapper.POTION.getMaterial()))) {
+				&& (MaterialWrapper.getWrapper(e.getItem()).isEdible() 
+						|| MaterialWrapper.getWrapper(e.getItem()).equals(MaterialWrapper.POTION.getMaterial()))) {
 			
 			if (e.getItem().hasItemMeta() && e.getItem().getItemMeta() instanceof PotionMeta
 					&& (!PersistentMeta.hasMeta(e.getPlayer(), BooleanMeta.class))) {
@@ -66,7 +66,7 @@ public class ItemListeners implements Listener{
 				
 				boolean ignoreLimit = false;
 				
-				switch(MaterialWrapper.wrap(MaterialWrapper.getFromItemStack(e.getItem()))) {
+				switch(MaterialWrapper.wrap(MaterialWrapper.getWrapper(e.getItem()))) {
 				case GOLDEN_APPLE:
 					foodLvl += 4;
 					saturation += 9.6;
