@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 
 import me.alchemi.al.configurations.Messenger;
 import me.alchemi.alchemicpvp.Config;
-import me.alchemi.alchemicpvp.main;
+import me.alchemi.alchemicpvp.PvP;
 import me.alchemi.alchemicpvp.Config.Messages;
 import me.alchemi.alchemicpvp.meta.NickMeta;
 import me.alchemi.alchemicpvp.meta.StatsMeta;
@@ -25,20 +25,20 @@ public class NickCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		
-		if (sender instanceof Player && main.getInstance().hasPermission(sender, "alchemicpvp.nick") && args.length == 1) {
+		if (sender instanceof Player && PvP.getInstance().hasPermission(sender, "alchemicpvp.nick") && args.length == 1) {
 			Player player = (Player) sender;
 			
 			Matcher m = Pattern.compile("&[1234567890klnor]").matcher(args[0]);
 			
 			if (args[0].length() > Config.Nickname.CHARACTERLIMIT.asInt()) {
-				main.getInstance().getMessenger().sendMessage(Messages.NICK_TOOLONG.value()
+				PvP.getInstance().getMessenger().sendMessage(Messages.NICK_TOOLONG.value()
 						.replace("$name$", args[0])
 						.replace("$amount$", Config.Nickname.CHARACTERLIMIT.asString()), sender);
 				
 				return true;
 			} 
 			
-			if (m.find() && !main.getInstance().hasPermission(sender, "alchemicpvp.nick.format") && !Config.Nickname.ALLOW_FORMAT.asBoolean()) {
+			if (m.find() && !PvP.getInstance().hasPermission(sender, "alchemicpvp.nick.format") && !Config.Nickname.ALLOW_FORMAT.asBoolean()) {
 				sender.sendMessage(Messenger.formatString(Messages.NICK_NOFORMAT.value()
 						.replace("$name$", args[0])
 						.replace("$eg$", "&k, &6, &1, etc.")));
@@ -62,12 +62,12 @@ public class NickCommand implements CommandExecutor {
 			player.setMetadata(NickMeta.class.getName(), new NickMeta(args[0]));
 			StatsMeta.getStats(player).setNickname(args[0]);
 			
-			main.getInstance().getMessenger().sendMessage(Messages.NICK_NEW.value()
+			PvP.getInstance().getMessenger().sendMessage(Messages.NICK_NEW.value()
 					.replace("$name$", args[0])
 					.replace("$player$", sender.getName()), sender);
 			
 		} else if (sender instanceof Player) {
-			main.getInstance().getMessenger().sendMessage(Messages.COMMANDS_NOPERMISSION.value().replace("$command$", command.getName()), sender);
+			PvP.getInstance().getMessenger().sendMessage(Messages.COMMANDS_NOPERMISSION.value().replace("$command$", command.getName()), sender);
 		}
 		
 		return true;

@@ -8,7 +8,7 @@ import org.bukkit.block.Block;
 
 import me.alchemi.al.api.MaterialWrapper;
 import me.alchemi.al.objects.meta.BaseMeta;
-import me.alchemi.alchemicpvp.main;
+import me.alchemi.alchemicpvp.PvP;
 
 public class FireExtMeta extends BaseMeta {
 	
@@ -17,7 +17,7 @@ public class FireExtMeta extends BaseMeta {
 	private Block block;
 
 	public FireExtMeta(Block block) {
-		super(main.getInstance(), block);
+		super(PvP.getInstance(), block);
 		
 		this.block = block;
 		
@@ -47,7 +47,7 @@ public class FireExtMeta extends BaseMeta {
 	
 	private void remove() {
 		registered.remove(this);
-		block.removeMetadata(this.getClass().getName(), main.getInstance());
+		block.removeMetadata(this.getClass().getName(), PvP.getInstance());
 	}
 
 }

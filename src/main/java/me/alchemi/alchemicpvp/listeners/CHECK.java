@@ -28,7 +28,7 @@ import me.alchemi.al.configurations.Messenger;
 import me.alchemi.al.objects.meta.PersistentMeta;
 import me.alchemi.alchemicpvp.Config;
 import me.alchemi.alchemicpvp.Config.Messages;
-import me.alchemi.alchemicpvp.main;
+import me.alchemi.alchemicpvp.PvP;
 import me.alchemi.alchemicpvp.meta.VanishMeta;
 
 public class CHECK implements Listener{
@@ -39,8 +39,8 @@ public class CHECK implements Listener{
 	
 	public CHECK(Player pl) {
 		
-		if (main.getInstance().getServer().getScoreboardManager().getMainScoreboard().getTeam("checkers") != null) checkers = main.getInstance().getServer().getScoreboardManager().getMainScoreboard().getTeam("checkers");
-		else checkers = main.getInstance().getServer().getScoreboardManager().getMainScoreboard().registerNewTeam("checkers");
+		if (PvP.getInstance().getServer().getScoreboardManager().getMainScoreboard().getTeam("checkers") != null) checkers = PvP.getInstance().getServer().getScoreboardManager().getMainScoreboard().getTeam("checkers");
+		else checkers = PvP.getInstance().getServer().getScoreboardManager().getMainScoreboard().registerNewTeam("checkers");
 		
 		checkers.setOption(Option.COLLISION_RULE, OptionStatus.NEVER);
 		
@@ -50,7 +50,7 @@ public class CHECK implements Listener{
 		
 		checkers.addEntry(getPlayer());
 		
-		main.getInstance().getServer().getPluginManager().registerEvents(this, main.getInstance());
+		PvP.getInstance().getServer().getPluginManager().registerEvents(this, PvP.getInstance());
 		if (!PersistentMeta.hasMeta(pl, VanishMeta.class) || !PersistentMeta.getMeta(pl, VanishMeta.class).asBoolean()) vanishToggle(pl);
 	}
 	
@@ -59,17 +59,17 @@ public class CHECK implements Listener{
 	}
 	
 	public static void vanishToggle(Player player) {
-		String prefix = main.getInstance().chat.getGroupPrefix(player.getWorld(), main.getInstance().chat.getPlayerGroups(player)[0]);
+		String prefix = PvP.getInstance().chat.getGroupPrefix(player.getWorld(), PvP.getInstance().chat.getPlayerGroups(player)[0]);
 		boolean vanish = false;
 		
 		if (PersistentMeta.hasMeta(player, VanishMeta.class)) vanish = PersistentMeta.getMeta(player, VanishMeta.class).asBoolean();
 		
-		for (Player OnPl : main.getInstance().getServer().getOnlinePlayers()) {
-			if (!main.getInstance().hasPermission(OnPl, "alchemicpvp.check.bypass")) {
+		for (Player OnPl : PvP.getInstance().getServer().getOnlinePlayers()) {
+			if (!PvP.getInstance().hasPermission(OnPl, "alchemicpvp.check.bypass")) {
 				if (vanish) {
-					OnPl.showPlayer(main.getInstance(), player);
+					OnPl.showPlayer(PvP.getInstance(), player);
 				} else {
-					OnPl.hidePlayer(main.getInstance(), player);
+					OnPl.hidePlayer(PvP.getInstance(), player);
 				}
 			}
 		}
@@ -79,16 +79,16 @@ public class CHECK implements Listener{
 			player.setPlayerListName(Messenger.formatString(prefix + player.getName()));
 			if (Config.Stats.POTION_EFFECT.asBoolean()) player.removePotionEffect(PotionEffectType.INVISIBILITY);
 			vanish = false;
-			main.getInstance().getMessenger().sendMessage(Messages.UNVANISH.value(), player);
+			PvP.getInstance().getMessenger().sendMessage(Messages.UNVANISH.value(), player);
 		}
 		else {
 			player.setPlayerListName(Messenger.formatString(Messages.CHECK_VANISHTAG.value() + prefix + player.getName()));
 			if (Config.Stats.POTION_EFFECT.asBoolean()) player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 100000, 9, true, false), true);
 			vanish = true;
-			main.getInstance().getMessenger().sendMessage(Messages.VANISH.value(), player);
+			PvP.getInstance().getMessenger().sendMessage(Messages.VANISH.value(), player);
 		}
 		
-		player.setMetadata(VanishMeta.class.getName(), new VanishMeta(main.getInstance(), vanish));
+		player.setMetadata(VanishMeta.class.getName(), new VanishMeta(PvP.getInstance(), vanish));
 		
 	}
 	
@@ -99,13 +99,13 @@ public class CHECK implements Listener{
 		checkers.removeEntry(getPlayer());
 				
 		HandlerList.unregisterAll(this);
-		main.getInstance().unRegisterCheck(getPlayer());
+		PvP.getInstance().unRegisterCheck(getPlayer());
 	}
 	
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent e) {
-		if ((((VanishMeta)player.getMetadata("vanish").get(0)).asBoolean()) && !main.getInstance().hasPermission(e.getPlayer(), "alchemicpvp.check.bypass")) {
-			e.getPlayer().hidePlayer(main.getInstance(), player);
+		if ((((VanishMeta)player.getMetadata("vanish").get(0)).asBoolean()) && !PvP.getInstance().hasPermission(e.getPlayer(), "alchemicpvp.check.bypass")) {
+			e.getPlayer().hidePlayer(PvP.getInstance(), player);
 		}
 	}
 	
@@ -114,7 +114,7 @@ public class CHECK implements Listener{
 		if (e.getPlayer().equals(player)) {
 			e.getPlayer().performCommand("uncheck");
 		} else if (!e.getPlayer().canSee(player)) {
-			e.getPlayer().showPlayer(main.getInstance(), player);
+			e.getPlayer().showPlayer(PvP.getInstance(), player);
 		}
 		
 	}
@@ -123,7 +123,7 @@ public class CHECK implements Listener{
 	public void onShootBow(EntityShootBowEvent e) {
 		if (e.getEntityType().equals(EntityType.PLAYER) && ((Player)e.getEntity()).equals(player)) {
 			e.setCancelled(true);
-			main.getInstance().getMessenger().sendMessage(Messages.CHECK_NOHURTING.value(), player);
+			PvP.getInstance().getMessenger().sendMessage(Messages.CHECK_NOHURTING.value(), player);
 		}
 	}
 	
@@ -132,7 +132,7 @@ public class CHECK implements Listener{
 		
 		if (e.getPlayer().equals(player) && e.getItem() != null && !e.getItem().equals(air)) {
 			
-			main.getInstance().getServer().getScheduler().runTaskLater(main.getInstance(), new Runnable() {
+			PvP.getInstance().getServer().getScheduler().runTaskLater(PvP.getInstance(), new Runnable() {
 				
 				@Override
 				public void run() {
@@ -150,7 +150,7 @@ public class CHECK implements Listener{
 		
 		if (player.equals(this.player) && !e.getCurrentItem().equals(air)) {
 			if (e.getSlotType() != SlotType.OUTSIDE) {
-				main.getInstance().getServer().getScheduler().runTaskLater(main.getInstance(), new Runnable() {
+				PvP.getInstance().getServer().getScheduler().runTaskLater(PvP.getInstance(), new Runnable() {
 					
 					@Override
 					public void run() {
@@ -180,7 +180,7 @@ public class CHECK implements Listener{
 		
 		if (e.getDamager() instanceof Player && ((Player) e.getDamager()).equals(this.player)) {
 			e.setCancelled(true);
-			main.getInstance().getMessenger().sendMessage(Messages.CHECK_NOHURTING.value(), player);
+			PvP.getInstance().getMessenger().sendMessage(Messages.CHECK_NOHURTING.value(), player);
 		}
 	}
 	

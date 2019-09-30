@@ -48,9 +48,9 @@ import me.alchemi.alchemicpvp.objects.wands.MagicWand;
 import me.alchemi.alchemicpvp.objects.worldguard.WorldGuard;
 import net.milkbowl.vault.chat.Chat;
 
-public class main extends PluginBase {
+public class PvP extends PluginBase {
 
-	private static main instance;
+	private static PvP instance;
 	
 	public Chat chat;
 	public static boolean AnimatedNames = false;
@@ -188,7 +188,7 @@ public class main extends PluginBase {
 		if (checkedPlayers.containsKey(name)) checkedPlayers.remove(name);
 	}
 	
-	public static main getInstance() {
+	public static PvP getInstance() {
 		return instance;
 	}
 	

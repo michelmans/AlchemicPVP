@@ -80,4 +80,18 @@ dragonstick:
     lore:
     - 'Left Click: &3make thine enemies explode!'
     - 'Right Click: &3burn thine enemies ALIVE!'
+    
+# Data storage settings
+storage:
+    
+    # Which storage type to use. Either YML, MYSQL or SQLITE.
+    # Default: MYSQL
+    type: MYSQL
+    
+    host: localhost
+    port: 3306
+    database: alchemicpvp
+    user: pvp
+    password: pvp-inator2000
+    
   

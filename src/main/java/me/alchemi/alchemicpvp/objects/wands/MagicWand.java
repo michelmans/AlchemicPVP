@@ -20,7 +20,7 @@ import org.bukkit.util.Vector;
 import me.alchemi.al.configurations.Messenger;
 import me.alchemi.al.objects.meta.PersistentMeta;
 import me.alchemi.alchemicpvp.Config.Wands;
-import me.alchemi.alchemicpvp.main;
+import me.alchemi.alchemicpvp.PvP;
 import me.alchemi.alchemicpvp.meta.CooldownMeta;
 import me.alchemi.alchemicpvp.meta.SecondCooldownMeta;
 
@@ -47,7 +47,7 @@ public class MagicWand extends AbstractWand implements Listener{
 		meta.setLocalizedName(LOCALIZEDNAME);
 		setItemMeta(meta);
 		
-		Bukkit.getPluginManager().registerEvents(this, main.getInstance());
+		Bukkit.getPluginManager().registerEvents(this, PvP.getInstance());
 	}
 	
 	@Override
@@ -70,8 +70,8 @@ public class MagicWand extends AbstractWand implements Listener{
 			
 		} else if ( e.getItem() != null && e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasLocalizedName() && e.getItem().getItemMeta().getLocalizedName().equals(LOCALIZEDNAME)) {
 			
-			if (main.worldGuard && !main.getInstance().getWorldGuard().canPvP(e.getPlayer())) {
-				main.getInstance().getWorldGuard().sendPvPDeny(e.getPlayer());
+			if (PvP.worldGuard && !PvP.getInstance().getWorldGuard().canPvP(e.getPlayer())) {
+				PvP.getInstance().getWorldGuard().sendPvPDeny(e.getPlayer());
 				return;
 			}
 			
@@ -92,8 +92,8 @@ public class MagicWand extends AbstractWand implements Listener{
 					target = eyeLoc.add(direction);
 				}
 				
-				if (main.worldGuard && !main.getInstance().getWorldGuard().isPvPDenied(target)) {
-					main.getInstance().getWorldGuard().sendPvPDeny(e.getPlayer());
+				if (PvP.worldGuard && !PvP.getInstance().getWorldGuard().isPvPDenied(target)) {
+					PvP.getInstance().getWorldGuard().sendPvPDeny(e.getPlayer());
 					return;
 				}
 				

@@ -8,14 +8,14 @@ import org.bukkit.entity.Player;
 
 import me.alchemi.al.configurations.Messenger;
 import me.alchemi.alchemicpvp.Config;
-import me.alchemi.alchemicpvp.main;
+import me.alchemi.alchemicpvp.PvP;
 import me.alchemi.alchemicpvp.Config.Messages;
 import me.alchemi.alchemicpvp.listeners.EventMessage;
 import me.alchemi.alchemicpvp.meta.StatsMeta;
 
 public class ReplyCommand implements CommandExecutor {
 
-	private Messenger msgnr = main.getInstance().getMessenger();
+	private Messenger msgnr = PvP.getInstance().getMessenger();
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

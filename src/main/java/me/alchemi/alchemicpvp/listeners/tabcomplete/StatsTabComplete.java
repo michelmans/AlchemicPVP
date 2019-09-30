@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-import me.alchemi.alchemicpvp.main;
+import me.alchemi.alchemicpvp.PvP;
 
 public class StatsTabComplete implements TabCompleter {
     
@@ -24,14 +24,14 @@ public class StatsTabComplete implements TabCompleter {
 			return tabSuggest;
 
 		if (args.length == 1 
-				&& (main.getInstance().hasPermission(sender, "alchemicpvp.stats.other") 
-						|| main.getInstance().hasPermission(sender, "alchemicpvp.stats.clear"))) {
+				&& (PvP.getInstance().hasPermission(sender, "alchemicpvp.stats.other") 
+						|| PvP.getInstance().hasPermission(sender, "alchemicpvp.stats.clear"))) {
 			
 			for (Player p : Bukkit.getServer().getOnlinePlayers()) {
 				list.add(p.getName());
 			}
 				
-		} else if (args.length == 2 && main.getInstance().hasPermission(sender, "alchemicpvp.statc.clear")) {
+		} else if (args.length == 2 && PvP.getInstance().hasPermission(sender, "alchemicpvp.statc.clear")) {
 			
 			list.add("clear");
 			

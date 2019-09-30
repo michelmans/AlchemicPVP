@@ -24,7 +24,7 @@ import com.sk89q.worldguard.protection.regions.RegionContainer;
 
 import me.alchemi.al.api.MaterialWrapper;
 import me.alchemi.alchemicpvp.Config.Worldguard;
-import me.alchemi.alchemicpvp.main;
+import me.alchemi.alchemicpvp.PvP;
 import me.alchemi.alchemicpvp.objects.Cube;
 
 public class WorldGuard implements Listener{
@@ -49,7 +49,7 @@ public class WorldGuard implements Listener{
 	
 	public void onEnable() {
 		container = wg.getPlatform().getRegionContainer();
-		Bukkit.getPluginManager().registerEvents(this, main.getInstance());
+		Bukkit.getPluginManager().registerEvents(this, PvP.getInstance());
 	}
 	
 	public boolean canPvP(Player player) {
@@ -91,7 +91,7 @@ public class WorldGuard implements Listener{
 						
 						int index = c.getClosestPlaneIndex(e.getPlayer().getLocation()); 
 						List<Location> removeable = c.getPlane(index).placeBlockAt(e.getPlayer().getLocation(), Worldguard.VISIBLE_BORDER_BLOCK.asMaterial()); 
-						Bukkit.getScheduler().runTaskLater(main.getInstance(), new Runnable() {
+						Bukkit.getScheduler().runTaskLater(PvP.getInstance(), new Runnable() {
 							
 							@Override
 							public void run() {

@@ -6,7 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import me.alchemi.alchemicpvp.main;
+import me.alchemi.alchemicpvp.PvP;
 import me.alchemi.alchemicpvp.Config.Messages;
 import me.alchemi.alchemicpvp.listeners.SpyListener;
 
@@ -15,38 +15,38 @@ public class SpyCommand implements CommandExecutor{
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		
-		if (sender instanceof Player && main.getInstance().hasPermission(sender, "alchemicpvp.spy")) {
+		if (sender instanceof Player && PvP.getInstance().hasPermission(sender, "alchemicpvp.spy")) {
 			
 			
-			if (args.length > 1 && args[0].equalsIgnoreCase("ignore") && main.getInstance().spies.containsKey(sender.getName())) {
+			if (args.length > 1 && args[0].equalsIgnoreCase("ignore") && PvP.getInstance().spies.containsKey(sender.getName())) {
 				
 				if (Bukkit.getPlayer(args[1]) == null) {
-					main.getInstance().getMessenger().sendMessage(Messages.SPY_PLAYEROFFLINE.value().replace("$player$", args[1]), sender);
+					PvP.getInstance().getMessenger().sendMessage(Messages.SPY_PLAYEROFFLINE.value().replace("$player$", args[1]), sender);
 					return true;
 				}
-				main.getInstance().spies.get(sender.getName()).ignorePlayer(Bukkit.getPlayer(args[1]));
+				PvP.getInstance().spies.get(sender.getName()).ignorePlayer(Bukkit.getPlayer(args[1]));
 				return true;
-			} else if (args.length > 1 && args[0].equalsIgnoreCase("unignore") && main.getInstance().spies.containsKey(sender.getName())) {
+			} else if (args.length > 1 && args[0].equalsIgnoreCase("unignore") && PvP.getInstance().spies.containsKey(sender.getName())) {
 				
 				if (Bukkit.getPlayer(args[1]) == null) {
-					main.getInstance().getMessenger().sendMessage(Messages.SPY_PLAYEROFFLINE.value().replace("$player$", args[1]), sender);
+					PvP.getInstance().getMessenger().sendMessage(Messages.SPY_PLAYEROFFLINE.value().replace("$player$", args[1]), sender);
 					return true;
 				}
-				main.getInstance().spies.get(sender.getName()).unIgnorePlayer(Bukkit.getPlayer(args[1]));
+				PvP.getInstance().spies.get(sender.getName()).unIgnorePlayer(Bukkit.getPlayer(args[1]));
 				return true;
 			}
 			
 			
-			if (main.getInstance().spies.containsKey(sender.getName())) {
-				main.getInstance().spies.remove(sender.getName());
-				main.getInstance().getMessenger().sendMessage(Messages.SPY_STOP.value(), sender);
+			if (PvP.getInstance().spies.containsKey(sender.getName())) {
+				PvP.getInstance().spies.remove(sender.getName());
+				PvP.getInstance().getMessenger().sendMessage(Messages.SPY_STOP.value(), sender);
 			} else {
-				main.getInstance().spies.put(sender.getName(), new SpyListener((Player) sender));
-				main.getInstance().getMessenger().sendMessage(Messages.SPY_START.value(), sender);
+				PvP.getInstance().spies.put(sender.getName(), new SpyListener((Player) sender));
+				PvP.getInstance().getMessenger().sendMessage(Messages.SPY_START.value(), sender);
 			}
 			
 		} else if (sender instanceof Player) {
-			main.getInstance().getMessenger().sendMessage(Messages.COMMANDS_NOPERMISSION.value().replace("$command$", command.getName()), sender);
+			PvP.getInstance().getMessenger().sendMessage(Messages.COMMANDS_NOPERMISSION.value().replace("$command$", command.getName()), sender);
 		}
 		return true;
 	}

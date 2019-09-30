@@ -13,10 +13,10 @@ import org.bukkit.scoreboard.Team;
 import me.alchemi.al.configurations.Messenger;
 import me.alchemi.alchemicpvp.Config;
 import me.alchemi.alchemicpvp.Config.Messages;
-import me.alchemi.alchemicpvp.PlayerStats;
-import me.alchemi.alchemicpvp.main;
+import me.alchemi.alchemicpvp.PvP;
 import me.alchemi.alchemicpvp.meta.StatsMeta;
 import me.alchemi.alchemicpvp.objects.events.StatsChangeEvent;
+import me.alchemi.alchemicpvp.stats.YMLStats;
 
 public class StatsScoreboard implements Listener {
 	
@@ -30,7 +30,7 @@ public class StatsScoreboard implements Listener {
 	
 	public StatsScoreboard() {
 		manager = Bukkit.getScoreboardManager();
-		Bukkit.getPluginManager().registerEvents(this, main.getInstance());
+		Bukkit.getPluginManager().registerEvents(this, PvP.getInstance());
 	}
 	
 	public void addPlayer(Player player) {
@@ -39,7 +39,7 @@ public class StatsScoreboard implements Listener {
 		Objective obj = scoreboard.registerNewObjective("Stats", "none", Messenger.formatString(Messages.STATS_SCOREBOARD_TITLE.value()));
 		obj.setDisplaySlot(DisplaySlot.SIDEBAR);
 		
-		PlayerStats stats = StatsMeta.getStats(player);
+		YMLStats stats = StatsMeta.getStats(player);
 		
 		Team[] teams = new Team[Config.Scoreboard.LINESAMOUNT.asInt()];
 		

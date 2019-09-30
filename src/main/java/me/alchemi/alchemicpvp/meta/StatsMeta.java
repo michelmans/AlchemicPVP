@@ -10,21 +10,21 @@ import org.bukkit.entity.Player;
 
 import me.alchemi.al.objects.meta.BaseMeta;
 import me.alchemi.al.objects.meta.PersistentMeta;
-import me.alchemi.alchemicpvp.PlayerStats;
-import me.alchemi.alchemicpvp.main;
+import me.alchemi.alchemicpvp.PvP;
+import me.alchemi.alchemicpvp.stats.YMLStats;
 
 public class StatsMeta extends BaseMeta {
 
-	private PlayerStats stats;
+	private YMLStats stats;
 	
 	private CommandSender replyTo;
 	
 	public static final String NAME = "stats";
 	
 	public StatsMeta(Player player) {
-		super(main.getInstance(), null);
+		super(PvP.getInstance(), null);
 		
-		File dataFile = new File(main.getInstance().playerData, player.getUniqueId().toString() + ".yml");
+		File dataFile = new File(PvP.getInstance().playerData, player.getUniqueId().toString() + ".yml");
 		FileConfiguration fc = new YamlConfiguration();
 		if (!dataFile.exists()) {
 			fc.set("name", player.getName());
@@ -41,7 +41,7 @@ public class StatsMeta extends BaseMeta {
 			fc = YamlConfiguration.loadConfiguration(dataFile);
 		}
 		
-		stats = new PlayerStats(fc, dataFile);
+		stats = new YMLStats(fc, dataFile);
 		
 	}
 	
@@ -53,7 +53,7 @@ public class StatsMeta extends BaseMeta {
 		return stats;
 	}
 	
-	public PlayerStats stats() {
+	public YMLStats stats() {
 		return stats;
 	}
 	
@@ -65,7 +65,7 @@ public class StatsMeta extends BaseMeta {
 		return sender instanceof Player ? getMeta((Player) sender) : null;
 	}
 	
-	public static PlayerStats getStats(Player player) {
+	public static YMLStats getStats(Player player) {
 		return getMeta(player).stats();
 	}
 

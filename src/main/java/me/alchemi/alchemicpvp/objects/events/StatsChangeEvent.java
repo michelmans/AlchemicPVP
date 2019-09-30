@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-import me.alchemi.alchemicpvp.PlayerStats.Stat;
+import me.alchemi.alchemicpvp.stats.Stat;
 
 public class StatsChangeEvent extends Event {
 

@@ -27,8 +27,7 @@ import me.alchemi.al.configurations.Messenger;
 import me.alchemi.al.objects.meta.PersistentMeta;
 import me.alchemi.alchemicpvp.Config;
 import me.alchemi.alchemicpvp.Config.Messages;
-import me.alchemi.alchemicpvp.PlayerStats;
-import me.alchemi.alchemicpvp.main;
+import me.alchemi.alchemicpvp.PvP;
 import me.alchemi.alchemicpvp.listeners.cmds.WhoCommand;
 import me.alchemi.alchemicpvp.meta.CooldownMeta;
 import me.alchemi.alchemicpvp.meta.FireExtMeta;
@@ -36,6 +35,7 @@ import me.alchemi.alchemicpvp.meta.NickMeta;
 import me.alchemi.alchemicpvp.meta.SecondCooldownMeta;
 import me.alchemi.alchemicpvp.meta.StatsMeta;
 import me.alchemi.alchemicpvp.meta.VanishMeta;
+import me.alchemi.alchemicpvp.stats.YMLStats;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -50,9 +50,9 @@ public class Events implements Listener {
 		
 		if (Config.clearInventory) e.getPlayer().getInventory().clear();
 		
-		if (main.getInstance().hasPermission(e.getPlayer(), "alchemicpvp.spy") && !main.getInstance().spies.containsKey(e.getPlayer().getName())) e.getPlayer().performCommand("socialspy");
+		if (PvP.getInstance().hasPermission(e.getPlayer(), "alchemicpvp.spy") && !PvP.getInstance().spies.containsKey(e.getPlayer().getName())) e.getPlayer().performCommand("socialspy");
 		
-		if (!PersistentMeta.hasMeta(e.getPlayer(), VanishMeta.class)) e.getPlayer().setMetadata(VanishMeta.class.getName(), new VanishMeta(main.getInstance(), false));
+		if (!PersistentMeta.hasMeta(e.getPlayer(), VanishMeta.class)) e.getPlayer().setMetadata(VanishMeta.class.getName(), new VanishMeta(PvP.getInstance(), false));
 		e.getPlayer().setMetadata(StatsMeta.class.getName(), new StatsMeta(e.getPlayer()));
 		if (!PersistentMeta.hasMeta(e.getPlayer(), NickMeta.class)) e.getPlayer().setMetadata(NickMeta.class.getName(), new NickMeta(StatsMeta.getStats(e.getPlayer()).getNickname()));
 		
@@ -68,11 +68,11 @@ public class Events implements Listener {
 			
 		} else e.getPlayer().setDisplayName(PersistentMeta.getMeta(e.getPlayer(), NickMeta.class).asString());
 		
-		main.getInstance().getSsb().addPlayer(e.getPlayer());
+		PvP.getInstance().getSsb().addPlayer(e.getPlayer());
 		
-		if (main.getInstance().toKill(e.getPlayer())) {
+		if (PvP.getInstance().toKill(e.getPlayer())) {
 			e.getPlayer().setHealth(0.0D);
-			PlayerStats stats = StatsMeta.getStats(e.getPlayer());
+			YMLStats stats = StatsMeta.getStats(e.getPlayer());
 			stats.setDeaths(stats.getDeaths() + 2);
 		}
 		
@@ -83,18 +83,18 @@ public class Events implements Listener {
 		
 		e.getEntity().getInventory().clear();
 		e.getEntity().updateInventory();
-		e.getEntity().removeMetadata(CooldownMeta.class.getName(), main.getInstance());
-		e.getEntity().removeMetadata(SecondCooldownMeta.class.getName(), main.getInstance());
+		e.getEntity().removeMetadata(CooldownMeta.class.getName(), PvP.getInstance());
+		e.getEntity().removeMetadata(SecondCooldownMeta.class.getName(), PvP.getInstance());
 		
 		e.setKeepInventory(true);
 		
 		if (e.getEntity().getKiller() == null) return;
 		
-		PlayerStats victim = StatsMeta.getStats(e.getEntity());
+		YMLStats victim = StatsMeta.getStats(e.getEntity());
 		victim.setCurrentKillstreak(0);
 		victim.updateDeaths(1);
 		
-		PlayerStats killer = StatsMeta.getStats(e.getEntity().getKiller());
+		YMLStats killer = StatsMeta.getStats(e.getEntity().getKiller());
 		killer.updateKills(1);
 		killer.updateKillstreaks(1);
 		
@@ -115,19 +115,19 @@ public class Events implements Listener {
 		
 		Random rand = new Random();
 		
-		if (Config.deathMessages.size() > 1) main.getInstance().getMessenger().broadcast(Config.deathMessages.get(rand.nextInt(Config.deathMessages.size()))
+		if (Config.deathMessages.size() > 1) PvP.getInstance().getMessenger().broadcast(Config.deathMessages.get(rand.nextInt(Config.deathMessages.size()))
 				.replace("$victim$", e.getEntity().getDisplayName())
 				.replace("$killer$", e.getEntity().getKiller().getDisplayName())
 				.replace("$item$", itemKill), false);
-		else main.getInstance().getMessenger().print(Config.deathMessages);
+		else PvP.getInstance().getMessenger().print(Config.deathMessages);
 		
 		e.getEntity().spigot().respawn();
 	}
 	
 	@EventHandler
 	public void onPlayerLeave(PlayerQuitEvent e) {
-		if (main.getInstance().hasPermission(e.getPlayer(), "alchemicpvp.spy") && main.getInstance().spies.containsKey(e.getPlayer().getName())) e.getPlayer().performCommand("socialspy");
-		for (SpyListener sl : main.getInstance().spies.values()) {
+		if (PvP.getInstance().hasPermission(e.getPlayer(), "alchemicpvp.spy") && PvP.getInstance().spies.containsKey(e.getPlayer().getName())) e.getPlayer().performCommand("socialspy");
+		for (SpyListener sl : PvP.getInstance().spies.values()) {
 			if (sl.isIgnoring(e.getPlayer())) sl.unIgnorePlayer(e.getPlayer());
 		}
 	}
@@ -149,7 +149,7 @@ public class Events implements Listener {
 						|| e.getEntityType().equals(EntityType.DRAGON_FIREBALL))) {
 			Location loc = e.getHitBlock().getLocation();
 			
-			if (main.worldGuard && !main.getInstance().getWorldGuard().isPvPDenied(loc)) {
+			if (PvP.worldGuard && !PvP.getInstance().getWorldGuard().isPvPDenied(loc)) {
 				return;
 			}
 			

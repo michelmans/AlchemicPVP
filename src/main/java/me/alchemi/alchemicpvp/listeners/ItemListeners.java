@@ -16,14 +16,14 @@ import org.bukkit.potion.PotionType;
 import me.alchemi.al.api.MaterialWrapper;
 import me.alchemi.al.objects.meta.PersistentMeta;
 import me.alchemi.alchemicpvp.Config;
-import me.alchemi.alchemicpvp.main;
+import me.alchemi.alchemicpvp.PvP;
 import me.alchemi.alchemicpvp.meta.BooleanMeta;
 import me.alchemi.alchemicpvp.meta.TaskIntMeta;
 
 public class ItemListeners implements Listener{
 
 	public ItemListeners() {
-		Bukkit.getServer().getPluginManager().registerEvents(this, main.getInstance());
+		Bukkit.getServer().getPluginManager().registerEvents(this, PvP.getInstance());
 	}
 	
 	@EventHandler
@@ -31,7 +31,7 @@ public class ItemListeners implements Listener{
 		
 		if (PersistentMeta.hasMeta(e.getPlayer(), TaskIntMeta.class)) {
 			Bukkit.getScheduler().cancelTask(PersistentMeta.getMeta(e.getPlayer(), TaskIntMeta.class).asInt());
-			e.getPlayer().removeMetadata(TaskIntMeta.class.getName(), main.getInstance());
+			e.getPlayer().removeMetadata(TaskIntMeta.class.getName(), PvP.getInstance());
 			
 		}
 		
@@ -157,12 +157,12 @@ public class ItemListeners implements Listener{
 			
 			e.getPlayer().setMetadata(BooleanMeta.class.getName(), new BooleanMeta(true));
 
-			Bukkit.getScheduler().scheduleSyncDelayedTask(main.getInstance(), new Runnable() {
+			Bukkit.getScheduler().scheduleSyncDelayedTask(PvP.getInstance(), new Runnable() {
 				
 				@Override
 				public void run() {
 					
-					e.getPlayer().removeMetadata(BooleanMeta.class.getName(), main.getInstance());
+					e.getPlayer().removeMetadata(BooleanMeta.class.getName(), PvP.getInstance());
 					
 				}
 			}, 5);

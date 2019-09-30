@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 
 import me.alchemi.al.objects.meta.BaseMeta;
-import me.alchemi.alchemicpvp.main;
+import me.alchemi.alchemicpvp.PvP;
 
 public class CooldownMeta extends BaseMeta {
 
@@ -16,13 +16,13 @@ public class CooldownMeta extends BaseMeta {
 	public Player player;
 	
 	public CooldownMeta(int cooldown, Player player) {
-		super(main.getInstance(), false);
+		super(PvP.getInstance(), false);
 		value = false;
 		remainingTicks = 20;
 		remaining = cooldown;
 		this.player = player;
 		player.setLevel(cooldown);
-		task = Bukkit.getScheduler().runTaskTimerAsynchronously(main.getInstance(), new Runnable() {
+		task = Bukkit.getScheduler().runTaskTimerAsynchronously(PvP.getInstance(), new Runnable() {
 			
 			@Override
 			public void run() {

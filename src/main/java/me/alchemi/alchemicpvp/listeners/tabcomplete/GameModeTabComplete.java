@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-import me.alchemi.alchemicpvp.main;
+import me.alchemi.alchemicpvp.PvP;
 
 public class GameModeTabComplete implements TabCompleter {
     
@@ -23,7 +23,7 @@ public class GameModeTabComplete implements TabCompleter {
 		if (!(sender instanceof Player))
 			return tabSuggest;
 
-		if (!main.getInstance().hasPermission(sender, cmd.getPermission()))
+		if (!PvP.getInstance().hasPermission(sender, cmd.getPermission()))
 			return tabSuggest;
 		
 		if (args.length == 1) {

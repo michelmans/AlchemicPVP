@@ -14,7 +14,7 @@ import me.alchemi.al.Library;
 import me.alchemi.al.api.MaterialWrapper;
 import me.alchemi.al.objects.handling.ItemFactory;
 import me.alchemi.al.objects.meta.PersistentMeta;
-import me.alchemi.alchemicpvp.main;
+import me.alchemi.alchemicpvp.PvP;
 import me.alchemi.alchemicpvp.meta.BooleanMeta;
 import me.alchemi.alchemicpvp.meta.SecondCooldownMeta;
 import me.alchemi.alchemicpvp.meta.TaskIntMeta;
@@ -34,8 +34,8 @@ public abstract class AbstractWand extends ItemStack{
 		}
 		
 		public AbstractWand getInstance() {
-			if (clazz.equals(DragonStick.class)) return main.getInstance().dragon;
-			else if (clazz.equals(MagicWand.class)) return main.getInstance().magic;
+			if (clazz.equals(DragonStick.class)) return PvP.getInstance().dragon;
+			else if (clazz.equals(MagicWand.class)) return PvP.getInstance().magic;
 			else return null;
 		}
 	}
@@ -102,15 +102,15 @@ public abstract class AbstractWand extends ItemStack{
 				
 				if (ran >= 5) {
 					Bukkit.getScheduler().cancelTask(PersistentMeta.getMeta(player, TaskIntMeta.class).asInt());
-					player.removeMetadata(TaskIntMeta.class.getName(), main.getInstance());
-					player.removeMetadata(BooleanMeta.class.getName(), main.getInstance());
+					player.removeMetadata(TaskIntMeta.class.getName(), PvP.getInstance());
+					player.removeMetadata(BooleanMeta.class.getName(), PvP.getInstance());
 				}
 				ran ++;
 			}
 		};
 		
 		player.setMetadata(TaskIntMeta.class.getName(),
-				new TaskIntMeta(Bukkit.getScheduler().scheduleSyncRepeatingTask(main.getInstance(),
+				new TaskIntMeta(Bukkit.getScheduler().scheduleSyncRepeatingTask(PvP.getInstance(),
 						runnable, 1, 1)));
 		
 	}

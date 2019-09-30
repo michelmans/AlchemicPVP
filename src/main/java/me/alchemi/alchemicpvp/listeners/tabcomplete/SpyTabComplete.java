@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-import me.alchemi.alchemicpvp.main;
+import me.alchemi.alchemicpvp.PvP;
 
 public class SpyTabComplete implements TabCompleter {
     
@@ -23,7 +23,7 @@ public class SpyTabComplete implements TabCompleter {
 		if (!(sender instanceof Player))
 			return tabSuggest;
 
-		if (!main.getInstance().hasPermission(sender, "alchemicpvp.spy"))
+		if (!PvP.getInstance().hasPermission(sender, "alchemicpvp.spy"))
 			return tabSuggest;
 		
 		if (args.length == 1) {
@@ -34,7 +34,7 @@ public class SpyTabComplete implements TabCompleter {
 		} else if (args.length == 2) {
 			
 			for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-				if (!main.getInstance().hasPermission(p, "alchemicpvp.spy.hideFromBigBrother")) list.add(p.getName());
+				if (!PvP.getInstance().hasPermission(p, "alchemicpvp.spy.hideFromBigBrother")) list.add(p.getName());
 			}
 			
 		}

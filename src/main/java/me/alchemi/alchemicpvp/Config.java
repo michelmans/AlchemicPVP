@@ -25,7 +25,7 @@ import me.alchemi.al.objects.handling.SexyLocation;
 public class Config extends ConfigBase{
 
 	public Config() throws FileNotFoundException, IOException, InvalidConfigurationException {
-		super(main.getInstance());
+		super(PvP.getInstance());
 		
 		immediateConsuming = ConfigEnum.CONFIG.getConfig().getBoolean("immediateConsuming", true);
 		clearInventory = ConfigEnum.CONFIG.getConfig().getBoolean("clearInventory", true);
@@ -41,8 +41,8 @@ public class Config extends ConfigBase{
 
 	public static enum ConfigEnum implements IConfigEnum {
 		
-		CONFIG(new File(main.getInstance().getDataFolder(), "config.yml"), 11),
-		MESSAGES(new File(main.getInstance().getDataFolder(), "messages.yml"), 10);
+		CONFIG(new File(PvP.getInstance().getDataFolder(), "config.yml"), 11),
+		MESSAGES(new File(PvP.getInstance().getDataFolder(), "messages.yml"), 10);
 
 		final File file;
 		final int version;

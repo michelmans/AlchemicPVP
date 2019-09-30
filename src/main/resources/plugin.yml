@@ -1,5 +1,5 @@
 name: AlchemicPVP
-main: me.alchemi.alchemicpvp.main
+main: me.alchemi.alchemicpvp.PvP
 version: ${project.version}
 author: Alchemi
 description: A plugin for better PvP.

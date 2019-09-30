@@ -7,7 +7,7 @@ import org.bukkit.inventory.ItemStack;
 
 import me.alchemi.al.objects.handling.ItemFactory;
 import me.alchemi.al.objects.meta.BaseMeta;
-import me.alchemi.alchemicpvp.main;
+import me.alchemi.alchemicpvp.PvP;
 import me.alchemi.alchemicpvp.objects.wands.AbstractWand;
 import me.alchemi.alchemicpvp.objects.wands.MagicWand;
 
@@ -21,7 +21,7 @@ public class SecondCooldownMeta extends BaseMeta {
 	private ItemFactory charge;
 	
 	public SecondCooldownMeta(AbstractWand wand, Player player) {
-		super(main.getInstance(), false);
+		super(PvP.getInstance(), false);
 		value = false;
 		
 		remaining = wand.getSecondaryCooldown() * 40;

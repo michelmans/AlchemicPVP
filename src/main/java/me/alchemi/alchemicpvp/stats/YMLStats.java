@@ -1,4 +1,4 @@
-package me.alchemi.alchemicpvp;
+package me.alchemi.alchemicpvp.stats;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,17 +9,13 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import me.alchemi.alchemicpvp.objects.events.StatsChangeEvent;
 
-public class PlayerStats {
+public class YMLStats implements IStats {
 
-	public static enum Stat {
-		KILLS, DEATHS, KDR, CKS, BKS;
-	}
-	
 	private FileConfiguration data;
 	private File dataFile;
 	private String name;
 	
-	public PlayerStats(FileConfiguration data, File dataFile) {
+	public YMLStats(FileConfiguration data, File dataFile) {
 		this.data = data;
 		name = data.getString("name");
 		this.dataFile = dataFile; 
@@ -29,34 +25,42 @@ public class PlayerStats {
 		data = YamlConfiguration.loadConfiguration(dataFile);
 	}
 	
-	public PlayerStats copy() {
-		return new PlayerStats(data, dataFile);
+	@Override
+	public YMLStats copy() {
+		return new YMLStats(data, dataFile);
 	}
 	
+	@Override
 	public String getName() {
 		return name;
 	}
 	
+	@Override
 	public int getKills() {
 		return data.getInt("kills");
 	}
 	
+	@Override
 	public int getDeaths() {
 		return data.getInt("deaths");
 	}
 	
+	@Override
 	public int getBestKillstreak() {
 		return data.getInt("killstreak.best");
 	}
 	
+	@Override
 	public int getCurrentKillstreak() {
 		return data.getInt("killstreak.current");
 	}
 	
+	@Override
 	public double getKDR() {
 		return (double) getKills()/getDeaths();
 	}
 	
+	@Override
 	public void setKills(int newKills) {
 		
 		Bukkit.getPluginManager().callEvent(new StatsChangeEvent(Stat.KILLS, getKills(), newKills, Bukkit.getPlayer(name)));
@@ -67,6 +71,7 @@ public class PlayerStats {
 		Bukkit.getPluginManager().callEvent(new StatsChangeEvent(Stat.KDR, getKDR(), getKDR(), Bukkit.getPlayer(name)));
 	}
 	
+	@Override
 	public void setDeaths(int newDeaths) {
 		Bukkit.getPluginManager().callEvent(new StatsChangeEvent(Stat.DEATHS, getDeaths(), newDeaths, Bukkit.getPlayer(name)));
 		data.set("deaths", newDeaths);
@@ -77,6 +82,7 @@ public class PlayerStats {
 		
 	}
 	
+	@Override
 	public void setBestKillstreak(int newKillstreak) {
 		
 		Bukkit.getPluginManager().callEvent(new StatsChangeEvent(Stat.BKS, getBestKillstreak(), newKillstreak, Bukkit.getPlayer(name)));
@@ -87,6 +93,7 @@ public class PlayerStats {
 		
 	}
 	
+	@Override
 	public void setCurrentKillstreak(int newKillstreak) {
 		
 		Bukkit.getPluginManager().callEvent(new StatsChangeEvent(Stat.CKS, getCurrentKillstreak(), newKillstreak, Bukkit.getPlayer(name)));
@@ -96,26 +103,13 @@ public class PlayerStats {
 		} catch (IOException e) {}
 		
 	}
-	
-	public void updateKills(int update) {
-		setKills(getKills() + update);
-	}
-	public void updateDeaths(int update) {
-		setDeaths(getDeaths() + update);
-	}
-	public void updateKillstreaks(int update) {
-		setCurrentKillstreak(getCurrentKillstreak() + update);
-		
-		if (getBestKillstreak() < getCurrentKillstreak()) {
-			setBestKillstreak(getCurrentKillstreak());
-		}
-		
-	}
 
+	@Override
 	public String getNickname() {
 		return data.getString("nickname");
 	}
 
+	@Override
 	public void setNickname(String nickname) {
 		data.set("nickname", nickname);
 		try {

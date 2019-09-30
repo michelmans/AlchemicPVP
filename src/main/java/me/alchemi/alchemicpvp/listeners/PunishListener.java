@@ -15,12 +15,12 @@ import com.SirBlobman.combatlogx.config.ConfigOptions;
 import com.SirBlobman.combatlogx.event.PlayerPunishEvent;
 import com.SirBlobman.combatlogx.utility.CombatUtil;
 
-import me.alchemi.alchemicpvp.main;
+import me.alchemi.alchemicpvp.PvP;
 
 public class PunishListener implements Listener {
 
 	public PunishListener() {
-		Bukkit.getPluginManager().registerEvents(this, main.getInstance());
+		Bukkit.getPluginManager().registerEvents(this, PvP.getInstance());
 	}
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
@@ -35,7 +35,7 @@ public class PunishListener implements Listener {
 		}
 		
 		if (ConfigOptions.PUNISH_KILL) {
-			main.getInstance().addToKill(e.getPlayer());
+			PvP.getInstance().addToKill(e.getPlayer());
 		}
 		
 		if (ConfigOptions.PUNISH_SUDO) {

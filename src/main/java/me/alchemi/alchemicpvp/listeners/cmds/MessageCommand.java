@@ -10,14 +10,14 @@ import org.bukkit.entity.Player;
 
 import me.alchemi.al.configurations.Messenger;
 import me.alchemi.alchemicpvp.Config;
-import me.alchemi.alchemicpvp.main;
+import me.alchemi.alchemicpvp.PvP;
 import me.alchemi.alchemicpvp.Config.Messages;
 import me.alchemi.alchemicpvp.listeners.EventMessage;
 import me.alchemi.alchemicpvp.meta.StatsMeta;
 
 public class MessageCommand implements CommandExecutor{
 
-	private Messenger msgnr = main.getInstance().getMessenger();
+	private Messenger msgnr = PvP.getInstance().getMessenger();
 	private static CommandSender consoleReply; 
 	
 	@Override
@@ -29,7 +29,7 @@ public class MessageCommand implements CommandExecutor{
 			if (args[0].equals("Console")) {
 				recipient = Bukkit.getConsoleSender();
 			} else {
-				recipient = main.getInstance().getServer().getPlayer(args[0]);
+				recipient = PvP.getInstance().getServer().getPlayer(args[0]);
 				if (recipient == null) {
 					msgnr.sendMessage(Messages.MESSAGE_PLAYEROFFLINE.value().replace("$player$", args[0]), sender);
 					return true;
