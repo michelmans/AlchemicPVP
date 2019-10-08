@@ -16,7 +16,7 @@ import me.alchemi.alchemicpvp.Config.Messages;
 import me.alchemi.alchemicpvp.PvP;
 import me.alchemi.alchemicpvp.meta.StatsMeta;
 import me.alchemi.alchemicpvp.objects.events.StatsChangeEvent;
-import me.alchemi.alchemicpvp.stats.YMLStats;
+import me.alchemi.alchemicpvp.stats.IStats;
 
 public class StatsScoreboard implements Listener {
 	
@@ -39,7 +39,7 @@ public class StatsScoreboard implements Listener {
 		Objective obj = scoreboard.registerNewObjective("Stats", "none", Messenger.formatString(Messages.STATS_SCOREBOARD_TITLE.value()));
 		obj.setDisplaySlot(DisplaySlot.SIDEBAR);
 		
-		YMLStats stats = StatsMeta.getStats(player);
+		IStats stats = StatsMeta.getStats(player);
 		
 		Team[] teams = new Team[Config.Scoreboard.LINESAMOUNT.asInt()];
 		

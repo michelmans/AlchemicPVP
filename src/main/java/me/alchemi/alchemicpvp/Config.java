@@ -11,12 +11,8 @@ import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.inventory.ItemStack;
 
-import me.alchemi.al.api.MaterialWrapper;
 import me.alchemi.al.configurations.Messenger;
 import me.alchemi.al.configurations.SexyConfiguration;
 import me.alchemi.al.objects.base.ConfigBase;
@@ -41,7 +37,7 @@ public class Config extends ConfigBase{
 
 	public static enum ConfigEnum implements IConfigEnum {
 		
-		CONFIG(new File(PvP.getInstance().getDataFolder(), "config.yml"), 11),
+		CONFIG(new File(PvP.getInstance().getDataFolder(), "config.yml"), 12),
 		MESSAGES(new File(PvP.getInstance().getDataFolder(), "messages.yml"), 10);
 
 		final File file;
@@ -68,9 +64,6 @@ public class Config extends ConfigBase{
 		public int getVersion() {
 			return version;
 		}
-		
-		
-		
 	}
 
 	public static enum Wands implements IConfig {
@@ -109,22 +102,7 @@ public class Config extends ConfigBase{
 			this.value = getConfig().get(this.path);
 			
 		}
-
-		@Override
-		public boolean asBoolean() {
-			return Boolean.parseBoolean(asString());
-		}
-
-		@Override
-		public String asString() {
-			return String.valueOf(value);
-		}
-
-		@Override
-		public Sound asSound() {
-			return null;
-		}
-
+		
 		@Override
 		public List<String> asStringList() {
 			
@@ -133,26 +111,7 @@ public class Config extends ConfigBase{
 					.collect(Collectors.toList());
 			
 		}
-
-		@Override
-		public int asInt() {
-			return Integer.valueOf(asString());
-		}
 		
-		public double asDouble() {
-			return Double.valueOf(asString());
-		}
-
-		@Override
-		public ItemStack asItemStack() {
-			return null;
-		}
-
-		@Override
-		public Material asMaterial() {
-			return MaterialWrapper.getWrapper(asString());
-		}
-
 		@Override
 		public SexyConfiguration getConfig() {
 			return ConfigEnum.CONFIG.getConfig();
@@ -161,20 +120,7 @@ public class Config extends ConfigBase{
 		@Override
 		public String key() {
 			return path;
-		}
-
-		@Override
-		public List<Float> asFloatList() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public List<Integer> asIntList() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-		
+		}		
 	}
 	
 	public static enum Stats implements IConfig {
@@ -202,47 +148,6 @@ public class Config extends ConfigBase{
 		}
 
 		@Override
-		public boolean asBoolean() {
-			return Boolean.parseBoolean(asString());
-		}
-
-		@Override
-		public String asString() {
-			return String.valueOf(value);
-		}
-
-		@Override
-		public Sound asSound() {
-			
-			return Sound.valueOf(asString());
-		}
-
-		@SuppressWarnings("unchecked")
-		@Override
-		public List<String> asStringList() {
-			try {
-				return (List<String>) value;
-			} catch (ClassCastException e) { return null; }
-		}
-
-		@Override
-		public int asInt() {
-			return Integer.valueOf(asString());
-		}
-
-		@Override
-		public ItemStack asItemStack() {
-			try {
-				return (ItemStack) value;
-			} catch (ClassCastException e) { return null; }
-		}
-
-		@Override
-		public Material asMaterial() {
-			return MaterialWrapper.getWrapper(asString());
-		}
-
-		@Override
 		public String key() {
 			return key;
 		}
@@ -250,24 +155,6 @@ public class Config extends ConfigBase{
 		@Override
 		public SexyConfiguration getConfig() {
 			return ConfigEnum.CONFIG.getConfig();
-		}
-
-		@Override
-		public double asDouble() {
-			// TODO Auto-generated method stub
-			return 0;
-		}
-
-		@Override
-		public List<Float> asFloatList() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public List<Integer> asIntList() {
-			// TODO Auto-generated method stub
-			return null;
 		}
 	}
 
@@ -301,67 +188,8 @@ public class Config extends ConfigBase{
 
 		@Override
 		public void get() {
-			
 			value = getConfig().get(key);
-			
 		}
-
-		@Override
-		public boolean asBoolean() {
-			return Boolean.valueOf(asString());
-		}
-
-		@Override
-		public String asString() {
-			return String.valueOf(value);
-		}
-
-		@Override
-		public Sound asSound() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public List<String> asStringList() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public int asInt() {
-			return Integer.valueOf(asString());
-		}
-
-		@Override
-		public ItemStack asItemStack() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public Material asMaterial() {
-			return MaterialWrapper.getWrapper(asString());
-		}
-
-		@Override
-		public double asDouble() {
-			// TODO Auto-generated method stub
-			return 0;
-		}
-
-		@Override
-		public List<Float> asFloatList() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public List<Integer> asIntList() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-		
 	}
 	
 	public static enum Nickname implements IConfig{
@@ -397,37 +225,6 @@ public class Config extends ConfigBase{
 		}
 
 		@Override
-		public Sound asSound() {
-			
-			return Sound.valueOf(asString());
-		}
-
-		@SuppressWarnings("unchecked")
-		@Override
-		public List<String> asStringList() {
-			try {
-				return (List<String>) value;
-			} catch (ClassCastException e) { return null; }
-		}
-
-		@Override
-		public int asInt() {
-			return Integer.valueOf(asString());
-		}
-
-		@Override
-		public ItemStack asItemStack() {
-			try {
-				return (ItemStack) value;
-			} catch (ClassCastException e) { return null; }
-		}
-
-		@Override
-		public Material asMaterial() {
-			return MaterialWrapper.getWrapper(asString());
-		}
-
-		@Override
 		public String key() {
 			return key;
 		}
@@ -436,25 +233,6 @@ public class Config extends ConfigBase{
 		public SexyConfiguration getConfig() {
 			return ConfigEnum.CONFIG.getConfig();
 		}
-
-		@Override
-		public double asDouble() {
-			// TODO Auto-generated method stub
-			return 0;
-		}
-
-		@Override
-		public List<Float> asFloatList() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public List<Integer> asIntList() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-		
 	}
 	
 	public static enum Message implements IConfig{
@@ -483,50 +261,6 @@ public class Config extends ConfigBase{
 		}
 
 		@Override
-		public boolean asBoolean() {
-			return Boolean.parseBoolean(asString());
-		}
-
-		@Override
-		public String asString() {
-			return String.valueOf(value);
-		}
-
-		@Override
-		public Sound asSound() {
-			try {
-				return Sound.valueOf(asString());
-			} catch(IllegalArgumentException | NullPointerException ex) {
-				return null;
-			}
-		}
-
-		@SuppressWarnings("unchecked")
-		@Override
-		public List<String> asStringList() {
-			try {
-				return (List<String>) value;
-			} catch (ClassCastException e) { return null; }
-		}
-
-		@Override
-		public int asInt() {
-			return Integer.valueOf(asString());
-		}
-
-		@Override
-		public ItemStack asItemStack() {
-			try {
-				return (ItemStack) value;
-			} catch (ClassCastException e) { return null; }
-		}
-
-		@Override
-		public Material asMaterial() {
-			return MaterialWrapper.getWrapper(asString());
-		}
-
-		@Override
 		public String key() {
 			return key;
 		}
@@ -535,25 +269,6 @@ public class Config extends ConfigBase{
 		public SexyConfiguration getConfig() {
 			return ConfigEnum.CONFIG.getConfig();
 		}
-
-		@Override
-		public double asDouble() {
-			// TODO Auto-generated method stub
-			return 0;
-		}
-
-		@Override
-		public List<Float> asFloatList() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public List<Integer> asIntList() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-		
 	}
 	
 	public static enum Scoreboard implements IConfig {
@@ -592,62 +307,43 @@ public class Config extends ConfigBase{
 			this.value = getConfig().get(key);
 			
 		}
+	}
+	
+	public static enum Storage implements IConfig {
+		TYPE("storage.type"),
+		KEEPINMEMORY("storage.keepInMemory"),
+		HOST("storage.host"),
+		PORT("storage.port"),
+		DATABASE("storage.database"),
+		USER("storage.user"),
+		PASSWORD("storage.password");
 
+		private Object value;
+		private final String key;
+		
+		private Storage(String key) {
+			this.key = key;
+			get();
+		}
+		
 		@Override
-		public boolean asBoolean() {
-			// TODO Auto-generated method stub
-			return false;
+		public Object value() {
+			return value;
 		}
 
 		@Override
-		public String asString() {
-			return String.valueOf(value);
+		public String key() {
+			return key;
 		}
 
 		@Override
-		public Sound asSound() {
-			// TODO Auto-generated method stub
-			return null;
+		public SexyConfiguration getConfig() {
+			return ConfigEnum.CONFIG.getConfig();
 		}
 
 		@Override
-		public List<String> asStringList() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public int asInt() {
-			return Integer.valueOf(asString());
-		}
-
-		@Override
-		public ItemStack asItemStack() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public Material asMaterial() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public double asDouble() {
-			// TODO Auto-generated method stub
-			return 0;
-		}
-
-		@Override
-		public List<Float> asFloatList() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public List<Integer> asIntList() {
-			return getConfig().getIntegerList(key);
+		public void get() {
+			this.value = getConfig().get(key);
 		}
 		
 	}

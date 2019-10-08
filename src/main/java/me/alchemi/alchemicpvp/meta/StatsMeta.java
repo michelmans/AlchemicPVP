@@ -1,48 +1,23 @@
 package me.alchemi.alchemicpvp.meta;
 
-import java.io.File;
-import java.io.IOException;
-
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import me.alchemi.al.objects.meta.BaseMeta;
 import me.alchemi.al.objects.meta.PersistentMeta;
 import me.alchemi.alchemicpvp.PvP;
-import me.alchemi.alchemicpvp.stats.YMLStats;
+import me.alchemi.alchemicpvp.stats.IStats;
 
 public class StatsMeta extends BaseMeta {
 
-	private YMLStats stats;
+	private IStats stats;
 	
 	private CommandSender replyTo;
-	
-	public static final String NAME = "stats";
 	
 	public StatsMeta(Player player) {
 		super(PvP.getInstance(), null);
 		
-		File dataFile = new File(PvP.getInstance().playerData, player.getUniqueId().toString() + ".yml");
-		FileConfiguration fc = new YamlConfiguration();
-		if (!dataFile.exists()) {
-			fc.set("name", player.getName());
-			fc.set("nickname", player.getDisplayName());
-			fc.set("kills", 0);
-			fc.set("deaths", 0);
-			fc.createSection("killstreak");
-			fc.set("killstreak.best", 0);
-			fc.set("killstreak.current", 0);
-			try {
-				fc.save(dataFile);
-			} catch (IOException e1) {}
-		} else {
-			fc = YamlConfiguration.loadConfiguration(dataFile);
-		}
-		
-		stats = new YMLStats(fc, dataFile);
-		
+		stats = StatsGetter.get(player);
 	}
 	
 	@Override
@@ -53,7 +28,7 @@ public class StatsMeta extends BaseMeta {
 		return stats;
 	}
 	
-	public YMLStats stats() {
+	public IStats stats() {
 		return stats;
 	}
 	
@@ -65,7 +40,7 @@ public class StatsMeta extends BaseMeta {
 		return sender instanceof Player ? getMeta((Player) sender) : null;
 	}
 	
-	public static YMLStats getStats(Player player) {
+	public static IStats getStats(Player player) {
 		return getMeta(player).stats();
 	}
 

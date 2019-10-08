@@ -16,6 +16,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 
 import me.alchemi.al.configurations.Messenger;
 import me.alchemi.al.objects.base.PluginBase;
+import me.alchemi.alchemicpvp.Config.Storage;
 import me.alchemi.alchemicpvp.listeners.CHECK;
 import me.alchemi.alchemicpvp.listeners.Events;
 import me.alchemi.alchemicpvp.listeners.ItemListeners;
@@ -46,6 +47,8 @@ import me.alchemi.alchemicpvp.objects.StatsScoreboard;
 import me.alchemi.alchemicpvp.objects.wands.DragonStick;
 import me.alchemi.alchemicpvp.objects.wands.MagicWand;
 import me.alchemi.alchemicpvp.objects.worldguard.WorldGuard;
+import me.alchemi.alchemicpvp.stats.DataType;
+import me.alchemi.alchemicpvp.stats.MySQLStats;
 import net.milkbowl.vault.chat.Chat;
 
 public class PvP extends PluginBase {
@@ -107,9 +110,12 @@ public class PvP extends PluginBase {
 		registerCommands();
 		getServer().getPluginManager().registerEvents(new Events(), this);
 		
-		playerData = new File(getDataFolder(), "playerdata");
-		
-		if (!playerData.exists()) playerData.mkdir();
+		if (DataType.valueOf(Storage.TYPE.asString()) == DataType.YML) {
+			playerData = new File(getDataFolder(), "playerdata");
+			if (!playerData.exists()) playerData.mkdir();
+		} else {
+			MySQLStats.init();
+		}
 		
 		if (worldGuard) wg.onEnable();
 		

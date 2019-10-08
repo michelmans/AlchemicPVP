@@ -88,6 +88,11 @@ storage:
     # Default: MYSQL
     type: MYSQL
     
+    # Wether or not to keep player stats in memory.
+    # Note: this can strain the memory, only use this in case of slow database connection.
+    # Default: false
+    keepInMemory: false
+    
     host: localhost
     port: 3306
     database: alchemicpvp

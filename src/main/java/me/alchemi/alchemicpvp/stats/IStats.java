@@ -1,10 +1,10 @@
 package me.alchemi.alchemicpvp.stats;
 
+import org.bukkit.OfflinePlayer;
+
 public interface IStats {
 	
-	YMLStats copy();
-	
-	String getName();
+	IStats copy();
 	
 	String getNickname();
 	
@@ -17,6 +17,8 @@ public interface IStats {
 	int getCurrentKillstreak();
 	
 	double getKDR();
+	
+	OfflinePlayer getPlayer();
 	
 	void setKills(int newKills);
 	

@@ -35,7 +35,7 @@ import me.alchemi.alchemicpvp.meta.NickMeta;
 import me.alchemi.alchemicpvp.meta.SecondCooldownMeta;
 import me.alchemi.alchemicpvp.meta.StatsMeta;
 import me.alchemi.alchemicpvp.meta.VanishMeta;
-import me.alchemi.alchemicpvp.stats.YMLStats;
+import me.alchemi.alchemicpvp.stats.IStats;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -72,7 +72,7 @@ public class Events implements Listener {
 		
 		if (PvP.getInstance().toKill(e.getPlayer())) {
 			e.getPlayer().setHealth(0.0D);
-			YMLStats stats = StatsMeta.getStats(e.getPlayer());
+			IStats stats = StatsMeta.getStats(e.getPlayer());
 			stats.setDeaths(stats.getDeaths() + 2);
 		}
 		
@@ -90,11 +90,11 @@ public class Events implements Listener {
 		
 		if (e.getEntity().getKiller() == null) return;
 		
-		YMLStats victim = StatsMeta.getStats(e.getEntity());
+		IStats victim = StatsMeta.getStats(e.getEntity());
 		victim.setCurrentKillstreak(0);
 		victim.updateDeaths(1);
 		
-		YMLStats killer = StatsMeta.getStats(e.getEntity().getKiller());
+		IStats killer = StatsMeta.getStats(e.getEntity().getKiller());
 		killer.updateKills(1);
 		killer.updateKillstreaks(1);
 		

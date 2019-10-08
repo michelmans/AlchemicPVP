@@ -14,10 +14,11 @@ import org.bukkit.entity.Player;
 
 import me.alchemi.al.Library;
 import me.alchemi.al.configurations.Messenger;
-import me.alchemi.alchemicpvp.PvP;
 import me.alchemi.alchemicpvp.Config.Messages;
+import me.alchemi.alchemicpvp.PvP;
+import me.alchemi.alchemicpvp.meta.StatsGetter;
 import me.alchemi.alchemicpvp.meta.StatsMeta;
-import me.alchemi.alchemicpvp.stats.YMLStats;
+import me.alchemi.alchemicpvp.stats.IStats;
 
 public class StatsCommand implements CommandExecutor {
 
@@ -26,22 +27,22 @@ public class StatsCommand implements CommandExecutor {
 
 		if (sender instanceof Player) {
 			
-			Player pl = (Player) sender;
+			Player player = (Player) sender;
 			
-			YMLStats stats;
+			IStats stats;
 			boolean other = false;
-			if (args.length > 1 && args[1].equals("clear") && PvP.getInstance().hasPermission(pl, "alchemicpvp.stats.clear")) {
+			if (args.length > 1 && args[1].equals("clear") && PvP.getInstance().hasPermission(player, "alchemicpvp.stats.clear")) {
 
-				OfflinePlayer player = Library.getOfflinePlayer(args[0]);
+				OfflinePlayer oPlayer = Library.getOfflinePlayer(args[0]);
 				
-				if (player == null) {
+				if (oPlayer == null) {
 					PvP.getInstance().getMessenger().sendMessage(Messages.STATS_NOPLAYER.value().replace("$player$", args[0]), sender);
 					return true;
 				}
 				
-				File dataFile = new File(PvP.getInstance().playerData, player.getUniqueId().toString() + ".yml");
+				File dataFile = new File(PvP.getInstance().playerData, oPlayer.getUniqueId().toString() + ".yml");
 				FileConfiguration fc = new YamlConfiguration();
-				fc.set("name", player.getName());
+				fc.set("name", oPlayer.getName());
 				fc.set("kills", 0);
 				fc.set("deaths", 0);
 				fc.createSection("killstreak");
@@ -54,22 +55,16 @@ public class StatsCommand implements CommandExecutor {
 				PvP.getInstance().getMessenger().sendMessage(Messages.STATS_CLEARED.value().replace("$player$", args[0]), sender);
 				return true;
 				
-			} else if (args.length > 0 && PvP.getInstance().hasPermission(pl, "alchemicpvp.stats.other")) {
-				OfflinePlayer player = Library.getOfflinePlayer(args[0]);
+			} else if (args.length > 0 && PvP.getInstance().hasPermission(player, "alchemicpvp.stats.other")) {
+				OfflinePlayer oPlayer = Library.getOfflinePlayer(args[0]);
 				
-				if (player == null) {
+				if (oPlayer == null) {
 					PvP.getInstance().getMessenger().sendMessage(Messages.STATS_NOPLAYER.value().replace("$player$", args[0]), sender);
 					return true;
 				}
 				
-				File statsFile = new File(PvP.getInstance().playerData, player.getUniqueId().toString() + ".yml");
-				if (!statsFile.exists()) {
-					PvP.getInstance().getMessenger().sendMessage(Messages.STATS_NOPLAYER.value().replace("$player$", args[0]), sender);
-					return true;
-				}
-				
-				if (!player.isOnline()) {
-					stats = new YMLStats(YamlConfiguration.loadConfiguration(statsFile), statsFile);
+				if (!oPlayer.isOnline()) {
+					stats = StatsGetter.get(oPlayer);
 					other = true;
 				}
 				else {
@@ -83,7 +78,7 @@ public class StatsCommand implements CommandExecutor {
 				PvP.getInstance().getMessenger().sendMessage(Messages.SPY_PLAYEROFFLINE.value().replace("$player$", args[1]), sender);
 				return true;
 			} else {
-				stats = StatsMeta.getStats(pl);
+				stats = StatsMeta.getStats(player);
 			}
 			
 			
@@ -91,7 +86,7 @@ public class StatsCommand implements CommandExecutor {
 			
 			if (!other) msg = Messages.STATS_HEADER.value();
 			else {
-				msg = Messages.STATS_HEADEROTHER.value().replace("$player$", stats.getName());
+				msg = Messages.STATS_HEADEROTHER.value().replace("$player$", stats.getPlayer().getName());
 			}
 			
 			msg = msg + "\n" + Messages.STATS_KILLS.value().replace("$amount$", String.valueOf(stats.getKills()));
@@ -102,7 +97,7 @@ public class StatsCommand implements CommandExecutor {
 			msg = msg + "\n" + Messages.STATS_BKILLSTREAK.value().replace("$amount$", String.valueOf(stats.getBestKillstreak()));
 			
 			if (!other) msg = msg + "\n" + Messages.STATS_FOOTER.value(); 
-			else msg = msg + "\n" + Messages.STATS_FOOTEROTHER.value().replace("$player$", stats.getName());
+			else msg = msg + "\n" + Messages.STATS_FOOTEROTHER.value().replace("$player$", stats.getPlayer().getName());
 			
 			msg = Messenger.formatString(msg);
 			
@@ -150,9 +145,9 @@ public class StatsCommand implements CommandExecutor {
 				PvP.getInstance().getMessenger().sendMessage(Messages.STATS_NOPLAYER.value().replace("$player$", args[0]), sender);
 				return true;
 			}
-			YMLStats stats;	
+			IStats stats;	
 			if (!player.isOnline()) {
-				stats = new YMLStats(YamlConfiguration.loadConfiguration(statsFile), statsFile);
+				stats = StatsGetter.get(player);
 				
 			}
 			else {
@@ -162,7 +157,7 @@ public class StatsCommand implements CommandExecutor {
 			
 			String msg = "";
 			
-			msg = Messages.STATS_HEADEROTHER.value().replace("$player$", stats.getName());
+			msg = Messages.STATS_HEADEROTHER.value().replace("$player$", stats.getPlayer().getName());
 			
 			msg = msg + "\n" + Messages.STATS_KILLS.value().replace("$amount$", String.valueOf(stats.getKills()));
 			msg = msg + "\n" + Messages.STATS_DEATHS.value().replace("$amount$", String.valueOf(stats.getDeaths()));
@@ -171,7 +166,7 @@ public class StatsCommand implements CommandExecutor {
 			msg = msg + "\n" + Messages.STATS_CKILLSTREAK.value().replace("$amount$", String.valueOf(stats.getCurrentKillstreak()));
 			msg = msg + "\n" + Messages.STATS_BKILLSTREAK.value().replace("$amount$", String.valueOf(stats.getBestKillstreak()));
 			
-			msg = msg + "\n" + Messages.STATS_FOOTEROTHER.value().replace("$player$", stats.getName());
+			msg = msg + "\n" + Messages.STATS_FOOTEROTHER.value().replace("$player$", stats.getPlayer().getName());
 			
 			msg = Messenger.formatString(msg);
 			

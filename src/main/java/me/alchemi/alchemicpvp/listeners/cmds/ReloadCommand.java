@@ -6,9 +6,12 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import me.alchemi.alchemicpvp.PvP;
 import me.alchemi.alchemicpvp.Config.Messages;
+import me.alchemi.alchemicpvp.Config.Storage;
+import me.alchemi.alchemicpvp.PvP;
 import me.alchemi.alchemicpvp.meta.StatsMeta;
+import me.alchemi.alchemicpvp.stats.DataType;
+import me.alchemi.alchemicpvp.stats.YMLStats;
 
 public class ReloadCommand implements CommandExecutor {
 
@@ -21,7 +24,7 @@ public class ReloadCommand implements CommandExecutor {
 			PvP.getInstance().getMessenger().sendMessage("&9Configs reloaded.", sender);
 			
 			for (Player player : Bukkit.getOnlinePlayers()) {
-				StatsMeta.getStats(player).reload();
+				if (DataType.valueOf(Storage.TYPE.asString()) == DataType.YML) ((YMLStats) StatsMeta.getStats(player)).reload();
 				PvP.getInstance().getSsb().addPlayer(player);
 			}
 			
