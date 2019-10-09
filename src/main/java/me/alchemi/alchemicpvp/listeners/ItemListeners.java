@@ -32,7 +32,6 @@ public class ItemListeners implements Listener{
 		if (PersistentMeta.hasMeta(e.getPlayer(), TaskIntMeta.class)) {
 			Bukkit.getScheduler().cancelTask(PersistentMeta.getMeta(e.getPlayer(), TaskIntMeta.class).asInt());
 			e.getPlayer().removeMetadata(TaskIntMeta.class.getName(), PvP.getInstance());
-			
 		}
 		
 		if (Config.immediateConsuming

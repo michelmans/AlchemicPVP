@@ -22,6 +22,7 @@ import me.alchemi.alchemicpvp.Config.Storage;
 import me.alchemi.alchemicpvp.listeners.CHECK;
 import me.alchemi.alchemicpvp.listeners.Events;
 import me.alchemi.alchemicpvp.listeners.ItemListeners;
+import me.alchemi.alchemicpvp.listeners.PotionBlocking;
 import me.alchemi.alchemicpvp.listeners.PunishListener;
 import me.alchemi.alchemicpvp.listeners.SpyListener;
 import me.alchemi.alchemicpvp.listeners.cmds.CheckCommand;
@@ -119,7 +120,10 @@ public class PvP extends PluginBase {
 			MySQLStats.init();
 		}
 		
-		if (worldGuard) wg.onEnable();
+		if (worldGuard) {
+			wg.onEnable();
+			getServer().getPluginManager().registerEvents(new PotionBlocking(), this);
+		}
 		
 		if (Bukkit.getPluginManager().getPlugin("CombatLogX") != null) new PunishListener();
 		

@@ -104,7 +104,7 @@ public class Events implements Listener {
 		if (!Config.Stats.DEATHMESSAGES.asBoolean()) return;
 		
 		ItemStack killItem = e.getEntity().getKiller().getInventory().getItemInMainHand();
-		String item = killItem.hasItemMeta() ? killItem.getItemMeta().hasDisplayName() ? killItem.getItemMeta().getDisplayName() : killItem.getType().getKey().getKey().replaceAll("_", " ").toLowerCase() : killItem.getType().getKey().getKey().replaceAll("_", " ").toLowerCase(); 
+		String item = killItem.hasItemMeta() ? killItem.getItemMeta().hasDisplayName() ? killItem.getItemMeta().getDisplayName() : MaterialWrapper.getWrapper(killItem).getKey().getKey().replaceAll("_", " ").toLowerCase() : MaterialWrapper.getWrapper(killItem).getKey().getKey().replaceAll("_", " ").toLowerCase();
 		
 		String itemKill;
 		if (Arrays.asList(new String[] {"a", "i", "e", "o", "u", "y"}).contains(String.valueOf(item.charAt(0)).toLowerCase())) {
