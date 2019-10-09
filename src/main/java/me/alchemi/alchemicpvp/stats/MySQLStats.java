@@ -1,5 +1,6 @@
 package me.alchemi.alchemicpvp.stats;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +35,8 @@ public class MySQLStats implements IStats {
 	private short cksVar;
 	
 	public static void init() {
-		uuid = new Column("uuid", DataType.TINYTEXT, ColumnModifier.NOT_NULL, ColumnModifier.UNIQUE);
+		uuid = new Column("uuid", DataType.VARCHAR, ColumnModifier.NOT_NULL, ColumnModifier.UNIQUE);
+		uuid.setValueLimit(38);
 		nickname = new Column("nickname", DataType.TINYTEXT, ColumnModifier.NOT_NULL);
 		kills = new Column("kills", DataType.SMALLINT, ColumnModifier.DEFAULT);
 		kills.setDefValue(0);
@@ -50,6 +52,7 @@ public class MySQLStats implements IStats {
 		try {
 			database = MySQLDatabase.newConnection(PvP.getInstance(), Storage.HOST.asString(), Storage.DATABASE.asString(), Storage.USER.asString(), Storage.PASSWORD.asString());
 			database.createTable(table);
+			System.out.println("MySQLStats.init()");
 		} catch (SQLException e) {
 			database = null;
 			e.printStackTrace();
@@ -89,7 +92,9 @@ public class MySQLStats implements IStats {
 	@Override
 	public String getNickname() {
 		try {
-			return Storage.KEEPINMEMORY.asBoolean() ? nicknameVar : database.getValue(table, nickname, uuid, player.getUniqueId().toString()).getString(0);
+			if (Storage.KEEPINMEMORY.asBoolean()) return nicknameVar;
+			ResultSet set = database.getValue(table, nickname, uuid, player.getUniqueId().toString());
+			return set.next() ? set.getString(0) : player.getName();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return player.getName();
@@ -99,7 +104,9 @@ public class MySQLStats implements IStats {
 	@Override
 	public int getKills() {
 		try {
-			return Storage.KEEPINMEMORY.asBoolean() ? killsVar : database.getValue(table, kills, uuid, player.getUniqueId().toString()).getInt(0);
+			if (Storage.KEEPINMEMORY.asBoolean()) return killsVar;
+			ResultSet set = database.getValue(table, kills, uuid, player.getUniqueId().toString());
+			return set.next() ? set.getInt(0) : 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return 0;
@@ -109,7 +116,9 @@ public class MySQLStats implements IStats {
 	@Override
 	public int getDeaths() {
 		try {
-			return Storage.KEEPINMEMORY.asBoolean() ? deathsVar : database.getValue(table, deaths, uuid, player.getUniqueId().toString()).getInt(0);
+			if (Storage.KEEPINMEMORY.asBoolean()) return deathsVar;
+			ResultSet set = database.getValue(table, deaths, uuid, player.getUniqueId().toString());
+			return set.next() ? set.getInt(0) : 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return 0;
@@ -119,7 +128,9 @@ public class MySQLStats implements IStats {
 	@Override
 	public int getBestKillstreak() {
 		try {
-			return Storage.KEEPINMEMORY.asBoolean() ? bksVar : database.getValue(table, bks, uuid, player.getUniqueId().toString()).getShort(0);
+			if (Storage.KEEPINMEMORY.asBoolean()) return bksVar;
+			ResultSet set = database.getValue(table, bks, uuid, player.getUniqueId().toString());
+			return set.next() ? set.getInt(0) : 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return 0;
@@ -129,7 +140,9 @@ public class MySQLStats implements IStats {
 	@Override
 	public int getCurrentKillstreak() {
 		try {
-			return Storage.KEEPINMEMORY.asBoolean() ? cksVar : database.getValue(table, cks, uuid, player.getUniqueId().toString()).getShort(0);
+			if (Storage.KEEPINMEMORY.asBoolean()) return cksVar;
+			ResultSet set = database.getValue(table, cks, uuid, player.getUniqueId().toString());
+			return set.next() ? set.getInt(0) : 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return 0;

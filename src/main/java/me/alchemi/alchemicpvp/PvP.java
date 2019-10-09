@@ -6,12 +6,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 import me.alchemi.al.configurations.Messenger;
@@ -126,6 +128,13 @@ public class PvP extends PluginBase {
 		dragon = new DragonStick();
 		magic = new MagicWand();		
 		
+		Bukkit.getOnlinePlayers().forEach(new Consumer<Player>() {
+			
+			@Override
+			public void accept(Player t) {
+				new Events().onPlayerJoin(new PlayerJoinEvent(t, ""));
+			}
+		});
 		messenger.print("&1The die is &8cast...");
 	}
 	
