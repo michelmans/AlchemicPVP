@@ -94,7 +94,7 @@ public class MySQLStats implements IStats {
 		try {
 			if (Storage.KEEPINMEMORY.asBoolean()) return nicknameVar;
 			ResultSet set = database.getValue(table, nickname, uuid, player.getUniqueId().toString());
-			return set.next() ? set.getString(0) : player.getName();
+			return set.next() ? set.getString(1) : player.getName();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return player.getName();
@@ -106,7 +106,7 @@ public class MySQLStats implements IStats {
 		try {
 			if (Storage.KEEPINMEMORY.asBoolean()) return killsVar;
 			ResultSet set = database.getValue(table, kills, uuid, player.getUniqueId().toString());
-			return set.next() ? set.getInt(0) : 0;
+			return set.next() ? set.getInt(1) : 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return 0;
@@ -118,7 +118,7 @@ public class MySQLStats implements IStats {
 		try {
 			if (Storage.KEEPINMEMORY.asBoolean()) return deathsVar;
 			ResultSet set = database.getValue(table, deaths, uuid, player.getUniqueId().toString());
-			return set.next() ? set.getInt(0) : 0;
+			return set.next() ? set.getInt(1) : 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return 0;
@@ -130,7 +130,7 @@ public class MySQLStats implements IStats {
 		try {
 			if (Storage.KEEPINMEMORY.asBoolean()) return bksVar;
 			ResultSet set = database.getValue(table, bks, uuid, player.getUniqueId().toString());
-			return set.next() ? set.getInt(0) : 0;
+			return set.next() ? set.getInt(1) : 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return 0;
@@ -142,7 +142,7 @@ public class MySQLStats implements IStats {
 		try {
 			if (Storage.KEEPINMEMORY.asBoolean()) return cksVar;
 			ResultSet set = database.getValue(table, cks, uuid, player.getUniqueId().toString());
-			return set.next() ? set.getInt(0) : 0;
+			return set.next() ? set.getInt(1) : 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return 0;
