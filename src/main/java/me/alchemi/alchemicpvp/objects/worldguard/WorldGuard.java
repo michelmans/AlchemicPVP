@@ -91,18 +91,7 @@ public class WorldGuard implements Listener{
 					if (c.getDistance(e.getTo()) <= 5) {
 						
 						int index = c.getClosestPlaneIndex(e.getPlayer().getLocation()); 
-						List<Location> removeable = c.getPlane(index).placeBlockAt(e.getPlayer().getLocation(), Worldguard.VISIBLE_BORDER_BLOCK.asMaterial()); 
-						Bukkit.getScheduler().runTaskLater(PvP.getInstance(), new Runnable() {
-							
-							@Override
-							public void run() {
-								
-								for (Location loc : removeable) {
-									loc.getWorld().getBlockAt(loc).setType(MaterialWrapper.AIR.getMaterial());
-								}
-								
-							}
-						}, 50);
+						c.getPlane(index).placeBlockAt(e.getPlayer(), Worldguard.VISIBLE_BORDER_BLOCK.asMaterial()); 
 						
 						if (!region.contains(BukkitAdapter.asBlockVector(e.getTo()))) {
 							

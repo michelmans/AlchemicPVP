@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 public class Cube {
@@ -59,9 +60,9 @@ public class Cube {
 		return getPlane(getClosestPlaneIndex(loc));
 	}
 	
-	public List<Location> setClosestPlaneBlock(Material type, Location loc){
+	public List<Location> setClosestPlaneBlock(Material type, Player player){
 		
-		return getClosestPlane(loc.clone()).placeBlockAt(loc, type);
+		return getClosestPlane(player.getLocation().clone()).placeBlockAt(player, type);
 		
 	}
 	
