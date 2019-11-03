@@ -1,8 +1,5 @@
 package me.alchemi.alchemicpvp.objects.worldguard;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -23,7 +20,6 @@ import com.sk89q.worldguard.protection.flags.registry.FlagRegistry;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 
-import me.alchemi.al.api.MaterialWrapper;
 import me.alchemi.alchemicpvp.Config.Worldguard;
 import me.alchemi.alchemicpvp.PvP;
 import me.alchemi.alchemicpvp.objects.Cube;
@@ -33,8 +29,6 @@ public class WorldGuard implements Listener{
 	private RegionContainer container;
 	
 	public static StateFlag BORDER_FLAG = new StateFlag("visible-border", false);
-	
-	private List<Location> placedBorders = new ArrayList<Location>();
 	
 	public WorldGuard() {}
 	
@@ -105,12 +99,5 @@ public class WorldGuard implements Listener{
 				}
 			}
 		}
-	}
-	
-	public void clearBorders() {
-		for (Location loc : placedBorders) {
-			loc.getWorld().getBlockAt(loc).setType(MaterialWrapper.AIR.getMaterial());
-		}
-		placedBorders.clear();
 	}
 }

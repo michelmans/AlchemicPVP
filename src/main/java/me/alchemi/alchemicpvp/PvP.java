@@ -142,11 +142,6 @@ public class PvP extends PluginBase {
 		messenger.print("&1The die is &8cast...");
 	}
 	
-	@Override
-	public void onDisable() {
-		if (worldGuard) wg.clearBorders();
-	}
-	
 	private void registerCommands() {
 		getCommand("stats").setExecutor(new StatsCommand());
 		getCommand("check").setExecutor(new CheckCommand());

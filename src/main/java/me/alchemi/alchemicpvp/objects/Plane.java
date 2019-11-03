@@ -7,9 +7,11 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import me.alchemi.alchemicpvp.Config;
+import me.alchemi.alchemicpvp.PvP;
 import me.alchemi.alchemicpvp.Config.Worldguard;
 
 public class Plane {
@@ -76,13 +78,7 @@ public class Plane {
 		return list;
 	}
 	
-	public List<Location> placeBlockAt(Player player, Material type) {
-		return placeBlockAt(player, type, true);
-	}
-	
-	public List<Location> placeBlockAt(Player player, Material type, boolean applyPhysics) {
-		
-		List<Location> placed = new ArrayList<Location>();
+	public void placeBlockAt(Player player, Material type) {
 		
 		Location loc = player.getLocation();
 		
@@ -116,12 +112,22 @@ public class Plane {
 		for (int x = x1; x <= x2; x++) {
 			for (int y = y1; y <= y2; y++) {
 				for (int z = z1; z <= z2; z++) {
-					placed.add(new Location(loc.getWorld(), x, y, z));
-					player.sendBlockChange(new Location(loc.getWorld(), x, y, z), Worldguard.VISIBLE_BORDER_BLOCK.asMaterial().createBlockData());
+					Location temp = new Location(loc.getWorld(), x, y, z);
+					player.sendBlockChange(temp, Worldguard.VISIBLE_BORDER_BLOCK.asMaterial().createBlockData());
+					
+					new BukkitRunnable() {
+						
+						@Override
+						public void run() {
+							
+							player.sendBlockChange(temp, temp.getBlock().getBlockData());
+							
+						}
+					}.runTaskLater(PvP.getInstance(), 50);
+					
 				}
 			}
 		}
-		return placed;
 	}
 	
 	public List<Location> placeBlockAt(World world, Material type) {

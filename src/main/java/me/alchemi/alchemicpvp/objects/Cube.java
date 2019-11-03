@@ -60,9 +60,9 @@ public class Cube {
 		return getPlane(getClosestPlaneIndex(loc));
 	}
 	
-	public List<Location> setClosestPlaneBlock(Material type, Player player){
+	public void setClosestPlaneBlock(Material type, Player player){
 		
-		return getClosestPlane(player.getLocation().clone()).placeBlockAt(player, type);
+		getClosestPlane(player.getLocation().clone()).placeBlockAt(player, type);
 		
 	}
 	
