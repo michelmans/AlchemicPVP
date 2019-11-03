@@ -5,14 +5,13 @@ import java.util.List;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import me.alchemi.alchemicpvp.Config;
-import me.alchemi.alchemicpvp.PvP;
 import me.alchemi.alchemicpvp.Config.Worldguard;
+import me.alchemi.alchemicpvp.PvP;
 
 public class Plane {
 
@@ -23,6 +22,10 @@ public class Plane {
 	private float maxX;
 	private float maxY;
 	private float maxZ;
+	
+	private String equation;
+	private Vector normal;
+	private double d;
 	
 	public Plane(float minX, float minY, float minZ, float maxX, float maxY, float maxZ) {
 		this.minX = minX;
@@ -35,6 +38,22 @@ public class Plane {
 		if (minX != maxX && minY != maxY && minZ != maxZ) {
 			throw new IllegalArgumentException("At least 2 coords need to be the same");
 		}
+		
+		Vector support = minZ == maxZ ? new Vector(maxX, minY, minZ)
+						: minX == maxX ? new Vector(minX, minY, maxZ)
+						: minY == maxY ? new Vector(maxX, minY, minZ) : null; 
+		
+		Vector dir1 = support.clone().subtract(new Vector(minX, minY, minZ));
+		Vector dir2 = support.clone().subtract(new Vector(maxX, maxY, maxZ));
+		
+		//normal = 
+		normal = new Vector(dir1.getY() * dir2.getZ() - dir1.getZ() * dir2.getY(), -(dir1.getX() * dir2.getZ() - dir1.getZ() * dir2.getX()), dir1.getX() * dir2.getY() - dir1.getY() * dir2.getX()); 
+		
+		//D = nX * supportX + nY * supportY + nZ * supportZ;
+		d = normal.getX() * minX + normal.getY() * minY + normal.getZ() * minZ;
+		
+		//Plane: nX * x + nY * y + nZ * z = D
+		equation = normal.getBlockX() + "x + " + normal.getBlockY() + "y + " + normal.getBlockZ() + "z = " + Math.round(d);
 	}
 
 	public Location intersect(Vector vec, Location loc) {
@@ -113,6 +132,11 @@ public class Plane {
 			for (int y = y1; y <= y2; y++) {
 				for (int z = z1; z <= z2; z++) {
 					Location temp = new Location(loc.getWorld(), x, y, z);
+					
+					if (temp.getBlockX() > maxX || temp.getBlockX() < minX
+							|| temp.getBlockY() > maxY || temp.getBlockY() < minY
+							|| temp.getBlockZ() > maxZ || temp.getBlockZ() < minZ) continue;
+					
 					player.sendBlockChange(temp, Worldguard.VISIBLE_BORDER_BLOCK.asMaterial().createBlockData());
 					
 					new BukkitRunnable() {
@@ -128,27 +152,6 @@ public class Plane {
 				}
 			}
 		}
-	}
-	
-	public List<Location> placeBlockAt(World world, Material type) {
-		return placeBlockAt(world, type, true);
-	}
-	
-	public List<Location> placeBlockAt(World world, Material type, boolean applyPhysics) {
-		
-		List<Location> placed = new ArrayList<Location>();
-		
-		for (int x = (int)minX; x <= maxX; x++) {
-			for (int y = (int)minY; y <= maxY; y++) {
-				for (int z = (int)minZ; z <= maxZ; z++) {
-					if (world.getBlockAt(x, y, z).isEmpty()) {
-						placed.add(new Location(world, x, y, z));
-						world.getBlockAt(x, y, z).setType(type, applyPhysics);
-					}
-				}
-			}
-		}
-		return placed;
 	}
 	
 	public final boolean isBetween(int test, float min, float max) {
@@ -239,43 +242,24 @@ public class Plane {
 		this.maxZ = maxZ;
 	}
 
-	public int getDistance(Location loc) {
+	public double getDistance(Location loc) {
 		
-		Vector support = new Vector(Math.floor((maxX-minX)/3) + minX, 
-				Math.floor((maxY-minY)/3) + minY, 
-				Math.floor((maxZ-minZ)/3) + minZ);
+		//L: <x, y, z> = location + t*normal
+		// x = locX + t * nX
+		// y = locY + t * nY
+		// z = locZ + t * nZ
+		// t = (d - nX*locX - nY*locY -nZ*locZ)/(nX^2+nY^2+nZ^2)
+		double t = (d - normal.getX() * loc.getX() - normal.getY() * loc.getY() - normal.getZ() * loc.getZ())/(Math.pow(normal.getX(), 2) + Math.pow(normal.getY(), 2) + Math.pow(normal.getZ(), 2));
 		
-		Vector direction1 = support.clone().subtract(new Vector(minX, minY, minZ));
-		Vector direction2 = support.clone().subtract(new Vector(maxX, maxY, maxZ));
+		Vector junction = new Vector(loc.getX() + t * normal.getX(), loc.getY() + t * normal.getBlockY(), loc.getZ() + t * normal.getZ());
 		
-		//(x, y, z) = support + r * direction1 + s * direction2
-		Vector cross = direction1.getCrossProduct(direction2);
-		
-		//crossX(x - supportX) + crossY(y - supportY) + crossZ(z - supportZ) = 0
-		int D = - (cross.getBlockX() * support.getBlockX()) 
-				- (cross.getBlockY() * support.getBlockY()) 
-				- (cross.getBlockZ() * support.getBlockZ());
-		
-		//|crossX * x + crossY * y + crossZ * z + D|
-		double t = Math.abs(cross.getBlockX() * loc.getBlockX() 
-				+ cross.getBlockY() * loc.getBlockY() 
-				+ cross.getBlockZ() * loc.getBlockZ() + D);
-		
-		//sqrt(crossX^2 + crossY^2 + crossZ^2)
-		double n = Math.sqrt(Math.pow(cross.getBlockX(), 2) 
-				+ Math.pow(cross.getBlockY(), 2) 
-				+ Math.pow(cross.getBlockZ(), 2));
-		
-//		System.out.println("ux + vy + wz + D = 0"
-//				.replace("u", String.valueOf(cross.getBlockX()))
-//				.replace("v", String.valueOf(cross.getBlockY()))
-//				.replace("w", String.valueOf(cross.getBlockZ()))
-//				.replace("D", String.valueOf(D)));
-		
-		return (int) Math.floor(t/n);
+		return junction.distance(loc.toVector());
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "Plane:{ (" + minX + ", " + minY + ", " + minZ + ") --> (" + maxX + ", " + maxY + ", " + maxZ + "), equation: " + equation + "}";
+	}
 	
 }
 

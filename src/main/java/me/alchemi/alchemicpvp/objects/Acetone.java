@@ -35,7 +35,8 @@ public class Acetone {
 		}
 		
 		for (Tameable w : world.getEntitiesByClass(Tameable.class)) {
-			if (w.getOwner().getUniqueId().equals(player.getUniqueId())) w.remove();
+			if (w.getOwner() != null 
+					&& w.getOwner().getUniqueId().equals(player.getUniqueId())) w.remove();
 		}
 	}
 	

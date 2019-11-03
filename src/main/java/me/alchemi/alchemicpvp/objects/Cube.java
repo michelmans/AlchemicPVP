@@ -25,8 +25,8 @@ public class Cube {
 		world = min.getWorld();
 	}
 	
-	public int getDistance(Location loc) {
-		int dist = Integer.MAX_VALUE;
+	public double getDistance(Location loc) {
+		double dist = Integer.MAX_VALUE;
 		for (Plane plane : planes) {
 			if (plane.equals(planes.get(0))) continue;
 			
@@ -37,10 +37,10 @@ public class Cube {
 	
 	public int getClosestPlaneIndex(Location loc) {
 		int planeIndex = 0;
-		int dist = -1;
+		double dist = -1;
 		int i = 0;
 		for (Plane plane : planes) {
-			int d = plane.getDistance(loc);
+			double d = plane.getDistance(loc);
 			
 			if ((d < dist || dist == -1)
 					&& (i > 0 && d != 0) ) {
@@ -62,7 +62,9 @@ public class Cube {
 	
 	public void setClosestPlaneBlock(Material type, Player player){
 		
-		getClosestPlane(player.getLocation().clone()).placeBlockAt(player, type);
+		for(Plane p : planes) {
+			if (p.getDistance(player.getLocation()) <= 5) p.placeBlockAt(player, type);
+		}
 		
 	}
 	
@@ -97,9 +99,23 @@ public class Cube {
 		}
 	}
 	
-	public List<Location> setPlaneBlock(Material type, BlockFace face) {
-		return getPlane(face).placeBlockAt(world, type);
-		
+	public BlockFace getPlaneFace(Plane plane) {
+		for (int i = 0; i < 6; i++) {
+			if (planes.get(i).equals(plane)) {
+				return i == 0 ? BlockFace.DOWN
+						: i == 1 ? BlockFace.UP
+						: i == 2 ? BlockFace.EAST
+						: i == 3 ? BlockFace.WEST
+						: i == 4 ? BlockFace.NORTH
+						: i == 5 ? BlockFace.SOUTH
+						: null;
+			}
+		}
+		return null;
+	}
+
+	public World getWorld() {
+		return world;
 	}
 	 
 }
