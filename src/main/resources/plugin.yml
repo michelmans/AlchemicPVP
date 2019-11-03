@@ -21,9 +21,9 @@ commands:
    setcheckspawn:
       usage: /setcheckspawn
       description: Sets the return point for the /uncheck command.
-   statsreload:
-      usage: /statsreload
-      description: Reload all files.
+   pvp:
+      usage: /pvp
+      description: AlchemicPvP base command.
    message:
       usage: /message <recipient> <message>
       description: Send a private message.

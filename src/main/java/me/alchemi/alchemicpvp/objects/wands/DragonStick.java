@@ -30,6 +30,7 @@ public class DragonStick extends AbstractWand implements Listener{
 	private static final boolean ENCHANTED = Wands.DRAGON_ENCHANTED.asBoolean();
 	private static final int COOLDOWN = Wands.DRAGON_COOLDOWN.asInt();
 	private static final int SECONDARYCOOLDOWN = Wands.DRAGON_SECONDARYCOOLDOWN.asInt();
+	private static final int SECONDARYUSE = Wands.DRAGON_SECONDARYUSE.asInt();
 	private static final double SECONDARYDAMAGE = Wands.DRAGON_SECONDARYDAMAGE.asDouble();
 	
 	public DragonStick() {
@@ -56,6 +57,11 @@ public class DragonStick extends AbstractWand implements Listener{
 		return SECONDARYCOOLDOWN;
 	}
 
+	@Override
+	public int getSecondaryUse() {
+		return SECONDARYUSE;
+	}
+	
 	@EventHandler
 	@Override
 	public void onItemUse(PlayerInteractEvent e) {

@@ -12,6 +12,7 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.block.BlockIgniteEvent.IgniteCause;
@@ -35,6 +36,7 @@ import me.alchemi.alchemicpvp.meta.NickMeta;
 import me.alchemi.alchemicpvp.meta.SecondCooldownMeta;
 import me.alchemi.alchemicpvp.meta.StatsMeta;
 import me.alchemi.alchemicpvp.meta.VanishMeta;
+import me.alchemi.alchemicpvp.objects.Acetone;
 import me.alchemi.alchemicpvp.stats.IStats;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -78,7 +80,7 @@ public class Events implements Listener {
 		
 	}
 	
-	@EventHandler
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerDeath(PlayerDeathEvent e) {
 		
 		e.getEntity().getInventory().clear();
@@ -86,50 +88,84 @@ public class Events implements Listener {
 		e.getEntity().removeMetadata(CooldownMeta.class.getName(), PvP.getInstance());
 		e.getEntity().removeMetadata(SecondCooldownMeta.class.getName(), PvP.getInstance());
 		
-		e.setKeepInventory(true);
+		e.getDrops().clear();
+		e.setKeepInventory(false);
 		
-		if (e.getEntity().getKiller() == null) return;
+		if (e.getEntity().getKiller() != null
+				&& !e.getEntity().equals(e.getEntity().getKiller())) {
 		
-		IStats victim = StatsMeta.getStats(e.getEntity());
-		victim.setCurrentKillstreak(0);
-		victim.updateDeaths(1);
-		
-		IStats killer = StatsMeta.getStats(e.getEntity().getKiller());
-		killer.updateKills(1);
-		killer.updateKillstreaks(1);
-		
-		e.getEntity().getKiller().setHealth(e.getEntity().getKiller().getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
-		
-		//Death Messages
-		if (!Config.Stats.DEATHMESSAGES.asBoolean()) return;
-		
-		ItemStack killItem = e.getEntity().getKiller().getInventory().getItemInMainHand();
-		String item = killItem.hasItemMeta() ? killItem.getItemMeta().hasDisplayName() ? killItem.getItemMeta().getDisplayName() : MaterialWrapper.getWrapper(killItem).getKey().getKey().replaceAll("_", " ").toLowerCase() : MaterialWrapper.getWrapper(killItem).getKey().getKey().replaceAll("_", " ").toLowerCase();
-		
-		String itemKill;
-		if (Arrays.asList(new String[] {"a", "i", "e", "o", "u", "y"}).contains(String.valueOf(item.charAt(0)).toLowerCase())) {
-			itemKill = "an " + item;
-		} else {
-			itemKill = "a " + item;
+			IStats victim = StatsMeta.getStats(e.getEntity());
+			victim.setCurrentKillstreak(0);
+			victim.updateDeaths(1);
+			
+			IStats killer = StatsMeta.getStats(e.getEntity().getKiller());
+			killer.updateKills(1);
+			killer.updateKillstreaks(1);
+			
+			e.getEntity().getKiller().setHealth(e.getEntity().getKiller().getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
+			
+			//Death Messages
+			if (!Config.Stats.DEATHMESSAGES.asBoolean()) return;
+			
+			ItemStack killItem = e.getEntity().getKiller().getInventory().getItemInMainHand();
+			String item = killItem.hasItemMeta() ? killItem.getItemMeta().hasDisplayName() ? killItem.getItemMeta().getDisplayName() : MaterialWrapper.getWrapper(killItem).getKey().getKey().replaceAll("_", " ").toLowerCase() : MaterialWrapper.getWrapper(killItem).getKey().getKey().replaceAll("_", " ").toLowerCase();
+			
+			String itemKill;
+			if (Arrays.asList(new String[] {"a", "i", "e", "o", "u", "y"}).contains(String.valueOf(item.charAt(0)).toLowerCase())) {
+				itemKill = "an " + item;
+			} else {
+				itemKill = "a " + item;
+			}
+			
+			Random rand = new Random();
+			
+			if (Config.deathMessages.size() > 1) PvP.getInstance().getMessenger().broadcast(Config.deathMessages.get(rand.nextInt(Config.deathMessages.size()))
+					.replace("$victim$", e.getEntity().getDisplayName())
+					.replace("$killer$", e.getEntity().getKiller().getDisplayName())
+					.replace("$item$", itemKill), false);
+			else PvP.getInstance().getMessenger().print(Config.deathMessages);
+		} else if (e.getEntity().getKiller() != null
+				&& e.getEntity().getKiller().equals(e.getEntity())) {
+			IStats epstein = StatsMeta.getStats(e.getEntity());
+			epstein.setCurrentKillstreak(0);
+			epstein.updateDeaths(2);
+			
+			//Death Messages
+			if (!Config.Stats.DEATHMESSAGES.asBoolean()) return;
+			
+			ItemStack killItem = e.getEntity().getKiller().getInventory().getItemInMainHand();
+			String item = killItem.hasItemMeta() ? killItem.getItemMeta().hasDisplayName() ? killItem.getItemMeta().getDisplayName() : MaterialWrapper.getWrapper(killItem).getKey().getKey().replaceAll("_", " ").toLowerCase() : MaterialWrapper.getWrapper(killItem).getKey().getKey().replaceAll("_", " ").toLowerCase();
+			
+			String itemKill;
+			if (Arrays.asList(new String[] {"a", "i", "e", "o", "u", "y"}).contains(String.valueOf(item.charAt(0)).toLowerCase())) {
+				itemKill = "an " + item;
+			} else {
+				itemKill = "a " + item;
+			}
+			
+			Random rand = new Random();
+			
+			if (Config.deathMessages.size() > 1) PvP.getInstance().getMessenger().broadcast(Config.deathMessages.get(rand.nextInt(Config.deathMessages.size()))
+					.replace("$victim$", e.getEntity().getDisplayName())
+					.replace("$killer$", e.getEntity().getKiller().getDisplayName())
+					.replace("$item$", itemKill), false);
+			else PvP.getInstance().getMessenger().print(Config.deathMessages);
+			
 		}
 		
-		Random rand = new Random();
+		Acetone.run(e.getEntity().getWorld(), e.getEntity());
 		
-		if (Config.deathMessages.size() > 1) PvP.getInstance().getMessenger().broadcast(Config.deathMessages.get(rand.nextInt(Config.deathMessages.size()))
-				.replace("$victim$", e.getEntity().getDisplayName())
-				.replace("$killer$", e.getEntity().getKiller().getDisplayName())
-				.replace("$item$", itemKill), false);
-		else PvP.getInstance().getMessenger().print(Config.deathMessages);
-		
-		e.getEntity().spigot().respawn();
 	}
 	
 	@EventHandler
 	public void onPlayerLeave(PlayerQuitEvent e) {
 		if (PvP.getInstance().hasPermission(e.getPlayer(), "alchemicpvp.spy") && PvP.getInstance().spies.containsKey(e.getPlayer().getName())) e.getPlayer().performCommand("socialspy");
+		
 		for (SpyListener sl : PvP.getInstance().spies.values()) {
 			if (sl.isIgnoring(e.getPlayer())) sl.unIgnorePlayer(e.getPlayer());
 		}
+		
+		Acetone.run(e.getPlayer().getWorld(), e.getPlayer());
 	}
 	
 	@EventHandler

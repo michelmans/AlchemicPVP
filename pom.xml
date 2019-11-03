@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>me.alchemi</groupId>
 	<artifactId>AlchemicPVP</artifactId>
-	<version>3.2.0</version>
+	<version>3.2.2</version>
 	<name>AlchemicPVP</name>
 	<build>
 		<finalName>${project.name}</finalName>
@@ -87,7 +87,7 @@
 		<dependency>
 			<groupId>com.comphenix.protocol</groupId>
 			<artifactId>ProtocolLib-API</artifactId>
-			<version>4.4.0-SNAPSHOT</version>
+			<version>4.4.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jetbrains</groupId>

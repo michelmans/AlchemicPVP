@@ -33,6 +33,7 @@ public class MagicWand extends AbstractWand implements Listener{
 	private static final boolean ENCHANTED = Wands.DRAGON_ENCHANTED.asBoolean();
 	private static final int COOLDOWN = Wands.MAGIC_COOLDOWN.asInt();
 	private static final int SECONDARYCOOLDOWN = Wands.MAGIC_SECONDARYCOOLDOWN.asInt();
+	private static final int SECONDARYUSE = Wands.MAGIC_SECONDARYUSE.asInt();
 	private static final double SECONDARYDAMAGE = Wands.MAGIC_SECONDARYDAMAGE.asDouble();
 	
 	public MagicWand() {
@@ -58,6 +59,11 @@ public class MagicWand extends AbstractWand implements Listener{
 	@Override
 	public int getSecondaryCooldown() {
 		return SECONDARYCOOLDOWN;
+	}
+	
+	@Override
+	public int getSecondaryUse() {
+		return SECONDARYUSE;
 	}
 	
 	@EventHandler

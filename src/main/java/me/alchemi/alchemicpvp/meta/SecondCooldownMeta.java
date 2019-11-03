@@ -9,12 +9,12 @@ import me.alchemi.al.objects.handling.ItemFactory;
 import me.alchemi.al.objects.meta.BaseMeta;
 import me.alchemi.alchemicpvp.PvP;
 import me.alchemi.alchemicpvp.objects.wands.AbstractWand;
-import me.alchemi.alchemicpvp.objects.wands.MagicWand;
 
 public class SecondCooldownMeta extends BaseMeta {
 
 	private int remaining;
-	private int originalRemaining;
+	private final int originalRemaining;
+	private final int cooldown;
 	private int itemSlot;
 	private boolean value;
 	public Player player;
@@ -24,8 +24,9 @@ public class SecondCooldownMeta extends BaseMeta {
 		super(PvP.getInstance(), false);
 		value = false;
 		
-		remaining = wand.getSecondaryCooldown() * 40;
-		originalRemaining = wand.getSecondaryCooldown() * 40;
+		remaining = wand.getSecondaryUse() * 20;
+		originalRemaining = wand.getSecondaryUse() * 20;
+		cooldown = wand.getSecondaryCooldown() * 20;
 		this.player = player;
 		this.charge = wand.getCharge();
 		
@@ -72,8 +73,8 @@ public class SecondCooldownMeta extends BaseMeta {
 		remaining--;
 		
 		if ( remaining%20 == 0 ) {
-			if (!hasSlotLocale(itemSlot, MagicWand.CHARGELOCALIZEDNAME, player.getInventory())) {
-				itemSlot = getSlotWithLocale(MagicWand.CHARGELOCALIZEDNAME, player.getInventory());
+			if (!hasSlotLocale(itemSlot, AbstractWand.CHARGELOCALIZEDNAME, player.getInventory())) {
+				itemSlot = getSlotWithLocale(AbstractWand.CHARGELOCALIZEDNAME, player.getInventory());
 			}
 			
 			if (itemSlot == -1) itemSlot = player.getInventory().firstEmpty();
@@ -86,13 +87,19 @@ public class SecondCooldownMeta extends BaseMeta {
 			
 			int task = Bukkit.getScheduler().scheduleSyncRepeatingTask(getOwningPlugin(), new Runnable() {
 				
+				private double amount;
+				private int cooldownRemaining = 0;
+				
 				@Override
 				public void run() {
-					 
-					player.getInventory().setItem(itemSlot, charge.setNum(charge.getAmount() + 1).setLocalizedName(MagicWand.CHARGELOCALIZEDNAME));
+					
+					cooldownRemaining += 1;
+					amount = (double)cooldownRemaining/(double)cooldown * (double)originalRemaining;
+					
+					if (amount%1 == 0) player.getInventory().setItem(itemSlot, charge.setNum((int)amount).setLocalizedName(AbstractWand.CHARGELOCALIZEDNAME));
 					
 				}
-			}, 10, 10);
+			}, 10, 20);
 			Bukkit.getScheduler().scheduleSyncDelayedTask(this.getOwningPlugin(), new Runnable() {
 				
 				@Override
@@ -105,7 +112,7 @@ public class SecondCooldownMeta extends BaseMeta {
 					Bukkit.getScheduler().cancelTask(task);
 					
 				}
-			}, originalRemaining/2);
+			}, cooldown);
 			
 		} 
 		

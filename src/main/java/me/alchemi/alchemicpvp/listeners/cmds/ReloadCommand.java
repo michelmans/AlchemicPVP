@@ -18,7 +18,10 @@ public class ReloadCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-		if (sender instanceof Player && PvP.getInstance().hasPermission(sender, "alchemicpvp.reload")) {
+		if (sender instanceof Player 
+				&& PvP.getInstance().hasPermission(sender, "alchemicpvp.reload")
+				&& args.length == 1
+				&& args[0].equals("reload")) {
 			
 			PvP.config.reload();
 			PvP.getInstance().getMessenger().sendMessage("&9Configs reloaded.", sender);

@@ -37,7 +37,7 @@ public class Config extends ConfigBase{
 
 	public static enum ConfigEnum implements IConfigEnum {
 		
-		CONFIG(new File(PvP.getInstance().getDataFolder(), "config.yml"), 12),
+		CONFIG(new File(PvP.getInstance().getDataFolder(), "config.yml"), 13),
 		MESSAGES(new File(PvP.getInstance().getDataFolder(), "messages.yml"), 10);
 
 		final File file;
@@ -74,6 +74,7 @@ public class Config extends ConfigBase{
 		MAGIC_COOLDOWN("wand.cooldown"),
 		MAGIC_SECONDARYCOOLDOWN("wand.secondaryCooldown"),
 		MAGIC_SECONDARYDAMAGE("wand.secondaryDamage"),
+		MAGIC_SECONDARYUSE("wand.secondaryUse"),
 		MAGIC_LORE("wand.lore"),
 		DRAGON_ENABLED("dragonstick.enabled"),
 		DRAGON_NAME("dragonstick.name"),
@@ -82,6 +83,7 @@ public class Config extends ConfigBase{
 		DRAGON_COOLDOWN("dragonstick.cooldown"),
 		DRAGON_SECONDARYCOOLDOWN("dragonstick.secondaryCooldown"),
 		DRAGON_SECONDARYDAMAGE("dragonstick.secondaryDamage"),
+		DRAGON_SECONDARYUSE("dragonstick.secondaryUse"),
 		DRAGON_LORE("dragonstick.lore");
 
 		Object value;

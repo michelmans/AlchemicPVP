@@ -152,7 +152,7 @@ public class PvP extends PluginBase {
 		getCommand("check").setExecutor(new CheckCommand());
 		getCommand("uncheck").setExecutor(new UncheckCommand());
 		getCommand("setcheckspawn").setExecutor(new SpawnCommand());
-		getCommand("statsreload").setExecutor(new ReloadCommand());
+		getCommand("pvp").setExecutor(new ReloadCommand());
 		getCommand("reply").setExecutor(new ReplyCommand());
 		getCommand("message").setExecutor(new MessageCommand());
 		getCommand("socialspy").setExecutor(new SpyCommand());

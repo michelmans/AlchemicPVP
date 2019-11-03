@@ -41,7 +41,7 @@ public abstract class AbstractWand extends ItemStack{
 	}
 	
 	public AbstractWand() {
-		CHARGE.setNum(getSecondaryCooldown() * 2);
+		CHARGE.setNum(getSecondaryUse());
 	}
 	
 	public ItemFactory getCharge() {
@@ -53,7 +53,7 @@ public abstract class AbstractWand extends ItemStack{
 		AbstractWand mw = wand.getInstance();
 		
 		Library.giveItemStack(mw, player);
-		if (mw.getSecondaryCooldown() * 2 > player.getInventory().getMaxStackSize()) player.getInventory().setMaxStackSize(mw.getSecondaryCooldown() * 2);
+		if (mw.getSecondaryUse() > player.getInventory().getMaxStackSize()) player.getInventory().setMaxStackSize(mw.getSecondaryUse());
 		Library.giveItemStack(mw.CHARGE, player);
 	}
 	
@@ -70,6 +70,8 @@ public abstract class AbstractWand extends ItemStack{
 	public abstract int getCooldown();
 	
 	public abstract int getSecondaryCooldown();
+	
+	public abstract int getSecondaryUse();
 	
 	public abstract void onItemUse(PlayerInteractEvent e);
 

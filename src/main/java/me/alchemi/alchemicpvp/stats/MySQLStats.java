@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
 import me.alchemi.al.database.Column;
@@ -14,6 +15,7 @@ import me.alchemi.al.database.Table;
 import me.alchemi.al.database.mysql.MySQLDatabase;
 import me.alchemi.alchemicpvp.Config.Storage;
 import me.alchemi.alchemicpvp.PvP;
+import me.alchemi.alchemicpvp.objects.events.StatsChangeEvent;
 
 public class MySQLStats implements IStats {
 
@@ -156,23 +158,29 @@ public class MySQLStats implements IStats {
 
 	@Override
 	public void setKills(int newKills) {
+		Bukkit.getPluginManager().callEvent(new StatsChangeEvent(Stat.KILLS, getBestKillstreak(), newKills, player.getPlayer()));
 		database.updateValue(table, kills, (short)newKills, getConditional());
 		
 		if (Storage.KEEPINMEMORY.asBoolean()) killsVar = (short) newKills;
+		
+		Bukkit.getPluginManager().callEvent(new StatsChangeEvent(Stat.KDR, getKDR(), getKDR(), player.getPlayer()));
 	}
 
 	@Override
 	public void setDeaths(int newDeaths) {
 		
+		Bukkit.getPluginManager().callEvent(new StatsChangeEvent(Stat.DEATHS, getBestKillstreak(), newDeaths, player.getPlayer()));
 		database.updateValue(table, deaths, (short)newDeaths, getConditional());
 		
 		if (Storage.KEEPINMEMORY.asBoolean()) deathsVar = (short) newDeaths;
 
+		Bukkit.getPluginManager().callEvent(new StatsChangeEvent(Stat.KDR, getKDR(), getKDR(), player.getPlayer()));
 	}
 
 	@Override
 	public void setBestKillstreak(int newKillstreak) {
 		
+		Bukkit.getPluginManager().callEvent(new StatsChangeEvent(Stat.BKS, getBestKillstreak(), newKillstreak, player.getPlayer()));
 		database.updateValue(table, bks, (short)newKillstreak, getConditional());
 		
 		if (Storage.KEEPINMEMORY.asBoolean()) bksVar = (short) newKillstreak;
@@ -182,6 +190,7 @@ public class MySQLStats implements IStats {
 	@Override
 	public void setCurrentKillstreak(int newKillstreak) {
 		
+		Bukkit.getPluginManager().callEvent(new StatsChangeEvent(Stat.CKS, getBestKillstreak(), newKillstreak, player.getPlayer()));
 		database.updateValue(table, cks, (short)newKillstreak, getConditional());
 		
 		if (Storage.KEEPINMEMORY.asBoolean()) cksVar = (short) newKillstreak;
