@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.util.Vector;
 
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.math.BlockVector3;
@@ -105,11 +106,12 @@ public class WorldGuard implements Listener{
 						
 						if (!region.contains(BukkitAdapter.asBlockVector(e.getTo()))) {
 							
+							Location center = maxL.add(minL).multiply(0.5);
+							Vector playerTPDir = e.getFrom().toVector().subtract(center.toVector()).normalize();
+							e.getPlayer().teleport(e.getFrom().add(playerTPDir));
 							e.setCancelled(true);
 							
-							
-						}
-						
+						}						
 					}
 				}
 			}
