@@ -11,9 +11,20 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Tameable;
 import org.bukkit.entity.Trident;
 
+import me.alchemi.al.objects.meta.PersistentMeta;
+import me.alchemi.alchemicpvp.PvP;
+import me.alchemi.alchemicpvp.meta.CooldownMeta;
+import me.alchemi.alchemicpvp.meta.SecondCooldownMeta;
+
 public class Acetone {
 
 	public static void run(World world, OfflinePlayer player) {
+		
+		if (player.isOnline()) {
+			if (PersistentMeta.hasMeta(player.getPlayer(), CooldownMeta.class)) player.getPlayer().removeMetadata(CooldownMeta.class.getName(), PvP.getInstance());
+			if (PersistentMeta.hasMeta(player.getPlayer(), SecondCooldownMeta.class)) player.getPlayer().removeMetadata(SecondCooldownMeta.class.getName(), PvP.getInstance());
+		}
+		
 		for (Entity e : world.getEntitiesByClasses(Trident.class, Arrow.class, Fireball.class, DragonFireball.class)) {
 			Projectile t = (Projectile)e;
 			

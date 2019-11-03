@@ -84,8 +84,6 @@ public class MagicWand extends AbstractWand implements Listener{
 			RayTraceResult ray = AbstractWand.getTarget(e.getPlayer());
 			Location target = ray != null ? ray.getHitPosition().toLocation(e.getPlayer().getWorld()) : null; 
 			
-			
-			
 			if ((e.getAction().equals(Action.LEFT_CLICK_AIR)
 					|| e.getAction().equals(Action.LEFT_CLICK_BLOCK))
 					&& (!PersistentMeta.hasMeta(e.getPlayer(), CooldownMeta.class)
@@ -98,14 +96,16 @@ public class MagicWand extends AbstractWand implements Listener{
 					target = eyeLoc.add(direction);
 				}
 				
-				if (PvP.worldGuard && !PvP.getInstance().getWorldGuard().isPvPDenied(target)) {
+				if (PvP.worldGuard 
+						&& !PvP.getInstance().getWorldGuard().isPvPDenied(target)) {
 					PvP.getInstance().getWorldGuard().sendPvPDeny(e.getPlayer());
 					return;
 				}
 				
 				e.getPlayer().setMetadata(CooldownMeta.class.getName(), new CooldownMeta(COOLDOWN, e.getPlayer()));
 				target.getWorld().strikeLightning(target);
-				if (ray != null && ray.getHitEntity() != null) {
+				if (ray != null 
+						&& ray.getHitEntity() != null) {
 					ray.getHitEntity().setLastDamageCause(new EntityDamageByEntityEvent(e.getPlayer(), ray.getHitEntity(), DamageCause.LIGHTNING, 5));
 				}
 				
