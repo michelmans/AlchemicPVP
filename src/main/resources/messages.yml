@@ -2,7 +2,9 @@ AlchemicPVP:
   Tag: '&7[&1&lAlchemicPVP&r&7] '
   
   Commands:
-    NoPermission: '&c&oYou don''t have permission to use &9$command$&c.&r&c If you believe this is an error, &nplease contact an administrator.'
+    NoPermission: >-
+      &c&oYou don''t have permission to use &9$command$&c.&r&c If you believe 
+      this is an error, &nplease contact an administrator.
     Reload: '&3Reloaded files.'
     WrongFormat: '&cPlease use: &9'
     Unknown: '&cUnknown command. Use &9/as help &cfor more information.'
@@ -33,7 +35,8 @@ AlchemicPVP:
     PlayerOffline: '$player$ &cis offline.'
     Teleport: '&3You have been teleported to &f$player$&3.'
     Enable: '&3You now posses the powers of a &6god&3 and you can &6fly&3.'
-    Disable: '&3You no longer posses &cgodly powers&3 and you''re &cgrounded&3, mister.'
+    Disable: >-
+      &3You no longer posses &cgodly powers&3 and you''re &cgrounded&3, mister.
     NotCheck: '&cYou are not in checkmode.'
     AlreadyCheck: '&cYou already are in checkmode.'
     NoHurting: '&cYou cannot hurt players while in checkmode.'
@@ -85,7 +88,8 @@ AlchemicPVP:
     Taken1: '&cSomeone with the nickname "$name$&c" is already online.'
     Taken2: '&c&n&oPlease choose a new one&r&c.'
     New: '&3Your nickname is now: $name$'
-    TooLong: '&cThis nickname is too long, it cannot be more than $amount$ characters.'
+    TooLong: >-
+      &cThis nickname is too long, it cannot be more than $amount$ characters.
     NoFormat: '&cYour nickname cannot contain formatting e.g. $eg$'
   
   StaffChat:

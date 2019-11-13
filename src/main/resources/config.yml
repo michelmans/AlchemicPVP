@@ -30,8 +30,10 @@ clearInventory: true
 WorldGuard:
     disableWandPvP: true
     
-    # How much blocks from the players location relative to the border should be shown.
-    # If visibleBorderLeeway is set to 2, the players will see 25 blocks in the border (5*5).
+    # How much blocks from the players location relative to the border 
+    # should be shown.
+    # If visibleBorderLeeway is set to 2, the players will see 25 blocks in 
+    # the border (5*5).
     # Default: 2 
     visibleBorderLeeway: 2
     
@@ -58,8 +60,8 @@ wand:
     
     # the lore for the item
     lore:
-    - 'Left Click: &3strike your foes with &6lightning from olympus itself&3!'
-    - 'Right Click: &3punish those who oppose you!'
+    - 'Left Click: '&3strike your foes with &6lightning from olympus itself&3!'
+    - 'Right Click: '&3punish those who oppose you!'
 
 # Dragon stick settings
 dragonstick:
@@ -91,7 +93,8 @@ storage:
     type: MYSQL
     
     # Wether or not to keep player stats in memory.
-    # Note: this can strain the memory, only use this in case of slow database connection.
+    # Note: this can strain the memory, only use this in case of slow 
+    # database connection.
     # Default: false
     keepInMemory: false
     
@@ -100,5 +103,3 @@ storage:
     database: alchemicpvp
     user: pvp
     password: pvp-inator2000
-    
-  
