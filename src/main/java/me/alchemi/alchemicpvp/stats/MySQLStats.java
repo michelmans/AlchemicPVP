@@ -3,7 +3,6 @@ package me.alchemi.alchemicpvp.stats;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -159,7 +158,7 @@ public class MySQLStats implements IStats {
 	@Override
 	public void setKills(int newKills) {
 		Bukkit.getPluginManager().callEvent(new StatsChangeEvent(Stat.KILLS, getBestKillstreak(), newKills, player.getPlayer()));
-		database.updateValue(table, kills, (short)newKills, getConditional());
+		database.updateValue(table, kills, (short)newKills, uuid, player.getUniqueId().toString());
 		
 		if (Storage.KEEPINMEMORY.asBoolean()) killsVar = (short) newKills;
 		
@@ -170,7 +169,7 @@ public class MySQLStats implements IStats {
 	public void setDeaths(int newDeaths) {
 		
 		Bukkit.getPluginManager().callEvent(new StatsChangeEvent(Stat.DEATHS, getBestKillstreak(), newDeaths, player.getPlayer()));
-		database.updateValue(table, deaths, (short)newDeaths, getConditional());
+		database.updateValue(table, deaths, (short)newDeaths, uuid, player.getUniqueId().toString());
 		
 		if (Storage.KEEPINMEMORY.asBoolean()) deathsVar = (short) newDeaths;
 
@@ -181,7 +180,7 @@ public class MySQLStats implements IStats {
 	public void setBestKillstreak(int newKillstreak) {
 		
 		Bukkit.getPluginManager().callEvent(new StatsChangeEvent(Stat.BKS, getBestKillstreak(), newKillstreak, player.getPlayer()));
-		database.updateValue(table, bks, (short)newKillstreak, getConditional());
+		database.updateValue(table, bks, (short)newKillstreak, uuid, player.getUniqueId().toString());
 		
 		if (Storage.KEEPINMEMORY.asBoolean()) bksVar = (short) newKillstreak;
 
@@ -191,7 +190,7 @@ public class MySQLStats implements IStats {
 	public void setCurrentKillstreak(int newKillstreak) {
 		
 		Bukkit.getPluginManager().callEvent(new StatsChangeEvent(Stat.CKS, getBestKillstreak(), newKillstreak, player.getPlayer()));
-		database.updateValue(table, cks, (short)newKillstreak, getConditional());
+		database.updateValue(table, cks, (short)newKillstreak, uuid, player.getUniqueId().toString());
 		
 		if (Storage.KEEPINMEMORY.asBoolean()) cksVar = (short) newKillstreak;
 
@@ -200,18 +199,10 @@ public class MySQLStats implements IStats {
 	@Override
 	public void setNickname(String newNickname) {
 		
-		database.updateValue(table, nickname, newNickname, getConditional());
+		database.updateValue(table, nickname, newNickname, uuid, player.getUniqueId().toString());
 		
 		if (Storage.KEEPINMEMORY.asBoolean()) nicknameVar = newNickname;
 
-	}
-
-	private Map<Column, Object> getConditional(){
-		return new HashMap<Column, Object>(){
-			{
-				put(uuid, player.getUniqueId().toString());
-			}
-		};
 	}
 
 	@Override
