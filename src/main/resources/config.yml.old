@@ -60,8 +60,7 @@ wand:
     
     # the lore for the item
     lore:
-    - 'Left Click: >-
-        &3strike your foes with &6lightning from olympus itself&3!
+    - 'Left Click: '&3strike your foes with &6lightning from olympus itself&3!'
     - 'Right Click: '&3punish those who oppose you!'
 
 # Dragon stick settings

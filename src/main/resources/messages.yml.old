@@ -4,7 +4,6 @@ AlchemicPVP:
   Commands:
     NoPermission: >-
       &c&oYou don''t have permission to use &9$command$&c.&r&c If you believe 
-      
       this is an error, &nplease contact an administrator.
     Reload: '&3Reloaded files.'
     WrongFormat: '&cPlease use: &9'
@@ -37,8 +36,7 @@ AlchemicPVP:
     Teleport: '&3You have been teleported to &f$player$&3.'
     Enable: '&3You now posses the powers of a &6god&3 and you can &6fly&3.'
     Disable: >-
-      &3You no longer posses &cgodly powers&3 and you''re &cgrounded&3, 
-      mister.
+      &3You no longer posses &cgodly powers&3 and you''re &cgrounded&3, mister.
     NotCheck: '&cYou are not in checkmode.'
     AlreadyCheck: '&cYou already are in checkmode.'
     NoHurting: '&cYou cannot hurt players while in checkmode.'
@@ -91,8 +89,7 @@ AlchemicPVP:
     Taken2: '&c&n&oPlease choose a new one&r&c.'
     New: '&3Your nickname is now: $name$'
     TooLong: >-
-      &cThis nickname is too long, it cannot be more than $amount$ 
-      characters.
+      &cThis nickname is too long, it cannot be more than $amount$ characters.
     NoFormat: '&cYour nickname cannot contain formatting e.g. $eg$'
   
   StaffChat:
