@@ -37,7 +37,7 @@ public class Config extends ConfigBase{
 
 	public static enum ConfigEnum implements IConfigEnum {
 		
-		CONFIG(new File(PvP.getInstance().getDataFolder(), "config.yml"), 13),
+		CONFIG(new File(PvP.getInstance().getDataFolder(), "config.yml"), 14),
 		MESSAGES(new File(PvP.getInstance().getDataFolder(), "messages.yml"), 10);
 
 		final File file;

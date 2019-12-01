@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'me.alchemi'
-version = '3.2.5'
+version = '3.2.6'
 description = 'AlchemicPVP'
 sourceCompatibility = '1.8'
 
@@ -62,7 +62,6 @@ processResources {
 jar {
 	doFirst{
 		println 'Building jar file...'
-		println 'Version $version'
 	}
 }
 

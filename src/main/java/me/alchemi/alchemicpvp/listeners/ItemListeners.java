@@ -37,10 +37,11 @@ public class ItemListeners implements Listener{
 		if (Config.immediateConsuming
 				&& e.getItem() != null
 				&& (MaterialWrapper.getWrapper(e.getItem()).isEdible() 
-						|| MaterialWrapper.getWrapper(e.getItem()).equals(MaterialWrapper.POTION.getMaterial()))) {
+						|| MaterialWrapper.getWrapper(e.getItem()).equals(MaterialWrapper.POTION.getMaterial()))
+				&& PvP.getInstance().getWorldGuard().canPvP(e.getPlayer())) {
 			
-			if (e.getItem().hasItemMeta() && e.getItem().getItemMeta() instanceof PotionMeta
-					&& (!PersistentMeta.hasMeta(e.getPlayer(), BooleanMeta.class))) {
+			if (e.getItem().hasItemMeta() && e.getItem().getItemMeta() instanceof PotionMeta) {
+				
 				PotionMeta potionMeta = ((PotionMeta) e.getItem().getItemMeta());
 				if (potionMeta.hasCustomEffects()) e.getPlayer().addPotionEffects(potionMeta.getCustomEffects());
 				
