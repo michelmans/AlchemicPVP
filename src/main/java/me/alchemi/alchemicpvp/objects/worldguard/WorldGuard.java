@@ -86,7 +86,7 @@ public class WorldGuard implements Listener{
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent e) {
 		
-		ApplicableRegionSet set = container.createQuery().getApplicableRegions(BukkitAdapter.adapt(e.getFrom()));
+		ApplicableRegionSet set = container.createQuery().getApplicableRegions(BukkitAdapter.adapt(e.getPlayer().getLocation()));
 		if (set.testState(null, BORDER_FLAG)) {
 			for (ProtectedRegion region : set) {
 				
@@ -99,30 +99,50 @@ public class WorldGuard implements Listener{
 						@Override
 						public void run() {
 							
-							if (c.getDistance(e.getTo()) <= 5) {
+							if (c.getDistance(e.getPlayer().getLocation()) <= 5) {
 								
 								c.setClosestPlaneBlock(Worldguard.VISIBLE_BORDER_BLOCK.asMaterial(), e.getPlayer());
 								
-								if (!region.contains(BukkitAdapter.asBlockVector(
-												e.getTo().add(e.getTo().getDirection().normalize().multiply(2))))) {
-									
-									Location center = BukkitAdapter.adapt(e.getFrom().getWorld(), region.getMinimumPoint())
-											.add(BukkitAdapter.adapt(e.getFrom().getWorld(), region.getMaximumPoint()))
-											.multiply(0.5);
-									
-									Vector playerTPDir = e.getFrom().toVector().subtract(center.toVector()).normalize();
-									
-									e.setCancelled(true);
+								if (!region.contains(BukkitAdapter.asBlockVector(e.getTo()))) {
 									
 									new BukkitRunnable() {
 										
 										@Override
 										public void run() {
-											e.getPlayer().teleport(e.getFrom().subtract(playerTPDir));
+											if (!region.contains(BukkitAdapter.asBlockVector(e.getPlayer().getLocation()))) {
+												Location center = BukkitAdapter.adapt(e.getPlayer().getLocation().getWorld(), region.getMinimumPoint())
+														.add(BukkitAdapter.adapt(e.getPlayer().getLocation().getWorld(), region.getMaximumPoint()))
+														.multiply(0.5);
+												
+												Vector playerTPDir = e.getPlayer().getLocation().toVector().subtract(center.toVector()).normalize();
+
+												e.getPlayer().teleport(e.getPlayer().getLocation().subtract(playerTPDir));
+											} else {
+												cancel();
+											}
 										}
-									}.runTask(PvP.getInstance());
+										
+									}.runTaskTimer(PvP.getInstance(), 0, 5);
 									
-								}						
+								}
+							}
+							
+							if (!region.contains(BukkitAdapter.asBlockVector(e.getPlayer().getLocation()))) {
+								
+								Location center = BukkitAdapter.adapt(e.getPlayer().getLocation().getWorld(), region.getMinimumPoint())
+										.add(BukkitAdapter.adapt(e.getPlayer().getLocation().getWorld(), region.getMaximumPoint()))
+										.multiply(0.5);
+								
+								Vector playerTPDir = e.getPlayer().getLocation().toVector().subtract(center.toVector()).normalize();
+								
+								new BukkitRunnable() {
+									
+									@Override
+									public void run() {
+										e.getPlayer().teleport(e.getPlayer().getLocation().subtract(playerTPDir));
+									}
+									
+								}.runTask(PvP.getInstance());
 							}
 							
 						}
