@@ -20,6 +20,14 @@ Scoreboard:
     kdr: 4
     ckillstreak: 3
     bkillstreak: 2
+    
+Tracking:
+    allowTracking: true
+    
+    #The tracking distance to use.
+    #Set to -1 for no limit.
+    #Default: -1
+    trackingDistance: -1
   
 # Wether or not to immediatly consume consumables (potions, food, etc)
 immediateConsuming: true
