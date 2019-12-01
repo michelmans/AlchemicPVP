@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import me.alchemi.al.api.MaterialWrapper;
 import me.alchemi.alchemicpvp.Config;
 import me.alchemi.alchemicpvp.Config.Worldguard;
 import me.alchemi.alchemicpvp.PvP;
@@ -137,7 +138,9 @@ public class Plane {
 							|| temp.getBlockY() > maxY || temp.getBlockY() < minY
 							|| temp.getBlockZ() > maxZ || temp.getBlockZ() < minZ) continue;
 					
-					player.sendBlockChange(temp, Worldguard.VISIBLE_BORDER_BLOCK.asMaterial().createBlockData());
+					
+					if (temp.getBlock().isPassable()
+							|| MaterialWrapper.wrap(temp.getBlock()) == MaterialWrapper.AIR) player.sendBlockChange(temp, Worldguard.VISIBLE_BORDER_BLOCK.asMaterial().createBlockData());
 					
 					new BukkitRunnable() {
 						

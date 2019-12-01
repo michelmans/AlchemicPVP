@@ -103,12 +103,15 @@ public class WorldGuard implements Listener{
 								
 								c.setClosestPlaneBlock(Worldguard.VISIBLE_BORDER_BLOCK.asMaterial(), e.getPlayer());
 								
-								if (!region.contains(BukkitAdapter.asBlockVector(e.getTo()))) {
+								if (!region.contains(BukkitAdapter.asBlockVector(
+												e.getTo().add(e.getTo().getDirection().normalize().multiply(2))))) {
 									
-									Location center = BukkitAdapter.adapt(e.getFrom().getWorld(), region.getMaximumPoint())
+									Location center = BukkitAdapter.adapt(e.getFrom().getWorld(), region.getMinimumPoint())
 											.add(BukkitAdapter.adapt(e.getFrom().getWorld(), region.getMaximumPoint()))
 											.multiply(0.5);
+									
 									Vector playerTPDir = e.getFrom().toVector().subtract(center.toVector()).normalize();
+									
 									e.setCancelled(true);
 									
 									new BukkitRunnable() {
