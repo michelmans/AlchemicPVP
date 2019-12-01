@@ -1,31 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-  <name>AlchemicPVP</name>
-  <comment>NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
-  <projects>
-    <project>AlchemicLibrary</project>
-    <project>AlchemicLibrary-api</project>
-  </projects>
-  <buildSpec>
-    <buildCommand>
-      <name>org.eclipse.jdt.core.javabuilder</name>
-    </buildCommand>
-    <buildCommand>
-      <name>org.eclipse.ui.externaltools.ExternalToolBuilder</name>
-      <triggers>auto,full,incremental,</triggers>
-      <arguments>
-        <dictionary>
-          <key>LaunchConfigHandle</key>
-          <value>&lt;project&gt;/.externalToolBuilders/AP Builder.launch</value>
-        </dictionary>
-      </arguments>
-    </buildCommand>
-    <buildCommand>
-      <name>org.eclipse.m2e.core.maven2Builder</name>
-    </buildCommand>
-  </buildSpec>
-  <natures>
-    <nature>org.eclipse.jdt.core.javanature</nature>
-    <nature>org.eclipse.m2e.core.maven2Nature</nature>
-  </natures>
+	<name>AlchemicPVP</name>
+	<comment>AlchemicPVP</comment>
+	<projects/>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>org.eclipse.buildship.core.gradleprojectnature</nature>
+	</natures>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments/>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.buildship.core.gradleprojectbuilder</name>
+			<arguments/>
+		</buildCommand>
+	</buildSpec>
+	<linkedResources/>
+	<filteredResources/>
 </projectDescription>

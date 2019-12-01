@@ -5,6 +5,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import me.alchemi.al.configurations.Messenger;
+import me.alchemi.alchemicpvp.Config;
 import me.alchemi.alchemicpvp.PvP;
 
 public class Tracker implements Listener{
@@ -18,8 +20,8 @@ public class Tracker implements Listener{
 	}
 	
 	public void startTracking() {
-		track(100);
-		track();
+		if (Config.trackingDistance < 0) track();
+		else track(Config.trackingDistance);
 	}
 	
 	private void track(double radius) {
@@ -30,8 +32,8 @@ public class Tracker implements Listener{
 				Player closest = null;
 				for (Entity e : player.getNearbyEntities(radius, radius, radius)) {
 					if (e instanceof Player
-							&& !(e.hasMetadata("is-npc")
-									&& e.getMetadata("is-npc").get(0).asBoolean())) {
+							&& !PvP.getInstance().npc.isNPC(e)
+							&& !e.equals(player)) {
 						
 						double dist = e.getLocation().distance(player.getLocation());
 						if (dist < close
@@ -55,8 +57,7 @@ public class Tracker implements Listener{
 				double close = -1;
 				Player closest = null;
 				for (Player p : player.getWorld().getEntitiesByClass(Player.class)) {
-					if (!(p.hasMetadata("is-npc")
-							&& p.getMetadata("is-npc").get(0).asBoolean())) {
+					if (!PvP.getInstance().npc.isNPC(p) && !p.equals(player)) {
 						
 						double dist = p.getLocation().distance(player.getLocation());
 						if (dist < close
@@ -73,12 +74,13 @@ public class Tracker implements Listener{
 	}
 	
 	private void setTarget() {
-		tracker.cancel();
+		if (tracker != null) tracker.cancel();
 		tracker = new BukkitRunnable() {
 			@Override
 			public void run() {
 				if (tracking != null 
 						&& tracking.isOnline()) {
+					Messenger.printStatic("Set target to", tracking.getName());
 					player.setCompassTarget(tracking.getLocation());
 				} else {
 					tracking = null;

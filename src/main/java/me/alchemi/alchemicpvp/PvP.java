@@ -20,6 +20,7 @@ import me.alchemi.al.configurations.Messenger;
 import me.alchemi.al.objects.base.PluginBase;
 import me.alchemi.alchemicpvp.Config.Storage;
 import me.alchemi.alchemicpvp.listeners.CHECK;
+import me.alchemi.alchemicpvp.listeners.ClickCompassEvent;
 import me.alchemi.alchemicpvp.listeners.Events;
 import me.alchemi.alchemicpvp.listeners.ItemListeners;
 import me.alchemi.alchemicpvp.listeners.PotionBlocking;
@@ -46,7 +47,10 @@ import me.alchemi.alchemicpvp.listeners.tabcomplete.GiveWandComplete;
 import me.alchemi.alchemicpvp.listeners.tabcomplete.SpyTabComplete;
 import me.alchemi.alchemicpvp.listeners.tabcomplete.StatsTabComplete;
 import me.alchemi.alchemicpvp.listeners.tabcomplete.TpTabComplete;
+import me.alchemi.alchemicpvp.objects.NPC;
 import me.alchemi.alchemicpvp.objects.StatsScoreboard;
+import me.alchemi.alchemicpvp.objects.citizens.Citizens;
+import me.alchemi.alchemicpvp.objects.citizens.NotCitizens;
 import me.alchemi.alchemicpvp.objects.wands.DragonStick;
 import me.alchemi.alchemicpvp.objects.wands.MagicWand;
 import me.alchemi.alchemicpvp.objects.worldguard.WorldGuard;
@@ -78,6 +82,8 @@ public class PvP extends PluginBase {
 	public HashMap<String, SpyListener> spies = new HashMap<String, SpyListener>();
 	
 	private List<UUID> toKill = new ArrayList<UUID>();
+	
+	public NPC npc;
 	
 	@Override
 	public void onLoad() {
@@ -112,6 +118,7 @@ public class PvP extends PluginBase {
 		
 		registerCommands();
 		getServer().getPluginManager().registerEvents(new Events(), this);
+		getServer().getPluginManager().registerEvents(new ClickCompassEvent(), this);
 		
 		if (DataType.valueOf(Storage.TYPE.asString()) == DataType.YML) {
 			playerData = new File(getDataFolder(), "playerdata");
@@ -124,6 +131,9 @@ public class PvP extends PluginBase {
 			wg.onEnable();
 			getServer().getPluginManager().registerEvents(new PotionBlocking(), this);
 		}
+		
+		if (Bukkit.getPluginManager().getPlugin("Citizens") != null) npc = new Citizens();
+		else npc = new NotCitizens();
 		
 		if (Bukkit.getPluginManager().getPlugin("CombatLogX") != null) new PunishListener();
 		

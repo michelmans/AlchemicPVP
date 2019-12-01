@@ -20,6 +20,9 @@ repositories {
 	maven {
 		url = 'http://maven.sk89q.com/repo/'
 	}
+	maven {
+		url = 'http://repo.citizensnpcs.co/'
+	}
 }
 
 dependencies {
@@ -31,6 +34,7 @@ dependencies {
 	implementation 'net.milkbowl.vault:VaultAPI:1.7'
 	implementation files('CombatLogX.jar')
 	implementation 'com.comphenix.protocol:ProtocolLib-API:4.4.0'
+	implementation 'net.citizensnpcs:citizensapi:2.0.25-SNAPSHOT'
 	compileOnly 'org.jetbrains:annotations:17.0.0'
 }
 

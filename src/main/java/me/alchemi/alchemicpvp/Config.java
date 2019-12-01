@@ -454,6 +454,10 @@ public class Config extends ConfigBase{
 	
 	public static boolean clearInventory;
 	
+	public static boolean allowTracking;
+	
+	public static double trackingDistance;
+	
 	public static List<String> deathMessages;
 	
 	@Override
@@ -462,6 +466,8 @@ public class Config extends ConfigBase{
 		deathMessages = ConfigEnum.MESSAGES.getConfig().getStringList("AlchemicPVP.DeathMessages");
 		clearInventory = ConfigEnum.CONFIG.getConfig().getBoolean("clearInventory", true);
 		immediateConsuming = ConfigEnum.CONFIG.getConfig().getBoolean("immediateConsuming", true);
+		allowTracking = ConfigEnum.CONFIG.getConfig().getBoolean("Tracking.allowTracking", true);
+		trackingDistance = ConfigEnum.CONFIG.getConfig().getDouble("Tracking.trackingDistance", -1);
 		
 		try { SPAWN = new SexyLocation(ConfigEnum.CONFIG.getConfig().getConfigurationSection("SPAWN")).getLocation(); }
 		catch (Exception e) { SPAWN = Bukkit.getWorlds().get(0).getSpawnLocation(); }
