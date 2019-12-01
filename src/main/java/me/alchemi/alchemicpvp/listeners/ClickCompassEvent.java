@@ -12,7 +12,7 @@ public class ClickCompassEvent implements Listener {
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onClick(PlayerInteractEvent e) {
-		if (MaterialWrapper.wrap(e.getItem()) == MaterialWrapper.COMPASS) {
+		if (e.getItem() != null && MaterialWrapper.wrap(e.getItem()) == MaterialWrapper.COMPASS) {
 			new Tracker(e.getPlayer()).startTracking();
 			e.setCancelled(true);
 		}
